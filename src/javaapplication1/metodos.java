@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -15,6 +16,32 @@ public class metodos {
 
     conexion c1 = new conexion();
     Connection cn = c1.getConexion();
+    
+    
+    public DefaultComboBoxModel llenarCMBMunicipio(){
+        DefaultComboBoxModel modelo= new DefaultComboBoxModel();
+        
+        String sql = "select nombreMunicipio from municipio;";
+        String datos="";
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                datos=rs.getString(1);
+                modelo.addElement(datos);
+                System.out.println(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return modelo;
+    }
+    
+    
+    //////////////////////////////////////////////////////
 
     public void registrarClientes(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String idStatus) {
         try {
