@@ -18,6 +18,8 @@ public class metodos {
     Connection cn = c1.getConexion();
     
     
+    
+    
     public DefaultComboBoxModel llenarCMBMunicipio(){
         DefaultComboBoxModel modelo= new DefaultComboBoxModel();
         
