@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -20,56 +21,14 @@ public class metodos {
     
     
     
-    public DefaultComboBoxModel llenarCMBMunicipio(){
-        DefaultComboBoxModel modelo= new DefaultComboBoxModel();
-        
-        String sql = "select nombreMunicipio from municipio;";
-        String datos="";
-        try{
-            
-            Statement st=cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            
-            while(rs.next()){
-                datos=rs.getString(1);
-                modelo.addElement(datos);
-                System.out.println(datos);
-            }
-            
-        }catch(SQLException e){
-            System.out.println("Error");
-        }
-        return modelo;
-    }
     
     
-    //////////////////////////////////////////////////////
-    public void registrarClientes2(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String idStatus) {
+    public void registrarClientes(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String txtStatusCliente) {
         try {
-            String sql="insert into cliente values(null,'"+nombreCliente+"','"+direccionCliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioCliente+"')"+",'"+nombreAval1Cliente+"','"+direccionAval1Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval1Cliente+"')"+",'"+nombreAval2Cliente+"','"+direccionAval2Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval2Cliente+"')"+",'"+idStatus+"');";
-            System.out.println(sql);
+            String sql="insert into cliente values(null,'"+nombreCliente+"','"+direccionCliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioCliente+"')"+",'"+nombreAval1Cliente+"','"+direccionAval1Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval1Cliente+"')"+",'"+nombreAval2Cliente+"','"+direccionAval2Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval2Cliente+"')"+",(select idStatus from catalogoStatus where descripcionStatus='"+txtStatusCliente+"'));";
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "error: " + e);
-
-        }
-    }
-
-    public void registrarClientes(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String idStatus) {
-        try {
-            PreparedStatement pss = cn.prepareStatement("insert into cliente values(null,?,?,?,?,?,?,?,?,?,?);");
-            pss.setString(1, nombreCliente);
-            pss.setString(2, direccionCliente);
-            pss.setString(3, idMunicipioCliente);
-            pss.setString(4, nombreAval1Cliente);
-            pss.setString(5, direccionAval1Cliente);
-            pss.setString(6, idMunicipioAval1Cliente);
-            pss.setString(7, nombreAval2Cliente);
-            pss.setString(8, direccionAval2Cliente);
-            pss.setString(9, idMunicipioAval2Cliente);
-            pss.setString(10, idStatus);
-            pss.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Se registro el cliente correctamente");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);
 
@@ -190,12 +149,155 @@ public class metodos {
             pss.setString(2, montoTrece);  
             pss.setString(3, idPrestamoTrece);
             return true;
-            } catch (SQLException e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);
             return false;
          }
     }
     
+    public void agregarPrestamo(String fechaInicioPrestamo, String fechaFinPrestamo, String montoPrestamo, String especial, String idClientePrestamo, String ejecutivoPrestamo){
+        try {
+            String sql = "insert into prestamo value(null,'"+fechaInicioPrestamo+"','"+fechaFinPrestamo+"','"+montoPrestamo+"','"+especial+"', "+idClientePrestamo+", (select idEjecutivo from ejecutivo where nombreEjecutivo='"+ejecutivoPrestamo+"'))";
+            System.out.println(sql);
+            PreparedStatement pss = cn.prepareStatement(sql);
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+            
+        }
+    }
+    ///////////////////////////////////////////////////////
+    
+    
+    public DefaultComboBoxModel llenarCMBMunicipio(){
+        DefaultComboBoxModel modelo= new DefaultComboBoxModel();
+        String sql = "select * from municipio;";
+        String datos="";
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos=rs.getString(2);
+                modelo.addElement(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return modelo;
+    }
+    public DefaultComboBoxModel llenarCMBStatus(){
+        DefaultComboBoxModel modelo= new DefaultComboBoxModel();
+        String sql = "select * from catalogoStatus;";
+        String datos="";
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos=rs.getString(2);
+                modelo.addElement(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return modelo;
+    }
+    
+    public DefaultComboBoxModel llenarCMBPromotor(){
+        DefaultComboBoxModel modelo= new DefaultComboBoxModel();
+        String sql = "select * from ejecutivo;";
+        String datos="";
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos=rs.getString(2);
+                modelo.addElement(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return modelo;
+    }
+    
+    public DefaultListModel llenarLista(){
+        
+        DefaultListModel modelo = new DefaultListModel();
+        String sql = "select nombreCliente from cliente;";
+        String datos="";
+        try{
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos=rs.getString(1);
+                modelo.addElement(datos);
+            }
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return modelo;
+    }
+    
+    
+    public String[] mostrarCliente(String nombreCliente){
+    
+        String sql = "select c.idCliente, c.nombreCliente, c.direccionCliente, m.nombreMunicipio, c.nombreAval1Cliente, c.direccionAval1Cliente, n.nombreMunicipio, c.nombreAval2Cliente, c.direccionAval2Cliente, o.nombreMunicipio, s.descripcionStatus from cliente c inner join catalogoStatus s on c.idStatus = s.idStatus inner join municipio m on c.idMunicipioCliente = m.idMunicipio inner join municipio n on c.idMunicipioAval1Cliente = n.idMunicipio inner join municipio o on c.idMunicipioAval2Cliente = o.idMunicipio where nombreCliente='"+nombreCliente+"';";
+        String datos[] = new String [11];
+        try{
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                datos[4]=rs.getString(5);
+                datos[5]=rs.getString(6);
+                datos[6]=rs.getString(7);
+                datos[7]=rs.getString(8);
+                datos[8]=rs.getString(9);
+                datos[9]=rs.getString(10);
+                datos[10]=rs.getString(11);
+            }
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return datos;
+    }
+    
+    public DefaultListModel BuscarCliente(String nombreCliente){
+    
+        DefaultListModel modelo = new DefaultListModel();
+        String sql = "select nombreCliente from cliente where nombreCliente like '%"+nombreCliente+"%' ;";
+        String datos="";
+        try{
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos=rs.getString(1);
+                modelo.addElement(datos);
+            }
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return modelo;
+    }
+    
+    
+    ///////////////////////////////////////////////////////
+    
+    public void editarCliente(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String idStatus, String idCliente){
+        String sql ="update cliente set nombreCliente='"+nombreCliente+"' ,direccionCliente='"+direccionCliente+"', idMunicipioCliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',nombreAval1Cliente='"+nombreAval1Cliente+"',direccionAval1Cliente='"+direccionAval1Cliente+"',idMunicipioAval1Cliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',nombreAval2Cliente='"+nombreAval2Cliente+"',direccionAval2Cliente='"+direccionAval2Cliente+"',idMunicipioAval2Cliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',idStatus='"+idStatus+"' where idCliente='"+idCliente+"'";
+        System.out.println(sql);
+    }
+    
+    
+    ///////////////////////////////////////////////////////
     public DefaultTableModel showTabletCliente(){
         
         DefaultTableModel modelo= new DefaultTableModel();
@@ -403,6 +505,50 @@ public class metodos {
         }
         
         return modelo;
+    }
+    public DefaultTableModel showTabletPrestamo(String idClientePrestamo){
+        
+        DefaultTableModel modelo= new DefaultTableModel();
+        
+        modelo.addColumn("ID Prestamo");
+        modelo.addColumn("Fecha inicial prestamo");
+        modelo.addColumn("Fecha final prestamo");
+        modelo.addColumn("Monto");
+        modelo.addColumn("Especial");
+        modelo.addColumn("Ejecutivo");
+        
+        String sql = "select p.idPrestamo, p.fechaInicioPrestamo, p.fechaFinPrestamo, P.montoPrestamo, p.especial, e.nombreEjecutivo from prestamo p inner join ejecutivo e on p.idEjecutivoPrestamo=e.idEjecutivo where p.idClientePrestamo="+idClientePrestamo+";";
+        System.out.println(sql);
+        String datos[] = new String [6];
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                datos[4]=rs.getString(5);
+                datos[5]=rs.getString(6);
+                modelo.addRow(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        
+        return modelo;
+    }
+    //////////////////////////////////////
+    public void borrarCliente(String idCliente){
+         try {
+            PreparedStatement pss = cn.prepareStatement("delete from cliente where idCliente="+idCliente+";");
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+         }
     }
 }
 

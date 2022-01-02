@@ -4,18 +4,43 @@
  */
 package javaapplication1;
 
+import java.awt.event.KeyEvent;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author soldi
  */
 public class clientes extends javax.swing.JFrame {
 
-    /**
-     * Creates new form main2
-     */
+    metodos m1 = new metodos();
     public clientes() {
         initComponents();
         setLocationRelativeTo(null);
+        llenarCombos();
+        llenarListaClientes();
+    }
+    public void llenarListaClientes(){
+        DefaultListModel modeloLista = m1.llenarLista();
+        listClientes.setModel(modeloLista);
+    }
+    
+    public void llenarCombos(){
+        municipio.setModel(m1.llenarCMBMunicipio());
+        municipioAval.setModel(m1.llenarCMBMunicipio());
+        municipioAval2.setModel(m1.llenarCMBMunicipio());
+        statusCliente.setModel(m1.llenarCMBStatus());
+        promotorPrestamo.setModel(m1.llenarCMBPromotor());
+    }
+    public void vaciarTXT(){
+        codigoCliente.setText("");
+        nombreCliente.setText("");
+        direccionCliente.setText("");
+        direccionAval.setText("");
+        nombreAval2.setText("");
+        direccionAval2.setText("");
+        llenarListaClientes();
     }
 
     /**
@@ -28,10 +53,11 @@ public class clientes extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         clientes = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listClientes = new javax.swing.JList<>();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         buscarCliente = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -48,8 +74,6 @@ public class clientes extends javax.swing.JFrame {
         nombreAval = new javax.swing.JTextField();
         direccionAval = new javax.swing.JTextField();
         municipioAval = new javax.swing.JComboBox<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -57,165 +81,244 @@ public class clientes extends javax.swing.JFrame {
         direccionAval2 = new javax.swing.JTextField();
         municipioAval2 = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        statusCliente = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        especialPrestamo = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
-        iniciaPrestamo = new javax.swing.JTextField();
-        terminaPrestamo = new javax.swing.JTextField();
-        promotor = new javax.swing.JComboBox<>();
-        monto = new javax.swing.JTextField();
-        jLabel19 = new javax.swing.JLabel();
-        estatusCliente = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        promotorPrestamo = new javax.swing.JComboBox<>();
+        montoPrestamo = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
+        iniciaPrestamoMes = new javax.swing.JComboBox<>();
+        terminaPrestamoDia = new javax.swing.JSpinner();
+        terminaPrestamoMes = new javax.swing.JComboBox<>();
+        terminaPrestamoAnio = new javax.swing.JSpinner();
+        iniciaPrestamoAnio = new javax.swing.JSpinner();
+        iniciaPrestamoDia = new javax.swing.JSpinner();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblPrestamos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/serach.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
+        clientes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                clientesKeyTyped(evt);
+            }
+        });
+        jPanel1.add(clientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 210, -1));
 
-        clientes.setText("jTextField1");
-        getContentPane().add(clientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 210, -1));
-
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        listClientes.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        listClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listClientesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listClientes);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 210, 370));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 210, 500));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 580));
+
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/serach.png"))); // NOI18N
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         buscarCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(buscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 190, -1));
+        jPanel2.add(buscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 190, -1));
 
         jLabel3.setText("Buscar");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
 
         jLabel4.setText("Código Cliente");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 60, -1, -1));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, -1, 20));
 
         jLabel5.setText("Nombre");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, -1, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, 20));
 
         jLabel6.setText("Dirección");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, -1, -1));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, -1, 20));
 
         jLabel7.setText("Municipio");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, -1, -1));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, 20));
 
         jLabel8.setText("Nombre Aval");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, -1, -1));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, -1, 20));
 
         jLabel9.setText("Dirección Aval");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, -1, -1));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, 20));
 
         jLabel10.setText("Municipio Aval");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, -1, -1));
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 20));
 
+        codigoCliente.setEditable(false);
+        codigoCliente.setText("Codigo");
         codigoCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 codigoClienteActionPerformed(evt);
             }
         });
-        getContentPane().add(codigoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 60, 190, -1));
-        getContentPane().add(nombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, 190, -1));
-        getContentPane().add(direccionCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 190, -1));
+        jPanel2.add(codigoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 190, -1));
+        jPanel2.add(nombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 190, -1));
+        jPanel2.add(direccionCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 190, -1));
 
         municipio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(municipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, 190, -1));
-        getContentPane().add(nombreAval, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 190, -1));
-        getContentPane().add(direccionAval, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, 190, -1));
+        jPanel2.add(municipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 190, -1));
+        jPanel2.add(nombreAval, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 190, -1));
+        jPanel2.add(direccionAval, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 190, -1));
 
         municipioAval.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(municipioAval, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 190, -1));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
-
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 680, 90));
+        jPanel2.add(municipioAval, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 190, -1));
 
         jLabel11.setText("Nombre Aval 2");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, -1, -1));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, 20));
 
         jLabel12.setText("Dirección Aval 2");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, -1, -1));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, -1, 20));
 
         jLabel13.setText("Municipio AVal 2");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, -1, -1));
-        getContentPane().add(nombreAval2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, 190, -1));
-        getContentPane().add(direccionAval2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 190, -1));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, -1, 20));
+        jPanel2.add(nombreAval2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 190, -1));
+        jPanel2.add(direccionAval2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 190, -1));
 
         municipioAval2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(municipioAval2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 190, -1));
+        jPanel2.add(municipioAval2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, 190, -1));
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cliente2.png"))); // NOI18N
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, -1, -1));
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, -1, -1));
 
-        jLabel2.setText("Prestamo");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 40, -1, -1));
+        jLabel19.setText("Status");
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, -1, 20));
 
-        jLabel15.setText("Inicia");
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 70, -1, -1));
-
-        jLabel16.setText("Termina");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 90, -1, -1));
-
-        jLabel17.setText("Promotor(a)");
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 110, -1, -1));
-
-        jLabel18.setText("Monto");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 130, -1, -1));
-
-        jCheckBox1.setText("Especial");
-        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 170, -1, -1));
-
-        jButton1.setText("Guardar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 170, -1, -1));
-        getContentPane().add(iniciaPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 70, 170, -1));
-        getContentPane().add(terminaPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 170, -1));
-
-        promotor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(promotor, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 110, 170, -1));
-        getContentPane().add(monto, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 130, 170, -1));
-
-        jLabel19.setText("Estatus");
-        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, -1, -1));
-
-        estatusCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(estatusCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, 190, -1));
+        statusCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(statusCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, 190, -1));
 
         jButton2.setText("Editar");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, -1, -1));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, -1, -1));
 
         jButton3.setText("Guardar");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, -1, -1));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 420, 80, -1));
 
         jButton4.setText("Eliminar");
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 300, -1, -1));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 420, -1, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 370, 450));
+
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setText("Prestamo");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+
+        jLabel15.setText("Inicia");
+        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+
+        jLabel16.setText("Termina");
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
+
+        jLabel17.setText("Promotor(a)");
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+
+        jLabel18.setText("Monto");
+        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+
+        especialPrestamo.setText("Especial");
+        jPanel3.add(especialPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+
+        jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, -1));
+
+        promotorPrestamo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        promotorPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                promotorPrestamoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(promotorPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 240, -1));
+
+        montoPrestamo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                montoPrestamoKeyTyped(evt);
+            }
+        });
+        jPanel3.add(montoPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 240, -1));
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/prestamo-asegurado2.png"))); // NOI18N
-        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 30, -1, -1));
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+
+        iniciaPrestamoMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
+        jPanel3.add(iniciaPrestamoMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
+
+        terminaPrestamoDia.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+        jPanel3.add(terminaPrestamoDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 70, -1));
+
+        terminaPrestamoMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
+        jPanel3.add(terminaPrestamoMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, -1, -1));
+
+        terminaPrestamoAnio.setModel(new javax.swing.SpinnerNumberModel(2022, 2022, null, 1));
+        jPanel3.add(terminaPrestamoAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 70, -1));
+
+        iniciaPrestamoAnio.setModel(new javax.swing.SpinnerNumberModel(2022, 2022, null, 1));
+        jPanel3.add(iniciaPrestamoAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 70, -1));
+
+        iniciaPrestamoDia.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+        jPanel3.add(iniciaPrestamoDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 70, -1));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 0, 350, 450));
+
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tblPrestamos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tblPrestamos);
+
+        jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 700, 100));
+
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 450, 720, 130));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -223,6 +326,193 @@ public class clientes extends javax.swing.JFrame {
     private void codigoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_codigoClienteActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String txtNombreCliente = nombreCliente.getText();
+        String txtDireccionCliente = direccionCliente.getText();
+        String txtMunicipio = municipio.getSelectedItem().toString();
+        String txtNombreAval = nombreAval.getText();
+        String txtDireccionAval = direccionAval.getText();
+        String txtMunicipioAval = municipioAval.getSelectedItem().toString();
+        String txtNombreAval2 = nombreAval2.getText();
+        String txtDireccionAval2 = direccionAval2.getText();
+        String txtMunicipioAval2 = municipioAval2.getSelectedItem().toString();
+        String txtStatusCliente = statusCliente.getSelectedItem().toString();
+        m1.registrarClientes(txtNombreCliente, txtDireccionCliente, txtMunicipio, txtNombreAval, txtDireccionAval, txtMunicipioAval, txtNombreAval2, txtDireccionAval2, txtMunicipioAval2, txtStatusCliente);
+        vaciarTXT();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (codigoCliente.getText()=="Codigo") {
+            JOptionPane.showMessageDialog(null, "Seleccione un cliente primero");
+        }else{
+            String txtCodigoCliente = codigoCliente.getText();
+            String txtNombreCliente = nombreCliente.getText();
+            String txtDireccionCliente = direccionCliente.getText();
+            String txtMunicipio = municipio.getSelectedItem().toString();
+            String txtNombreAval = nombreAval.getText();
+            String txtDireccionAval = direccionAval.getText();
+            String txtMunicipioAval = municipioAval.getSelectedItem().toString();
+            String txtNombreAval2 = nombreAval2.getText();
+            String txtDireccionAval2 = direccionAval2.getText();
+            String txtMunicipioAval2 = municipioAval2.getSelectedItem().toString();
+            String txtStatusCliente = statusCliente.getSelectedItem().toString();
+            m1.editarCliente (txtNombreCliente, txtDireccionCliente, txtMunicipio, txtNombreAval, txtDireccionAval, txtMunicipioAval, txtNombreAval2, txtDireccionAval2, txtMunicipioAval2, txtStatusCliente, txtCodigoCliente);
+            vaciarTXT();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void listClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listClientesMouseClicked
+        String Cliente=listClientes.getSelectedValue().toString();
+        String[] arrayCliente=m1.mostrarCliente(Cliente);
+        codigoCliente.setText(arrayCliente[0]);
+        nombreCliente.setText(arrayCliente[1]);
+        direccionCliente.setText(arrayCliente[2]);
+        municipio.setSelectedItem(arrayCliente[3]);
+        nombreAval.setText(arrayCliente[4]);
+        direccionAval.setText(arrayCliente[5]);
+        municipioAval.setSelectedItem(arrayCliente[6]);
+        nombreAval2.setText(arrayCliente[7]);
+        direccionAval2.setText(arrayCliente[8]);
+        municipioAval2.setSelectedItem(arrayCliente[9]);
+        statusCliente.setSelectedItem(arrayCliente[10]);
+        tblPrestamos.setModel(m1.showTabletPrestamo(arrayCliente[0]));
+        
+        
+    }//GEN-LAST:event_listClientesMouseClicked
+
+    private void promotorPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_promotorPrestamoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_promotorPrestamoActionPerformed
+
+    private void montoPrestamoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_montoPrestamoKeyTyped
+        char c=evt.getKeyChar();
+        if((Character.isDigit(c))||(c==KeyEvent.VK_PERIOD)||(c==KeyEvent.VK_BACK_SPACE)){
+            int punto=0;
+            if(c==KeyEvent.VK_PERIOD){ 
+                String s=montoPrestamo.getText();
+                int dot=s.indexOf('.');
+                punto=dot;
+                if(dot!=-1){
+                    getToolkit().beep();
+                    evt.consume();
+                }
+            }
+        }
+        else{    
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_montoPrestamoKeyTyped
+
+    private void clientesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_clientesKeyTyped
+        DefaultListModel modelo = m1.BuscarCliente(clientes.getText());
+        listClientes.setModel(modelo);
+    }//GEN-LAST:event_clientesKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Integer txtIniciaPrestamoDia=(Integer)iniciaPrestamoDia.getValue();
+        String txtIniciaPrestamoMes=iniciaPrestamoMes.getSelectedItem().toString();
+        Integer txtIniciaPrestamoAnio=(Integer)iniciaPrestamoAnio.getValue();
+        
+        Integer txtTerminaPrestamoDia=(Integer)terminaPrestamoDia.getValue();
+        String txtTerminaPrestamoMes=terminaPrestamoMes.getSelectedItem().toString();
+        Integer txtTerminaPrestamoAnio=(Integer)terminaPrestamoAnio.getValue();
+        
+        String txtMontoPrestamo=montoPrestamo.getText();
+        String txtCodigoCliente=codigoCliente.getText();
+        
+        String especial="";
+        
+        String txtPromotorPrestamo = promotorPrestamo.getSelectedItem().toString();
+        
+        if (especialPrestamo.isSelected()) {
+            especial="Si";
+        }else{
+            especial="No";
+        }
+        
+        
+        String inicioMes="";
+        String terminaMes="";
+        
+        if (txtIniciaPrestamoMes=="Enero") {
+            inicioMes="01";
+        }else if(txtIniciaPrestamoMes=="Febrero"){
+            inicioMes="02";
+        }else if(txtIniciaPrestamoMes=="Marzo"){
+            inicioMes="03";
+        }else if(txtIniciaPrestamoMes=="Abril"){
+            inicioMes="04";
+        }else if(txtIniciaPrestamoMes=="Mayo"){
+            inicioMes="05";
+        }else if(txtIniciaPrestamoMes=="Junio"){
+            inicioMes="06";
+        }else if(txtIniciaPrestamoMes=="Julio"){
+            inicioMes="07";
+        }else if(txtIniciaPrestamoMes=="Agosto"){
+            inicioMes="08";
+        }else if(txtIniciaPrestamoMes=="Septiembre"){
+            inicioMes="09";
+        }else if(txtIniciaPrestamoMes=="Octubre"){
+            inicioMes="10";
+        }else if(txtIniciaPrestamoMes=="Nomviembre"){
+            inicioMes="11";
+        }else if(txtIniciaPrestamoMes=="Diciembre"){
+            inicioMes="12";
+        }  
+        if (txtTerminaPrestamoMes=="Enero") {
+            terminaMes="01";
+        }else if(txtTerminaPrestamoMes=="Febrero"){
+            terminaMes="02";
+        }else if(txtTerminaPrestamoMes=="Marzo"){
+            terminaMes="03";
+        }else if(txtTerminaPrestamoMes=="Abril"){
+            terminaMes="04";
+        }else if(txtTerminaPrestamoMes=="Mayo"){
+            terminaMes="05";
+        }else if(txtTerminaPrestamoMes=="Junio"){
+            terminaMes="06";
+        }else if(txtTerminaPrestamoMes=="Julio"){
+            terminaMes="07";
+        }else if(txtTerminaPrestamoMes=="Agosto"){
+            terminaMes="08";
+        }else if(txtTerminaPrestamoMes=="Septiembre"){
+            terminaMes="09";
+        }else if(txtTerminaPrestamoMes=="Octubre"){
+            terminaMes="10";
+        }else if(txtTerminaPrestamoMes=="Nomviembre"){
+            terminaMes="11";
+        }else if(txtTerminaPrestamoMes=="Diciembre"){
+            terminaMes="12";
+        }
+        
+        String fechaInicio=txtIniciaPrestamoDia+"/"+inicioMes+"/"+txtIniciaPrestamoAnio;
+        String fechaFin=txtTerminaPrestamoDia+"/"+terminaMes+"/"+txtTerminaPrestamoAnio;
+        
+        if(txtCodigoCliente=="Codigo"){
+           JOptionPane.showMessageDialog(null, "Seleccione un cliente para asigarnle un prestamo");
+        }else{
+            m1.agregarPrestamo(fechaInicio, fechaFin, txtMontoPrestamo, especial, txtCodigoCliente,txtPromotorPrestamo);
+            tblPrestamos.setModel(m1.showTabletPrestamo(txtCodigoCliente));
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if(codigoCliente.getText()=="Codigo"){
+           JOptionPane.showMessageDialog(null, "Seleccione un cliente para asigarnle un prestamo");
+        }else{
+            if (JOptionPane.showConfirmDialog(null, "Estas seguro que deseas borrar este cliente", "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                m1.borrarCliente(codigoCliente.getText());
+                llenarListaClientes();
+                vaciarTXT();
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,13 +557,14 @@ public class clientes extends javax.swing.JFrame {
     private javax.swing.JTextField direccionAval;
     private javax.swing.JTextField direccionAval2;
     private javax.swing.JTextField direccionCliente;
-    private javax.swing.JComboBox<String> estatusCliente;
-    private javax.swing.JTextField iniciaPrestamo;
+    private javax.swing.JCheckBox especialPrestamo;
+    private javax.swing.JSpinner iniciaPrestamoAnio;
+    private javax.swing.JSpinner iniciaPrestamoDia;
+    private javax.swing.JComboBox<String> iniciaPrestamoMes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -294,19 +585,25 @@ public class clientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField monto;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<String> listClientes;
+    private javax.swing.JTextField montoPrestamo;
     private javax.swing.JComboBox<String> municipio;
     private javax.swing.JComboBox<String> municipioAval;
     private javax.swing.JComboBox<String> municipioAval2;
     private javax.swing.JTextField nombreAval;
     private javax.swing.JTextField nombreAval2;
     private javax.swing.JTextField nombreCliente;
-    private javax.swing.JComboBox<String> promotor;
-    private javax.swing.JTextField terminaPrestamo;
+    private javax.swing.JComboBox<String> promotorPrestamo;
+    private javax.swing.JComboBox<String> statusCliente;
+    private javax.swing.JTable tblPrestamos;
+    private javax.swing.JSpinner terminaPrestamoAnio;
+    private javax.swing.JSpinner terminaPrestamoDia;
+    private javax.swing.JComboBox<String> terminaPrestamoMes;
     // End of variables declaration//GEN-END:variables
 }
