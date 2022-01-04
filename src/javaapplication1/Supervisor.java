@@ -4,8 +4,9 @@
  */
 package javaapplication1;
 
+import java.awt.event.KeyEvent;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author soldi
@@ -21,8 +22,13 @@ public class Supervisor extends javax.swing.JFrame {
     public Supervisor() {
         initComponents();
         setLocationRelativeTo(null);
+        llenarcombos();
     }
 
+    public void llenarcombos() {
+        municipio.setModel(m1.llenarCMBMunicipio());
+        prestamista.setModel(m1.llenarCMBPrestamista());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

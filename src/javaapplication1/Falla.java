@@ -4,6 +4,9 @@
  */
 package javaapplication1;
 
+import java.awt.event.KeyEvent;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 /**
  *
  * @author vgmos
@@ -13,11 +16,18 @@ public class Falla extends javax.swing.JFrame {
     /**
      * Creates new form trece
      */
+    
+    metodos m1 = new metodos();
+    
     public Falla() {
         initComponents();
         setLocationRelativeTo(null);
+        llenarcombos();
     }
-
+    
+     public void llenarcombos() {
+     nombreCliente.setModel(m1.llenarCMBClientes());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,6 +99,11 @@ public class Falla extends javax.swing.JFrame {
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, 20));
 
         nombreFalla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        nombreFalla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreFallaActionPerformed(evt);
+            }
+        });
         jPanel2.add(nombreFalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 410, -1));
 
         jLabel3.setText("Fecha Ptmo.");
@@ -187,7 +202,7 @@ public class Falla extends javax.swing.JFrame {
     }//GEN-LAST:event_montoFallaActionPerformed
 
     private void nombreClienteFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreClienteFallaActionPerformed
-        // TODO add your handling code here:
+        String txtnombreCliente=nombreCliente.getText();
     }//GEN-LAST:event_nombreClienteFallaActionPerformed
 
     private void promotorFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_promotorFallaActionPerformed
@@ -206,6 +221,10 @@ public class Falla extends javax.swing.JFrame {
     private void fechaFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaFallaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaFallaActionPerformed
+
+    private void nombreFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreFallaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreFallaActionPerformed
 
     /**
      * @param args the command line arguments

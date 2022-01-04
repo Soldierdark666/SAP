@@ -4,6 +4,10 @@
  */
 package javaapplication1;
 
+
+
+
+
 /**
  *
  * @author soldi
@@ -13,11 +17,18 @@ public class Prestamista extends javax.swing.JFrame {
     /**
      * Creates new form Prestamista
      */
+    
+     metodos m1 = new metodos();
+    
     public Prestamista() {
         initComponents();
         setLocationRelativeTo(null);
+        llenarcombos();
     }
-
+    
+     public void llenarcombos() {
+        municipio.setModel(m1.llenarCMBMunicipio());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,6 +110,11 @@ public class Prestamista extends javax.swing.JFrame {
         getContentPane().add(direccionPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 200, -1));
 
         municipio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        municipio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                municipioActionPerformed(evt);
+            }
+        });
         getContentPane().add(municipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 200, -1));
         getContentPane().add(plaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 200, -1));
         getContentPane().add(semanas, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 200, -1));
@@ -143,6 +159,10 @@ public class Prestamista extends javax.swing.JFrame {
         String txtmontoEspeciaPrestamista=montoEspeciaPrestamista.getText();
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void municipioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_municipioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_municipioActionPerformed
 
     /**
      * @param args the command line arguments

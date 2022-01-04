@@ -4,6 +4,8 @@
  */
 package javaapplication1;
 
+import java.awt.event.KeyEvent;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +24,12 @@ public class Encargado extends javax.swing.JFrame {
     public Encargado() {
         initComponents();
         setLocationRelativeTo(null);
+        llenarcombos();
+    }
+    
+    public void llenarcombos() {
+        municipio.setModel(m1.llenarCMBMunicipio());
+        supervisor.setModel(m1.llenarCMBSupervisor());
     }
 
     /**
