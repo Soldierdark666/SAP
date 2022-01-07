@@ -5,6 +5,7 @@
 package javaapplication1;
 
 import java.awt.event.KeyEvent;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 /**
@@ -25,9 +26,11 @@ public class Falla extends javax.swing.JFrame {
         llenarcombos();
     }
     
-     public void llenarcombos() {
-     nombreCliente.setModel(m1.llenarCMBClientes());
+    public void llenarcombos() {
+        nombreCliente.setModel(m1.llenarCMBClientes());
     }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,7 +46,7 @@ public class Falla extends javax.swing.JFrame {
         fechaPrestamoFalla = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        nombreFalla = new javax.swing.JComboBox<>();
+        nombreCliente = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         psFalla = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -98,13 +101,13 @@ public class Falla extends javax.swing.JFrame {
         jLabel2.setText("Nombre: ");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, 20));
 
-        nombreFalla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        nombreFalla.addActionListener(new java.awt.event.ActionListener() {
+        nombreCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        nombreCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nombreFallaActionPerformed(evt);
+                nombreClienteActionPerformed(evt);
             }
         });
-        jPanel2.add(nombreFalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 410, -1));
+        jPanel2.add(nombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 410, -1));
 
         jLabel3.setText("Fecha Ptmo.");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, 20));
@@ -194,7 +197,23 @@ public class Falla extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String nombre                   =           nombreCliente.getSelectedItem().toString();
+        DefaultComboBoxModel modelo     =           m1.llenarCMBFechaPrestamo(nombre);
+        this.fechaPrestamoFalla.setModel(modelo);
+        String FechaInicioPrestamo      =           this.fechaPrestamoFalla.getSelectedItem().toString();
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo);
+        
+        this.nombreClienteFalla.setText(datosPrestamo[0]);
+        this.promotorFalla.setText(datosPrestamo[1]);
+        this.montoFalla.setText(datosPrestamo[2]);
+        this.fechaFinFalla.setText(datosPrestamo[3]);
+        
+        
+        
+        
+        
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void montoFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoFallaActionPerformed
@@ -202,7 +221,7 @@ public class Falla extends javax.swing.JFrame {
     }//GEN-LAST:event_montoFallaActionPerformed
 
     private void nombreClienteFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreClienteFallaActionPerformed
-        String txtnombreCliente=nombreCliente.getText();
+        
     }//GEN-LAST:event_nombreClienteFallaActionPerformed
 
     private void promotorFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_promotorFallaActionPerformed
@@ -222,9 +241,9 @@ public class Falla extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaFallaActionPerformed
 
-    private void nombreFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreFallaActionPerformed
+    private void nombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nombreFallaActionPerformed
+    }//GEN-LAST:event_nombreClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,8 +305,8 @@ public class Falla extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField montoFalla;
     private javax.swing.JTextField montoFechaFalla;
+    private javax.swing.JComboBox<String> nombreCliente;
     private javax.swing.JTextField nombreClienteFalla;
-    private javax.swing.JComboBox<String> nombreFalla;
     private javax.swing.JTextField promotorFalla;
     private javax.swing.JTextField psFalla;
     // End of variables declaration//GEN-END:variables

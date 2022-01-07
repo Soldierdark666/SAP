@@ -29,7 +29,6 @@ public class Encargado extends javax.swing.JFrame {
     
     public void llenarcombos() {
         municipio.setModel(m1.llenarCMBMunicipio());
-        supervisor.setModel(m1.llenarCMBSupervisor());
     }
 
     /**

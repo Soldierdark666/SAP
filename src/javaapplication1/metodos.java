@@ -167,7 +167,7 @@ public class metodos {
         }
     }
     ///////////////////////////////////////////////////////
-    
+
     
     public DefaultComboBoxModel llenarCMBMunicipio(){
         DefaultComboBoxModel modelo= new DefaultComboBoxModel();
@@ -188,16 +188,16 @@ public class metodos {
         return modelo;
     }
     
-    public DefaultComboBoxModel llenarCMBSupervisor(){
+    public DefaultComboBoxModel llenarCMBFechaPrestamo(String nombreCliente){
         DefaultComboBoxModel modelo= new DefaultComboBoxModel();
-        String sql = "select * from supervisor;";
+        String sql = "select fechaInicioPrestamo from prestamo where idClientePrestamo=(select idCliente from cliente where nombreCliente=('"+nombreCliente+"'));";
         String datos="";
         try{
             
             Statement st=cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
-                datos=rs.getString(2);
+                datos=rs.getString(1);
                 modelo.addElement(datos);
             }
             
@@ -300,7 +300,27 @@ public class metodos {
         }
         return modelo;
     }
-    
+    public String[] buscarPrestamo(String fechaInicioPrestamo){
+        DefaultComboBoxModel modelo= new DefaultComboBoxModel();
+        String sql = "select c.nombreCliente, e.nombreEjecutivo, p.montoPrestamo, p.fechaFinPrestamo from cliente c inner join prestamo p on c.idCliente=p.idPrestamo inner join ejecutivo e on e.idEjecutivo=p.idEjecutivoPrestamo where fechaInicioPrestamo='"+fechaInicioPrestamo+"';";
+        String datos[]=new String[4];
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                modelo.addElement(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return datos;
+    }
     
     public String[] mostrarCliente(String nombreCliente){
     
@@ -344,6 +364,28 @@ public class metodos {
             System.out.println("Error");
         }
         return modelo;
+    }
+    
+    public String[] filtrarCliente(String nombreCliente){
+    
+        DefaultListModel modelo = new DefaultListModel();
+        String sql = "select * from cliente where nombreCliente = '"+nombreCliente+"';";
+        String datos[] = new String[6];
+        try{
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                datos[4]=rs.getString(5);
+                datos[5]=rs.getString(6);
+            }
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return datos;
     }
     
     
