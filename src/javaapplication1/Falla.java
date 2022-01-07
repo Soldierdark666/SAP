@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author vgmos
@@ -24,6 +25,10 @@ public class Falla extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         llenarcombos();
+    }
+    
+    public void llenarTablaFalla(DefaultTableModel modelo){
+        tblFallas.setModel(modelo);
     }
     
     public void llenarcombos() {
@@ -64,7 +69,7 @@ public class Falla extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblFallas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -88,6 +93,11 @@ public class Falla extends javax.swing.JFrame {
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, -1, 20));
 
         fechaPrestamoFalla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        fechaPrestamoFalla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaPrestamoFallaActionPerformed(evt);
+            }
+        });
         jPanel2.add(fechaPrestamoFalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 160, -1));
 
         jButton1.setText("Cargar Info.");
@@ -176,7 +186,7 @@ public class Falla extends javax.swing.JFrame {
         });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 200, 140, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblFallas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -187,7 +197,7 @@ public class Falla extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblFallas);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 740, 210));
 
@@ -209,10 +219,7 @@ public class Falla extends javax.swing.JFrame {
         this.fechaFinFalla.setText(datosPrestamo[3]);
         
         
-        
-        
-        
-        
+        llenarTablaFalla(m1.showTableFalla(FechaInicioPrestamo));
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -233,8 +240,15 @@ public class Falla extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinFallaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtfechaFalla=fechaFalla.getText();
-        String txtmontoFechaFalla=montoFechaFalla.getText();
+        String txtfechaFalla            =           fechaFalla.getText();
+        String txtMontoFechaFalla       =           montoFechaFalla.getText();
+        String txtFechaPrestamo         =           this.fechaPrestamoFalla.getSelectedItem().toString();
+        String nombreCliente            =           this.nombreCliente.getSelectedItem().toString();
+        
+        
+        
+        m1.agregarFalla(txtfechaFalla, txtMontoFechaFalla, txtFechaPrestamo,nombreCliente);
+        llenarTablaFalla(m1.showTableFalla(txtFechaPrestamo));
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void fechaFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaFallaActionPerformed
@@ -244,6 +258,19 @@ public class Falla extends javax.swing.JFrame {
     private void nombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreClienteActionPerformed
+
+    private void fechaPrestamoFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaPrestamoFallaActionPerformed
+        String FechaInicioPrestamo      =           this.fechaPrestamoFalla.getSelectedItem().toString();  
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo);
+        
+        this.nombreClienteFalla.setText(datosPrestamo[0]);
+        this.promotorFalla.setText(datosPrestamo[1]);
+        this.montoFalla.setText(datosPrestamo[2]);
+        this.fechaFinFalla.setText(datosPrestamo[3]);
+        
+        
+        llenarTablaFalla(m1.showTableFalla(FechaInicioPrestamo));
+    }//GEN-LAST:event_fechaPrestamoFallaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -302,12 +329,12 @@ public class Falla extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField montoFalla;
     private javax.swing.JTextField montoFechaFalla;
     private javax.swing.JComboBox<String> nombreCliente;
     private javax.swing.JTextField nombreClienteFalla;
     private javax.swing.JTextField promotorFalla;
     private javax.swing.JTextField psFalla;
+    private javax.swing.JTable tblFallas;
     // End of variables declaration//GEN-END:variables
 }

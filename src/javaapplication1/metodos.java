@@ -64,13 +64,13 @@ public class metodos {
         }
     }
     
-    public void agregarFalla (String fechaFalla, String montoFalla, String idPrestamoFalla) {
+    public void agregarFalla (String fechaFalla, String montoFalla, String idPrestamoFalla, String nombreCliente) {
         try{
-            PreparedStatement pss = cn.prepareStatement("insert into falla values(null,?,?,?);");
-            pss.setString(1, fechaFalla);
-            pss.setString(2, montoFalla);
-            pss.setString(3, idPrestamoFalla);
-            } catch (SQLException e) {
+            String sql = "insert into falla values(null,'"+fechaFalla+"',"+montoFalla+",(select idPrestamo from prestamo where fechaInicioPrestamo='"+idPrestamoFalla+"' and idClientePrestamo=(select idCliente from cliente where nombreCliente='"+nombreCliente+"')));";
+            PreparedStatement pss = cn.prepareStatement(sql);
+            pss.executeUpdate();
+            //System.out.println(sql);
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);
         }
     }
@@ -302,7 +302,8 @@ public class metodos {
     }
     public String[] buscarPrestamo(String fechaInicioPrestamo){
         DefaultComboBoxModel modelo= new DefaultComboBoxModel();
-        String sql = "select c.nombreCliente, e.nombreEjecutivo, p.montoPrestamo, p.fechaFinPrestamo from cliente c inner join prestamo p on c.idCliente=p.idPrestamo inner join ejecutivo e on e.idEjecutivo=p.idEjecutivoPrestamo where fechaInicioPrestamo='"+fechaInicioPrestamo+"';";
+        String sql = "select c.nombreCliente, e.nombreEjecutivo, p.montoPrestamo, p.fechaFinPrestamo from cliente c inner join prestamo p on c.idCliente=p.idClientePrestamo inner join ejecutivo e on e.idEjecutivo=p.idEjecutivoPrestamo where fechaInicioPrestamo='"+fechaInicioPrestamo+"';";
+        //System.out.println(sql);
         String datos[]=new String[4];
         try{
             
@@ -480,16 +481,16 @@ public class metodos {
         return modelo;
     }
     
-     public DefaultTableModel showTabletFalla(){
+     public DefaultTableModel showTableFalla(String fechaPrestamo){
         
         DefaultTableModel modelo= new DefaultTableModel();
         
-        modelo.addColumn("ID Falla");
-        modelo.addColumn("Fecha Falla");
-        modelo.addColumn("Monto Falla");
-        modelo.addColumn("ID Prestamo Falla");
+        modelo.addColumn("ID falla");
+        modelo.addColumn("Fecha falla");
+        modelo.addColumn("Fecha prestamo");
+        modelo.addColumn("Monto falla");
         
-        String sql = "select * from falla;";
+        String sql = "select f.idFalla, f.fechaFalla, p.fechaInicioPrestamo, f.montoFalla from falla f inner join prestamo p on f.idPrestamoFalla = p.idPrestamo where p.fechaInicioPrestamo='"+fechaPrestamo+"';";
         String datos[] = new String [11];
         try{
             
