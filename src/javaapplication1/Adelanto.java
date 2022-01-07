@@ -4,6 +4,9 @@
  */
 package javaapplication1;
 
+import java.awt.event.KeyEvent;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,7 +25,13 @@ public class Adelanto extends javax.swing.JFrame {
     public Adelanto() {
         initComponents();
         setLocationRelativeTo(null);
+        llenarcombos();
     }
+    
+    public void llenarcombos() {
+        nombreCliente.setModel(m1.llenarCMBClientes());
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,7 +48,7 @@ public class Adelanto extends javax.swing.JFrame {
         fechaPrestamoAdelanto = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        nombreAdelanto = new javax.swing.JComboBox<>();
+        nombreCliente = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         psAdelanto = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -47,7 +56,7 @@ public class Adelanto extends javax.swing.JFrame {
         montoAdelanto = new javax.swing.JTextField();
         nombreClienteAdelanto = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        adelantoPromotor = new javax.swing.JTextField();
+        promotorAdelanto = new javax.swing.JTextField();
         fechaFinAdelanto = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -96,8 +105,8 @@ public class Adelanto extends javax.swing.JFrame {
         jLabel2.setText("Nombre: ");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, 20));
 
-        nombreAdelanto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(nombreAdelanto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 410, -1));
+        nombreCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(nombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 410, -1));
 
         jLabel3.setText("Fecha Ptmo.");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, 20));
@@ -126,12 +135,12 @@ public class Adelanto extends javax.swing.JFrame {
         jLabel6.setText("Promotor:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, -1, -1));
 
-        adelantoPromotor.addActionListener(new java.awt.event.ActionListener() {
+        promotorAdelanto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adelantoPromotorActionPerformed(evt);
+                promotorAdelantoActionPerformed(evt);
             }
         });
-        jPanel2.add(adelantoPromotor, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 180, -1));
+        jPanel2.add(promotorAdelanto, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 180, -1));
 
         fechaFinAdelanto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,7 +206,16 @@ public class Adelanto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String nombre                   =           nombreCliente.getSelectedItem().toString();
+        DefaultComboBoxModel modelo     =           m1.llenarCMBFechaPrestamo(nombre);
+        this.fechaPrestamoAdelanto.setModel(modelo);
+        String FechaInicioPrestamo      =           this.fechaPrestamoAdelanto.getSelectedItem().toString();
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo);
+        
+        this.nombreClienteAdelanto.setText(datosPrestamo[0]);
+        this.promotorAdelanto.setText(datosPrestamo[1]);
+        this.montoAdelanto.setText(datosPrestamo[2]);
+        this.fechaFinAdelanto.setText(datosPrestamo[3]);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void montoAdelantoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoAdelantoActionPerformed
@@ -208,9 +226,9 @@ public class Adelanto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreClienteAdelantoActionPerformed
 
-    private void adelantoPromotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adelantoPromotorActionPerformed
+    private void promotorAdelantoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_promotorAdelantoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_adelantoPromotorActionPerformed
+    }//GEN-LAST:event_promotorAdelantoActionPerformed
 
     private void fechaFinAdelantoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaFinAdelantoActionPerformed
         // TODO add your handling code here:
@@ -278,7 +296,6 @@ public class Adelanto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField adelantoPromotor;
     private javax.swing.JTextField fechaEntranteAdelanto;
     private javax.swing.JTextField fechaFinAdelanto;
     private javax.swing.JComboBox<String> fechaPrestamoAdelanto;
@@ -302,8 +319,9 @@ public class Adelanto extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField montoAdelanto;
     private javax.swing.JTextField montoAdelantoFecha;
-    private javax.swing.JComboBox<String> nombreAdelanto;
+    private javax.swing.JComboBox<String> nombreCliente;
     private javax.swing.JTextField nombreClienteAdelanto;
+    private javax.swing.JTextField promotorAdelanto;
     private javax.swing.JTextField psAdelanto;
     // End of variables declaration//GEN-END:variables
 }

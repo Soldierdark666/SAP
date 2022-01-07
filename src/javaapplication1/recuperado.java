@@ -4,8 +4,10 @@
  */
 package javaapplication1;
 
+import java.awt.event.KeyEvent;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author vgmos
@@ -22,7 +24,13 @@ public class recuperado extends javax.swing.JFrame {
     public recuperado() {
         initComponents();
         setLocationRelativeTo(null);
+        llenarcombos();
     }
+    
+    public void llenarcombos() {
+        nombreCliente.setModel(m1.llenarCMBClientes());
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,7 +47,7 @@ public class recuperado extends javax.swing.JFrame {
         fechaPrstamoRecuperado = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        nombreRecuperado = new javax.swing.JComboBox<>();
+        nombreCliente = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         psRecuperado = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -94,8 +102,8 @@ public class recuperado extends javax.swing.JFrame {
         jLabel2.setText("Nombre: ");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, 20));
 
-        nombreRecuperado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(nombreRecuperado, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 410, -1));
+        nombreCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(nombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 410, -1));
 
         jLabel3.setText("Fecha Ptmo.");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, 20));
@@ -185,7 +193,16 @@ public class recuperado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String nombre                   =           nombreCliente.getSelectedItem().toString();
+        DefaultComboBoxModel modelo     =           m1.llenarCMBFechaPrestamo(nombre);
+        this.fechaPrstamoRecuperado.setModel(modelo);
+        String FechaInicioPrestamo      =           this.fechaPrstamoRecuperado.getSelectedItem().toString();
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo);
+        
+        this.nombreClienteRecuperado.setText(datosPrestamo[0]);
+        this.promotorRecuperado.setText(datosPrestamo[1]);
+        this.MontoRecuperado.setText(datosPrestamo[2]);
+        this.fechaFinRecuperado.setText(datosPrestamo[3]);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void MontoRecuperadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MontoRecuperadoActionPerformed
@@ -276,8 +293,8 @@ public class recuperado extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField montoRecuperado;
+    private javax.swing.JComboBox<String> nombreCliente;
     private javax.swing.JTextField nombreClienteRecuperado;
-    private javax.swing.JComboBox<String> nombreRecuperado;
     private javax.swing.JTextField promotorRecuperado;
     private javax.swing.JTextField psRecuperado;
     // End of variables declaration//GEN-END:variables

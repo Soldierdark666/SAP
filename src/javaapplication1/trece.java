@@ -4,6 +4,9 @@
  */
 package javaapplication1;
 
+import java.awt.event.KeyEvent;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,8 +25,13 @@ public class trece extends javax.swing.JFrame {
     public trece() {
         initComponents();
         setLocationRelativeTo(null);
+        llenarcombos();
     }
-
+    
+    public void llenarcombos() {
+        nombreCliente.setModel(m1.llenarCMBClientes());
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,7 +47,7 @@ public class trece extends javax.swing.JFrame {
         fechaPrestamoTrece = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        nombreTrece = new javax.swing.JComboBox<>();
+        nombreCliente = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         psTrece = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -47,7 +55,7 @@ public class trece extends javax.swing.JFrame {
         montoTrece = new javax.swing.JTextField();
         nombreClienteTrece = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        promotor = new javax.swing.JTextField();
+        promotorTrece = new javax.swing.JTextField();
         fechaFinTrece = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -94,8 +102,8 @@ public class trece extends javax.swing.JFrame {
         jLabel2.setText("Nombre: ");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, 20));
 
-        nombreTrece.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(nombreTrece, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 410, -1));
+        nombreCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(nombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 410, -1));
 
         jLabel3.setText("Fecha Ptmo.");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, 20));
@@ -124,12 +132,12 @@ public class trece extends javax.swing.JFrame {
         jLabel6.setText("Promotor:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, -1, -1));
 
-        promotor.addActionListener(new java.awt.event.ActionListener() {
+        promotorTrece.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                promotorActionPerformed(evt);
+                promotorTreceActionPerformed(evt);
             }
         });
-        jPanel2.add(promotor, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 180, -1));
+        jPanel2.add(promotorTrece, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 180, -1));
 
         fechaFinTrece.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,7 +187,16 @@ public class trece extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String nombre                   =           nombreCliente.getSelectedItem().toString();
+        DefaultComboBoxModel modelo     =           m1.llenarCMBFechaPrestamo(nombre);
+        this.fechaPrestamoTrece.setModel(modelo);
+        String FechaInicioPrestamo      =           this.fechaPrestamoTrece.getSelectedItem().toString();
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo);
+        
+        this.nombreClienteTrece.setText(datosPrestamo[0]);
+        this.promotorTrece.setText(datosPrestamo[1]);
+        this.montoTrece.setText(datosPrestamo[2]);
+        this.fechaFinTrece.setText(datosPrestamo[3]);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void montoTreceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoTreceActionPerformed
@@ -190,9 +207,9 @@ public class trece extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreClienteTreceActionPerformed
 
-    private void promotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_promotorActionPerformed
+    private void promotorTreceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_promotorTreceActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_promotorActionPerformed
+    }//GEN-LAST:event_promotorTreceActionPerformed
 
     private void fechaFinTreceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaFinTreceActionPerformed
         // TODO add your handling code here:
@@ -265,9 +282,9 @@ public class trece extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField monto;
     private javax.swing.JTextField montoTrece;
+    private javax.swing.JComboBox<String> nombreCliente;
     private javax.swing.JTextField nombreClienteTrece;
-    private javax.swing.JComboBox<String> nombreTrece;
-    private javax.swing.JTextField promotor;
+    private javax.swing.JTextField promotorTrece;
     private javax.swing.JTextField psTrece;
     // End of variables declaration//GEN-END:variables
 }
