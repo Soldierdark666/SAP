@@ -4,17 +4,27 @@
  */
 package javaapplication1;
 
+import java.awt.event.KeyEvent;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author soldi
  */
 public class filtroCuentas extends javax.swing.JFrame {
 
-    /**
-     * Creates new form filtroCuentas
-     */
+    metodos m1 = new metodos();
     public filtroCuentas() {
         initComponents();
+        setLocationRelativeTo(null);
+        llenarCombos();
+    }
+    
+     public void llenarCombos(){
+        supervisor.setModel(m1.llenarCMBSupervisor());
+        ejecutivo.setModel(m1.llenarCMBEjecutivo());
+        ejecutivoGrupo.setModel(m1.llenarCMBEjecutivo());
     }
 
     /**
@@ -28,9 +38,9 @@ public class filtroCuentas extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        plaza = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        supervisor = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -51,7 +61,7 @@ public class filtroCuentas extends javax.swing.JFrame {
         imprimir = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        ejecutivo = new javax.swing.JComboBox<>();
         jTextField16 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -72,7 +82,7 @@ public class filtroCuentas extends javax.swing.JFrame {
         imprimir1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        ejecutivoGrupo = new javax.swing.JComboBox<>();
         jTextField31 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -132,8 +142,8 @@ public class filtroCuentas extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 150, -1));
+        supervisor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(supervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 150, -1));
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 50, -1));
 
         jLabel1.setText("Supervisor");
@@ -164,15 +174,20 @@ public class filtroCuentas extends javax.swing.JFrame {
         jButton2.setText("ver");
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 80, -1));
 
-        jTabbedPane1.addTab("Cuentas por supervisor", jPanel1);
+        plaza.addTab("Cuentas por supervisor", jPanel1);
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 150, -1));
+        ejecutivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ejecutivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ejecutivoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(ejecutivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 150, -1));
         jPanel2.add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 50, -1));
 
-        jLabel3.setText("Supervisor");
+        jLabel3.setText("Ejecutivo");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, -1, 20));
 
         jLabel4.setText("Fecha");
@@ -200,15 +215,15 @@ public class filtroCuentas extends javax.swing.JFrame {
         jButton3.setText("ver");
         jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 80, -1));
 
-        jTabbedPane1.addTab("Cuentas por ejecutivo", jPanel2);
+        plaza.addTab("Cuentas por ejecutivo", jPanel2);
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel3.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 150, -1));
+        ejecutivoGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel3.add(ejecutivoGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 150, -1));
         jPanel3.add(jTextField31, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 50, -1));
 
-        jLabel5.setText("Supervisor");
+        jLabel5.setText("Ejecutivo");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, -1, 20));
 
         jLabel6.setText("Fecha");
@@ -236,7 +251,7 @@ public class filtroCuentas extends javax.swing.JFrame {
         jButton4.setText("ver");
         jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 80, -1));
 
-        jTabbedPane1.addTab("Ejecutivo/Grupo", jPanel3);
+        plaza.addTab("Ejecutivo/Grupo", jPanel3);
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -244,7 +259,7 @@ public class filtroCuentas extends javax.swing.JFrame {
         jPanel4.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 150, -1));
         jPanel4.add(jTextField46, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 50, -1));
 
-        jLabel7.setText("Supervisor");
+        jLabel7.setText("Plaza");
         jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, -1, 20));
 
         jLabel8.setText("Fecha");
@@ -272,12 +287,16 @@ public class filtroCuentas extends javax.swing.JFrame {
         jButton5.setText("ver");
         jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 80, -1));
 
-        jTabbedPane1.addTab("Cuentas general", jPanel4);
+        plaza.addTab("Cuentas general", jPanel4);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, 360));
+        getContentPane().add(plaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, 360));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ejecutivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ejecutivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ejecutivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -315,6 +334,8 @@ public class filtroCuentas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ejecutivo;
+    private javax.swing.JComboBox<String> ejecutivoGrupo;
     private javax.swing.JButton imprimir;
     private javax.swing.JButton imprimir1;
     private javax.swing.JButton imprimir2;
@@ -323,9 +344,6 @@ public class filtroCuentas extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -340,7 +358,6 @@ public class filtroCuentas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
@@ -402,5 +419,7 @@ public class filtroCuentas extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTabbedPane plaza;
+    private javax.swing.JComboBox<String> supervisor;
     // End of variables declaration//GEN-END:variables
 }

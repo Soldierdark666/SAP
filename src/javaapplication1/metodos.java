@@ -168,6 +168,44 @@ public class metodos {
     }
     ///////////////////////////////////////////////////////
 
+    public DefaultComboBoxModel llenarCMBEjecutivo(){
+        DefaultComboBoxModel modelo= new DefaultComboBoxModel();
+        String sql = "select * from ejecutivo;";
+        String datos="";
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos=rs.getString(2);
+                modelo.addElement(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return modelo;
+    }
+    
+    public DefaultComboBoxModel llenarCMBSupervisor(){
+        DefaultComboBoxModel modelo= new DefaultComboBoxModel();
+        String sql = "select * from supervisor;";
+        String datos="";
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos=rs.getString(2);
+                modelo.addElement(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return modelo;
+    }
+    
     
     public DefaultComboBoxModel llenarCMBMunicipio(){
         DefaultComboBoxModel modelo= new DefaultComboBoxModel();
