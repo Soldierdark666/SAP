@@ -4,10 +4,7 @@
  */
 package javaapplication1;
 
-import java.awt.event.KeyEvent;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -34,7 +31,6 @@ public class Falla extends javax.swing.JFrame {
     public void llenarcombos() {
         nombreCliente.setModel(m1.llenarCMBClientes());
     }
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -211,15 +207,14 @@ public class Falla extends javax.swing.JFrame {
         DefaultComboBoxModel modelo     =           m1.llenarCMBFechaPrestamo(nombre);
         this.fechaPrestamoFalla.setModel(modelo);
         String FechaInicioPrestamo      =           this.fechaPrestamoFalla.getSelectedItem().toString();
-        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo);
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo,nombre);
         
         this.nombreClienteFalla.setText(datosPrestamo[0]);
         this.promotorFalla.setText(datosPrestamo[1]);
         this.montoFalla.setText(datosPrestamo[2]);
         this.fechaFinFalla.setText(datosPrestamo[3]);
-        
-        
-        llenarTablaFalla(m1.showTableFalla(FechaInicioPrestamo));
+         
+        llenarTablaFalla(m1.showTableFalla(nombre,FechaInicioPrestamo));
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -242,13 +237,11 @@ public class Falla extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String txtfechaFalla            =           fechaFalla.getText();
         String txtMontoFechaFalla       =           montoFechaFalla.getText();
-        String txtFechaPrestamo         =           this.fechaPrestamoFalla.getSelectedItem().toString();
-        String nombreCliente            =           this.nombreCliente.getSelectedItem().toString();
+        String FechaInicioPrestamo      =           fechaPrestamoFalla.getSelectedItem().toString();
+        String nombre                   =           nombreCliente.getSelectedItem().toString();
         
-        
-        
-        m1.agregarFalla(txtfechaFalla, txtMontoFechaFalla, txtFechaPrestamo,nombreCliente);
-        llenarTablaFalla(m1.showTableFalla(txtFechaPrestamo));
+        m1.agregarFalla(txtfechaFalla, txtMontoFechaFalla, FechaInicioPrestamo,nombre);
+        llenarTablaFalla(m1.showTableFalla(nombre,FechaInicioPrestamo));
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void fechaFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaFallaActionPerformed
@@ -260,8 +253,10 @@ public class Falla extends javax.swing.JFrame {
     }//GEN-LAST:event_nombreClienteActionPerformed
 
     private void fechaPrestamoFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaPrestamoFallaActionPerformed
-        String FechaInicioPrestamo      =           this.fechaPrestamoFalla.getSelectedItem().toString();  
-        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo);
+        String FechaInicioPrestamo      =           this.fechaPrestamoFalla.getSelectedItem().toString();
+        String nombre                   =           nombreCliente.getSelectedItem().toString();
+
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo,nombre);
         
         this.nombreClienteFalla.setText(datosPrestamo[0]);
         this.promotorFalla.setText(datosPrestamo[1]);
@@ -269,7 +264,7 @@ public class Falla extends javax.swing.JFrame {
         this.fechaFinFalla.setText(datosPrestamo[3]);
         
         
-        llenarTablaFalla(m1.showTableFalla(FechaInicioPrestamo));
+        llenarTablaFalla(m1.showTableFalla(nombre,FechaInicioPrestamo));
     }//GEN-LAST:event_fechaPrestamoFallaActionPerformed
 
     /**

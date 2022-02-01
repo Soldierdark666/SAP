@@ -4,10 +4,8 @@
  */
 package javaapplication1;
 
-import java.awt.event.KeyEvent;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,7 +18,6 @@ public class Adelanto extends javax.swing.JFrame {
      */
     
         metodos m1 = new metodos();
-        String idPrestamoAdelanto = "";
     
     public Adelanto() {
         initComponents();
@@ -30,6 +27,10 @@ public class Adelanto extends javax.swing.JFrame {
     
     public void llenarcombos() {
         nombreCliente.setModel(m1.llenarCMBClientes());
+    }
+    
+    public void llenarTablaAdelanto(DefaultTableModel modelo){
+        tablaAdelanto.setModel(modelo);
     }
     
 
@@ -66,7 +67,7 @@ public class Adelanto extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaAdelanto = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         fechaEntranteAdelanto = new javax.swing.JTextField();
 
@@ -92,6 +93,11 @@ public class Adelanto extends javax.swing.JFrame {
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, -1, 20));
 
         fechaPrestamoAdelanto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        fechaPrestamoAdelanto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaPrestamoAdelantoActionPerformed(evt);
+            }
+        });
         jPanel2.add(fechaPrestamoAdelanto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 160, -1));
 
         jButton1.setText("Cargar Info.");
@@ -175,7 +181,7 @@ public class Adelanto extends javax.swing.JFrame {
         });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 200, 140, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaAdelanto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -186,7 +192,7 @@ public class Adelanto extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaAdelanto);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 740, 160));
 
@@ -209,13 +215,14 @@ public class Adelanto extends javax.swing.JFrame {
         String nombre                   =           nombreCliente.getSelectedItem().toString();
         DefaultComboBoxModel modelo     =           m1.llenarCMBFechaPrestamo(nombre);
         this.fechaPrestamoAdelanto.setModel(modelo);
-        String FechaInicioPrestamo      =           this.fechaPrestamoAdelanto.getSelectedItem().toString();
-        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo);
+        String FechaInicioPrestamo      =           fechaPrestamoAdelanto.getSelectedItem().toString();
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo,nombre);
         
         this.nombreClienteAdelanto.setText(datosPrestamo[0]);
         this.promotorAdelanto.setText(datosPrestamo[1]);
         this.montoAdelanto.setText(datosPrestamo[2]);
         this.fechaFinAdelanto.setText(datosPrestamo[3]);
+        llenarTablaAdelanto(m1.showTabletAdelanto(nombre,FechaInicioPrestamo));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void montoAdelantoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoAdelantoActionPerformed
@@ -235,14 +242,15 @@ public class Adelanto extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinAdelantoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtfechaEntranteAdelanto=fechaEntranteAdelanto.getText();
-        String txtfechaSalienteAdelanto=fechaSalienteAdelanto.getText();
-        String txtmontoAdelantoFecha=montoAdelantoFecha.getText();
-         if (m1.agregarAdelanto(txtfechaEntranteAdelanto, txtfechaSalienteAdelanto, txtmontoAdelantoFecha,idPrestamoAdelanto)) {
-            JOptionPane.showMessageDialog(null, "Cliente registrado correctamente");
-        }else{
-            JOptionPane.showMessageDialog(null, "Hubo un error, intentelo nuevamente");
-        }
+        String txtfechaEntranteAdelanto =           fechaEntranteAdelanto.getText();
+        String txtfechaSalienteAdelanto =           fechaSalienteAdelanto.getText();
+        String txtmontoAdelantoFecha    =           montoAdelantoFecha.getText();
+        String nombre                   =           nombreCliente.getSelectedItem().toString();
+        String FechaInicioPrestamo      =           fechaPrestamoAdelanto.getSelectedItem().toString();
+        
+        m1.agregarAdelanto(txtfechaEntranteAdelanto, txtfechaSalienteAdelanto, txtmontoAdelantoFecha,nombre,FechaInicioPrestamo);
+        
+        llenarTablaAdelanto(m1.showTabletAdelanto(nombre,FechaInicioPrestamo));
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void fechaSalienteAdelantoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaSalienteAdelantoActionPerformed
@@ -252,6 +260,21 @@ public class Adelanto extends javax.swing.JFrame {
     private void fechaEntranteAdelantoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaEntranteAdelantoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaEntranteAdelantoActionPerformed
+
+    private void fechaPrestamoAdelantoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaPrestamoAdelantoActionPerformed
+        String nombre                   =           nombreCliente.getSelectedItem().toString();
+        String FechaInicioPrestamo      =           fechaPrestamoAdelanto.getSelectedItem().toString();
+        
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo,nombre);
+        
+        this.nombreClienteAdelanto.setText(datosPrestamo[0]);
+        this.promotorAdelanto.setText(datosPrestamo[1]);
+        this.montoAdelanto.setText(datosPrestamo[2]);
+        this.fechaFinAdelanto.setText(datosPrestamo[3]);
+        
+        
+        llenarTablaAdelanto(m1.showTabletAdelanto(nombre,FechaInicioPrestamo));
+    }//GEN-LAST:event_fechaPrestamoAdelantoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,12 +339,12 @@ public class Adelanto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField montoAdelanto;
     private javax.swing.JTextField montoAdelantoFecha;
     private javax.swing.JComboBox<String> nombreCliente;
     private javax.swing.JTextField nombreClienteAdelanto;
     private javax.swing.JTextField promotorAdelanto;
     private javax.swing.JTextField psAdelanto;
+    private javax.swing.JTable tablaAdelanto;
     // End of variables declaration//GEN-END:variables
 }

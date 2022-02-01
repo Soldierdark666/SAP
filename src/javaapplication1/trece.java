@@ -4,11 +4,8 @@
  */
 package javaapplication1;
 
-import java.awt.event.KeyEvent;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
-
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author vgmos
@@ -20,7 +17,6 @@ public class trece extends javax.swing.JFrame {
      */
     
     metodos m1 = new metodos();
-    String idPrestamoTrece = "";
     
     public trece() {
         initComponents();
@@ -30,6 +26,10 @@ public class trece extends javax.swing.JFrame {
     
     public void llenarcombos() {
         nombreCliente.setModel(m1.llenarCMBClientes());
+    }
+    
+    public void llenarTablaTrece(DefaultTableModel modelo){
+        tablaTrece.setModel(modelo);
     }
     
     /**
@@ -65,7 +65,7 @@ public class trece extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaTrece = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -89,6 +89,11 @@ public class trece extends javax.swing.JFrame {
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, -1, 20));
 
         fechaPrestamoTrece.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        fechaPrestamoTrece.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaPrestamoTreceActionPerformed(evt);
+            }
+        });
         jPanel2.add(fechaPrestamoTrece, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 160, -1));
 
         jButton1.setText("Cargar Info.");
@@ -166,7 +171,7 @@ public class trece extends javax.swing.JFrame {
         });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 200, 100, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaTrece.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -177,7 +182,7 @@ public class trece extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaTrece);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 740, 210));
 
@@ -191,12 +196,14 @@ public class trece extends javax.swing.JFrame {
         DefaultComboBoxModel modelo     =           m1.llenarCMBFechaPrestamo(nombre);
         this.fechaPrestamoTrece.setModel(modelo);
         String FechaInicioPrestamo      =           this.fechaPrestamoTrece.getSelectedItem().toString();
-        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo);
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo,nombre);
         
         this.nombreClienteTrece.setText(datosPrestamo[0]);
         this.promotorTrece.setText(datosPrestamo[1]);
         this.montoTrece.setText(datosPrestamo[2]);
         this.fechaFinTrece.setText(datosPrestamo[3]);
+        
+        llenarTablaTrece(m1.showTabletTrece(nombre, FechaInicioPrestamo));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void montoTreceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoTreceActionPerformed
@@ -216,14 +223,29 @@ public class trece extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinTreceActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtfechaTrece=fechaTrece.getText();
-        String txtmonto=monto.getText();
-          if (m1.agregarTrece(txtfechaTrece, txtmonto,idPrestamoTrece)) {
-            JOptionPane.showMessageDialog(null, "Cliente registrado correctamente");
-        }else{
-            JOptionPane.showMessageDialog(null, "Hubo un error, intentelo nuevamente");
-        }
+        String txtfechaTrece            =       fechaTrece.getText();
+        String txtmonto                 =       monto.getText();
+        String nombre                   =       nombreCliente.getSelectedItem().toString();
+        String FechaInicioPrestamo      =       fechaPrestamoTrece.getSelectedItem().toString();
+        m1.agregarTrece(txtfechaTrece, txtmonto, nombre, FechaInicioPrestamo);
+        
+        llenarTablaTrece(m1.showTabletTrece(nombre, FechaInicioPrestamo));
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void fechaPrestamoTreceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaPrestamoTreceActionPerformed
+        String nombre                   =       nombreCliente.getSelectedItem().toString();
+        String FechaInicioPrestamo      =       fechaPrestamoTrece.getSelectedItem().toString();
+        
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo,nombre);
+        
+        this.nombreClienteTrece.setText(datosPrestamo[0]);
+        this.promotorTrece.setText(datosPrestamo[1]);
+        this.montoTrece.setText(datosPrestamo[2]);
+        this.fechaFinTrece.setText(datosPrestamo[3]);
+        
+        
+        llenarTablaTrece(m1.showTabletTrece(nombre, FechaInicioPrestamo));
+    }//GEN-LAST:event_fechaPrestamoTreceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,12 +301,12 @@ public class trece extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField monto;
     private javax.swing.JTextField montoTrece;
     private javax.swing.JComboBox<String> nombreCliente;
     private javax.swing.JTextField nombreClienteTrece;
     private javax.swing.JTextField promotorTrece;
     private javax.swing.JTextField psTrece;
+    private javax.swing.JTable tablaTrece;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,10 +4,8 @@
  */
 package javaapplication1;
 
-import java.awt.event.KeyEvent;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author vgmos
@@ -18,8 +16,7 @@ public class recuperado extends javax.swing.JFrame {
      * Creates new form trece
      */
     
-        metodos m1 = new metodos();
-        String idPrestamoRecuperado = "";
+    metodos m1 = new metodos();
     
     public recuperado() {
         initComponents();
@@ -31,6 +28,9 @@ public class recuperado extends javax.swing.JFrame {
         nombreCliente.setModel(m1.llenarCMBClientes());
     }
     
+    public void llenarTablaRecuperado(DefaultTableModel modelo){
+        tablaRecuperado.setModel(modelo);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,7 +65,7 @@ public class recuperado extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaRecuperado = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -89,6 +89,11 @@ public class recuperado extends javax.swing.JFrame {
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, -1, 20));
 
         fechaPrstamoRecuperado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        fechaPrstamoRecuperado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaPrstamoRecuperadoActionPerformed(evt);
+            }
+        });
         jPanel2.add(fechaPrstamoRecuperado, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 160, -1));
 
         jButton1.setText("Cargar Info.");
@@ -172,7 +177,7 @@ public class recuperado extends javax.swing.JFrame {
         });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 200, 140, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaRecuperado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -183,7 +188,7 @@ public class recuperado extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaRecuperado);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 740, 210));
 
@@ -197,12 +202,14 @@ public class recuperado extends javax.swing.JFrame {
         DefaultComboBoxModel modelo     =           m1.llenarCMBFechaPrestamo(nombre);
         this.fechaPrstamoRecuperado.setModel(modelo);
         String FechaInicioPrestamo      =           this.fechaPrstamoRecuperado.getSelectedItem().toString();
-        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo);
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo,nombre);
         
         this.nombreClienteRecuperado.setText(datosPrestamo[0]);
         this.promotorRecuperado.setText(datosPrestamo[1]);
         this.MontoRecuperado.setText(datosPrestamo[2]);
         this.fechaFinRecuperado.setText(datosPrestamo[3]);
+        
+        llenarTablaRecuperado(m1.showTabletRecuperado(nombre, FechaInicioPrestamo));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void MontoRecuperadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MontoRecuperadoActionPerformed
@@ -224,16 +231,31 @@ public class recuperado extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String txtfechaRecuperado=fechaRecuperado.getText();
         String txtmontoRecuperado=montoRecuperado.getText();
-        if (m1.agregarTrece(txtfechaRecuperado, txtmontoRecuperado, idPrestamoRecuperado)) {
-            JOptionPane.showMessageDialog(null, "Cliente registrado correctamente");
-        }else{
-            JOptionPane.showMessageDialog(null, "Hubo un error, intentelo nuevamente");
-        }
+        String nombre                   =       nombreCliente.getSelectedItem().toString();
+        String FechaInicioPrestamo      =       fechaPrstamoRecuperado.getSelectedItem().toString();
+        m1.agregarTrece(txtfechaRecuperado, txtmontoRecuperado, nombre, FechaInicioPrestamo);
+        
+        llenarTablaRecuperado(m1.showTabletRecuperado(nombre, FechaInicioPrestamo));
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void fechaRecuperadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaRecuperadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaRecuperadoActionPerformed
+
+    private void fechaPrstamoRecuperadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaPrstamoRecuperadoActionPerformed
+        String nombre                   =       nombreCliente.getSelectedItem().toString();
+        String FechaInicioPrestamo      =       fechaPrstamoRecuperado.getSelectedItem().toString();
+        
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo,nombre);
+        
+        this.nombreClienteRecuperado.setText(datosPrestamo[0]);
+        this.promotorRecuperado.setText(datosPrestamo[1]);
+        this.MontoRecuperado.setText(datosPrestamo[2]);
+        this.fechaFinRecuperado.setText(datosPrestamo[3]);
+        
+        
+        llenarTablaRecuperado(m1.showTabletRecuperado(nombre, FechaInicioPrestamo));
+    }//GEN-LAST:event_fechaPrstamoRecuperadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,11 +313,11 @@ public class recuperado extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField montoRecuperado;
     private javax.swing.JComboBox<String> nombreCliente;
     private javax.swing.JTextField nombreClienteRecuperado;
     private javax.swing.JTextField promotorRecuperado;
     private javax.swing.JTextField psRecuperado;
+    private javax.swing.JTable tablaRecuperado;
     // End of variables declaration//GEN-END:variables
 }
