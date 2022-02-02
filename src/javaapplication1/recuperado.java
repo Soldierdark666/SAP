@@ -233,7 +233,7 @@ public class recuperado extends javax.swing.JFrame {
         String txtmontoRecuperado=montoRecuperado.getText();
         String nombre                   =       nombreCliente.getSelectedItem().toString();
         String FechaInicioPrestamo      =       fechaPrstamoRecuperado.getSelectedItem().toString();
-        m1.agregarTrece(txtfechaRecuperado, txtmontoRecuperado, nombre, FechaInicioPrestamo);
+        m1.agregarRecuperado(txtfechaRecuperado, txtmontoRecuperado, FechaInicioPrestamo, nombre);
         
         llenarTablaRecuperado(m1.showTabletRecuperado(nombre, FechaInicioPrestamo));
     }//GEN-LAST:event_jButton2ActionPerformed

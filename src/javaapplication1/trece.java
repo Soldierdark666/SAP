@@ -227,7 +227,7 @@ public class trece extends javax.swing.JFrame {
         String txtmonto                 =       monto.getText();
         String nombre                   =       nombreCliente.getSelectedItem().toString();
         String FechaInicioPrestamo      =       fechaPrestamoTrece.getSelectedItem().toString();
-        m1.agregarTrece(txtfechaTrece, txtmonto, nombre, FechaInicioPrestamo);
+        m1.agregarTrece(txtfechaTrece, txtmonto, FechaInicioPrestamo, nombre);
         
         llenarTablaTrece(m1.showTabletTrece(nombre, FechaInicioPrestamo));
     }//GEN-LAST:event_jButton2ActionPerformed

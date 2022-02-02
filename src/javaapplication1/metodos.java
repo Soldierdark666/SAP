@@ -39,7 +39,6 @@ public class metodos {
         try {
             String sql = "insert into adelanto values(null,'"+fechaEntrnateAdelanto+"','"+fechaSaleinteAdelanto+"',"+montoAdelanto+",(select idPrestamo from prestamo where fechaInicioPrestamo='"+fechaPrestamo+"' and idClientePrestamo=(select idCliente from cliente where nombreCliente='"+nombreCliente+"')));";
             PreparedStatement pss = cn.prepareStatement(sql);
-            System.out.println(sql);
             pss.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);
@@ -126,9 +125,9 @@ public class metodos {
         }
     }
     
-    public void agregarRecuperado(String fechaRecuperado,String montoRecuperado,String fechaPrestamo, String nombreCliente){
+    public void agregarRecuperado(String fechaRecuperado,String montoRecuperado,String fechaPrestamo, String nombreCliente){ 
         try {
-            String sql="insert into recuperado(null,'"+fechaRecuperado+"','"+montoRecuperado+"',(select idPrestamo from prestamo where fechaInicioPrestamo='"+fechaPrestamo+"'and idClientePrestamo=(select idCliente from cliente where nombreCliente='"+nombreCliente+"')));";
+            String sql="insert into recuperado value(null,'"+fechaRecuperado+"','"+montoRecuperado+"',(select idPrestamo from prestamo where fechaInicioPrestamo='"+fechaPrestamo+"'and idClientePrestamo=(select idCliente from cliente where nombreCliente='"+nombreCliente+"')));";
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
         } catch (SQLException e) {
@@ -138,7 +137,8 @@ public class metodos {
     
     public void agregarTrece(String fechaTrece,String montoTrece,String fechaPrestamo, String nombreCliente){
          try {
-            String sql="insert into trece(null,'"+fechaTrece+"','"+montoTrece+"',(select idPrestamo from prestamo where fechaInicioPrestamo='"+fechaPrestamo+"'and idClientePrestamo=(select idCliente from cliente where nombreCliente='"+nombreCliente+"')));";
+            String sql="insert into trece value(null,'"+fechaTrece+"','"+montoTrece+"',(select idPrestamo from prestamo where fechaInicioPrestamo='"+fechaPrestamo+"' and idClientePrestamo=(select idCliente from cliente where nombreCliente='"+nombreCliente+"')));";
+            
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
         } catch (SQLException e) {
@@ -149,7 +149,6 @@ public class metodos {
     public void agregarPrestamo(String fechaInicioPrestamo, String fechaFinPrestamo, String montoPrestamo, String especial, String idClientePrestamo, String ejecutivoPrestamo){
         try {
             String sql = "insert into prestamo value(null,'"+fechaInicioPrestamo+"','"+fechaFinPrestamo+"','"+montoPrestamo+"','"+especial+"', "+idClientePrestamo+", (select idEjecutivo from ejecutivo where nombreEjecutivo='"+ejecutivoPrestamo+"'))";
-            System.out.println(sql);
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
         } catch (SQLException e) {
@@ -182,7 +181,6 @@ public class metodos {
         String sql = "select p.fechaInicioPrestamo from prestamo p inner join ejecutivo e on p.idEjecutivoPrestamo=e.idEjecutivo where e.idEjecutivo=(select idEjecutivo from ejecutivo where nombreEjecutivo='"+nombreEjecutivo+"');";
         String datos="";
         try{
-            
             Statement st=cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
@@ -600,7 +598,7 @@ public class metodos {
         modelo.addColumn("Monto Trece");
         modelo.addColumn("Fecha Prestamo");
         
-        String sql = "select t.idTrece, t.fechaTrece, t.montoTrece, p.fechaInicioPrestamo from terce t inner join prestamo p on t.idPrestamoTrece=p.idPrestamo inner join cliente c on c.idCliente=p.idClientePrestamo where c.nombreCliente='"+nombreCliente+"' and p.fechaInicioPrestamo='"+fechaPrestamo+"';";
+        String sql = "select t.idTrece, t.fechaTrece, t.montoTrece, p.fechaInicioPrestamo from trece t inner join prestamo p on t.idPrestamoTrece=p.idPrestamo inner join cliente c on c.idCliente=p.idClientePrestamo where c.nombreCliente='"+nombreCliente+"' and p.fechaInicioPrestamo='"+fechaPrestamo+"';";
         String datos[] = new String [11];
         try{
             
@@ -663,7 +661,6 @@ public class metodos {
         modelo.addColumn("Ejecutivo");
         
         String sql = "select p.idPrestamo, p.fechaInicioPrestamo, p.fechaFinPrestamo, P.montoPrestamo, p.especial, e.nombreEjecutivo from prestamo p inner join ejecutivo e on p.idEjecutivoPrestamo=e.idEjecutivo where p.idClientePrestamo="+idClientePrestamo+";";
-        System.out.println(sql);
         String datos[] = new String [6];
         try{
             
