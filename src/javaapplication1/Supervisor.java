@@ -4,8 +4,6 @@
  */
 package javaapplication1;
 
-import java.awt.event.KeyEvent;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 /**
  *
@@ -28,6 +26,13 @@ public class Supervisor extends javax.swing.JFrame {
     public void llenarcombos() {
         municipio.setModel(m1.llenarCMBMunicipio());
         prestamista.setModel(m1.llenarCMBPrestamista());
+        buscarSupervisor.setModel(m1.llenarCMBSupervisor());
+    }
+    public void vaciarInputs(){
+        supervisor.setText("NULL");
+        nombreSupervisor.setText("");
+        telefonoSupervisor.setText("");
+        direccionSupervisor.setText("");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,51 +67,62 @@ public class Supervisor extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/serach.png"))); // NOI18N
         jLabel2.setText("Buscar Supervisor");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
         buscarSupervisor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(buscarSupervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 190, -1));
+        buscarSupervisor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarSupervisorActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buscarSupervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 190, -1));
 
         jLabel1.setText("Supervisor");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, 20));
 
         jLabel3.setText("Nombre Supervisor");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, 20));
 
         jLabel4.setText("Teléfono");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, 20));
 
         jLabel5.setText("Dirección");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, 20));
 
         jLabel6.setText("Municipio");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, -1, 20));
 
         jLabel7.setText("Prestamista");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, 20));
 
+        supervisor.setEditable(false);
+        supervisor.setText("NULL");
         supervisor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 supervisorActionPerformed(evt);
             }
         });
-        getContentPane().add(supervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 190, -1));
-        getContentPane().add(nombreSupervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 190, -1));
-        getContentPane().add(telefonoSupervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 190, -1));
-        getContentPane().add(direccionSupervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 190, -1));
+        jPanel1.add(supervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 190, 20));
+        jPanel1.add(nombreSupervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 190, 20));
+        jPanel1.add(telefonoSupervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 190, 20));
+        jPanel1.add(direccionSupervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 190, 20));
 
         municipio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(municipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 190, -1));
+        jPanel1.add(municipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 190, 20));
 
         prestamista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(prestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 190, -1));
+        jPanel1.add(prestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 190, 20));
 
         jButton1.setText("Editar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, -1, -1));
 
         jButton2.setText("Guardar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -114,32 +130,72 @@ public class Supervisor extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, -1, -1));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, -1));
 
         jButton3.setText("Eliminar");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, -1, -1));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 330, -1));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, -1, -1));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 330, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 320));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtsupervisor=supervisor.getText();
         String txtnombreSupervisor=nombreSupervisor.getText();
         String txttelefonoSupervisor=telefonoSupervisor.getText();
         String txtdireccionSupervisor=direccionSupervisor.getText();
         String cmbmunicipio=municipio.getSelectedItem().toString();
         String cmbprestamista=prestamista.getSelectedItem().toString();
-          if (m1.agregarSupervisor(txtsupervisor, txtnombreSupervisor, txttelefonoSupervisor, txtdireccionSupervisor, cmbmunicipio, cmbprestamista)) {
-            JOptionPane.showMessageDialog(null, "Cliente registrado correctamente");
-        }else{
-            JOptionPane.showMessageDialog(null, "Hubo un error, intentelo nuevamente");
-        }
+        m1.agregarSupervisor(txtnombreSupervisor, txttelefonoSupervisor, txtdireccionSupervisor, cmbmunicipio, cmbprestamista);
+        vaciarInputs();
+        llenarcombos();
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void supervisorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supervisorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_supervisorActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (supervisor.getText()!="NULL") {
+            String txtIDSupervisor=supervisor.getText();
+            String txtNombreSupervisor=nombreSupervisor.getText();
+            String txtTelefonoSupervisor=telefonoSupervisor.getText();
+            String txtFireccionSupervisor=direccionSupervisor.getText();
+            String cmbMunicipio=municipio.getSelectedItem().toString();
+            String cmbPrestamista=prestamista.getSelectedItem().toString();
+            m1.editarSupervisor(txtNombreSupervisor, txtTelefonoSupervisor, txtFireccionSupervisor, cmbMunicipio, cmbPrestamista,txtIDSupervisor);
+        }else{
+            JOptionPane.showMessageDialog(null,"Seleccione primero un Supervisor");
+        }
+        llenarcombos();
+        vaciarInputs();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (supervisor.getText()!="NULL") {
+            String txtIDSupervisor=supervisor.getText();
+            m1.borrarSupervisor(txtIDSupervisor);
+        }else{
+            JOptionPane.showMessageDialog(null,"Seleccione primero un Supervisor");
+        }
+        llenarcombos();
+        vaciarInputs();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void buscarSupervisorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarSupervisorActionPerformed
+        String[] datos=m1.filtrarSupervisor(buscarSupervisor.getSelectedItem().toString());
+        supervisor.setText(datos[0]);
+        nombreSupervisor.setText(datos[1]);
+        telefonoSupervisor.setText(datos[2]);
+        direccionSupervisor.setText(datos[3]);
+    }//GEN-LAST:event_buscarSupervisorActionPerformed
 
     /**
      * @param args the command line arguments

@@ -45,18 +45,17 @@ public class metodos {
         }
     }
 
-    public boolean agregarEncargado(String nombreEncargado, String telefonoEncargado, String direccionEncargado, String idMunicipioEncargado, String idSupervisorEncargado) {
+    public void agregarEncargado(String nombreEncargado, String telefonoEncargado, String direccionEncargado, String idMunicipioEncargado, String idSupervisorEncargado) {
         try {
-            PreparedStatement pss = cn.prepareStatement("insert into encargado values(null,?,?,?,?,?);");
+            PreparedStatement pss = cn.prepareStatement("insert into encargado values(null,?,?,?,(select idMunicipio from municipio where nombreMunicipio=?),(select idSupervisor from supervisor where nombreSupervisor=?));");
             pss.setString(1, nombreEncargado);
             pss.setString(2, telefonoEncargado);
             pss.setString(3, direccionEncargado);
             pss.setString(4, idMunicipioEncargado);
-            pss.setString(5,idSupervisorEncargado);
-            return true;
+            pss.setString(5, idSupervisorEncargado);
+            pss.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);
-            return false;
         }
     }
     
@@ -82,37 +81,30 @@ public class metodos {
         }
     }
     
-    public void agregarEjecutivo(String idEjecutivo, String nombreEjecutivo, String telefonoEjecutivo, String direccionEjecutivo, String idMunicipioEjecutivo, String plazaEjecutivo, String semanasEjecutivo, String montoEjecutivo, String montoEspecialEjecutivo){
+    public void agregarEjecutivo(String nombreEjecutivo, String telefonoEjecutivo, String direccionEjecutivo, String MunicipioEjecutivo, String plazaEjecutivo, String semanasEjecutivo, String montoEjecutivo, String montoEspecialEjecutivo){
         try {
-            PreparedStatement pss = cn.prepareStatement("insert into ejecutivo(null,?,?,?,?,?,?,?,?);");
-            pss.setString(1, idEjecutivo);
-            pss.setString(2, nombreEjecutivo);
-            pss.setString(3, telefonoEjecutivo);
-            pss.setString(4, direccionEjecutivo);
-            pss.setString(5, idMunicipioEjecutivo);
-            pss.setString(6, plazaEjecutivo);
-            pss.setString(7, semanasEjecutivo);
-            pss.setString(8, montoEjecutivo);
-            pss.setString(9, montoEspecialEjecutivo);
-            } catch (SQLException e) {
+            String sql="insert into ejecutivo values(null,'"+nombreEjecutivo+"','"+telefonoEjecutivo+"','"+direccionEjecutivo+"',(select idMunicipio from municipio where nombreMunicipio='"+MunicipioEjecutivo+"'),'"+plazaEjecutivo+"',"+semanasEjecutivo+","+montoEjecutivo+","+montoEspecialEjecutivo+");";
+            System.out.println(sql);
+            PreparedStatement pss = cn.prepareStatement(sql);
+            pss.executeUpdate();
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);
         }
     }
+
     
-    public boolean agregarSupervisor(String idSupervisor, String nombreSupervisor, String telefonoSupervisor, String direccionSupervisor, String idMunicipioSupervisor, String idEjecutivoSupervisor){
-         try {
-            PreparedStatement pss = cn.prepareStatement("insert into supervisor(null,?,?,?,?,?);");
-            pss.setString(1, idSupervisor);
-            pss.setString(2, nombreSupervisor);
-            pss.setString(3, telefonoSupervisor);
-            pss.setString(4, direccionSupervisor);
-            pss.setString(5, idMunicipioSupervisor);
-            pss.setString(6, idEjecutivoSupervisor);
-            return true;
-            } catch (SQLException e) {
+    public void agregarSupervisor(String nombreSupervisor, String telefonoSupervisor, String direccionSupervisor, String municipioSupervisor, String ejecutivoSupervisor){
+        try {
+            PreparedStatement pss = cn.prepareStatement("insert into supervisor values(null,?,?,?,(select idMunicipio from municipio where nombreMunicipio=?),(select idEjecutivo from ejecutivo where nombreEjecutivo=?));");
+            pss.setString(1, nombreSupervisor);
+            pss.setString(2, telefonoSupervisor);
+            pss.setString(3, direccionSupervisor);
+            pss.setString(4, municipioSupervisor);
+            pss.setString(5, ejecutivoSupervisor);
+            pss.executeUpdate();
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);
-            return false;
-         }
+        }
     }
     public void agregarFondo(String idFondo,String fechaFondo,String idEjecutivo){
         try {
@@ -161,6 +153,24 @@ public class metodos {
     public DefaultComboBoxModel llenarCMBEjecutivo(){
         DefaultComboBoxModel modelo= new DefaultComboBoxModel();
         String sql = "select * from ejecutivo;";
+        String datos="";
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos=rs.getString(2);
+                modelo.addElement(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return modelo;
+    }
+    public DefaultComboBoxModel llenarCMBEncargado(){
+        DefaultComboBoxModel modelo= new DefaultComboBoxModel();
+        String sql = "select * from encargado;";
         String datos="";
         try{
             
@@ -345,29 +355,6 @@ public class metodos {
         }
         return modelo;
     }
-    public String[] buscarPrestamo(String fechaInicioPrestamo, String nombreCliente){
-        DefaultComboBoxModel modelo= new DefaultComboBoxModel();
-        String sql = "select c.nombreCliente, e.nombreEjecutivo, p.montoPrestamo, p.fechaFinPrestamo from cliente c inner join prestamo p on c.idCliente=p.idClientePrestamo inner join ejecutivo e on e.idEjecutivo=p.idEjecutivoPrestamo where fechaInicioPrestamo='"+fechaInicioPrestamo+"' and c.nombreCliente='"+nombreCliente+"';";
-        //System.out.println(sql);
-        String datos[]=new String[4];
-        try{
-            
-            Statement st=cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
-                datos[0]=rs.getString(1);
-                datos[1]=rs.getString(2);
-                datos[2]=rs.getString(3);
-                datos[3]=rs.getString(4);
-                modelo.addElement(datos);
-            }
-            
-        }catch(SQLException e){
-            System.out.println("Error");
-        }
-        return datos;
-    }
-    
     public String[] mostrarCliente(String nombreCliente){
     
         String sql = "select c.idCliente, c.nombreCliente, c.direccionCliente, m.nombreMunicipio, c.nombreAval1Cliente, c.direccionAval1Cliente, n.nombreMunicipio, c.nombreAval2Cliente, c.direccionAval2Cliente, o.nombreMunicipio, s.descripcionStatus from cliente c inner join catalogoStatus s on c.idStatus = s.idStatus inner join municipio m on c.idMunicipioCliente = m.idMunicipio inner join municipio n on c.idMunicipioAval1Cliente = n.idMunicipio inner join municipio o on c.idMunicipioAval2Cliente = o.idMunicipio where nombreCliente='"+nombreCliente+"';";
@@ -394,6 +381,29 @@ public class metodos {
         return datos;
     }
     
+    public String[] buscarPrestamo(String fechaInicioPrestamo, String nombreCliente){
+        DefaultComboBoxModel modelo= new DefaultComboBoxModel();
+        String sql = "select c.nombreCliente, e.nombreEjecutivo, p.montoPrestamo, p.fechaFinPrestamo from cliente c inner join prestamo p on c.idCliente=p.idClientePrestamo inner join ejecutivo e on e.idEjecutivo=p.idEjecutivoPrestamo where fechaInicioPrestamo='"+fechaInicioPrestamo+"' and c.nombreCliente='"+nombreCliente+"';";
+        //System.out.println(sql);
+        String datos[]=new String[4];
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                modelo.addElement(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return datos;
+    }
+    
     public DefaultListModel BuscarCliente(String nombreCliente){
     
         DefaultListModel modelo = new DefaultListModel();
@@ -411,10 +421,69 @@ public class metodos {
         }
         return modelo;
     }
+    public String[] filtrarSupervisor(String nombreSupervisor){
+        String sql = "select * from supervisor where nombreSupervisor = '"+nombreSupervisor+"';";
+        String datos[] = new String[6];
+        try{
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                datos[4]=rs.getString(5);
+                datos[5]=rs.getString(6);
+            }
+        }catch(SQLException e){
+            System.out.println("Error: "+e);
+        }
+        return datos;
+    }
+    public String[] filtrarEncargado(String nombreEncargado){
+        String sql = "select * from encargado where nombreEncargado = '"+nombreEncargado+"';";
+        String datos[] = new String[6];
+        try{
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                datos[4]=rs.getString(5);
+                datos[5]=rs.getString(6);
+            }
+        }catch(SQLException e){
+            System.out.println("Error: "+e);
+        }
+        return datos;
+    }
+    public String[] filtrarEjecutivo(String nombreEjecutivo){
+        String sql = "select * from ejecutivo where nombreEjecutivo='"+nombreEjecutivo+"';";
+        String datos[] = new String[9];
+        try{
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                datos[4]=rs.getString(5);
+                datos[5]=rs.getString(6);
+                datos[6]=rs.getString(7);
+                datos[7]=rs.getString(8);
+                datos[8]=rs.getString(9);
+            }
+        }catch(SQLException e){
+            System.out.println("Error: "+e);
+        }
+        return datos;
+    }
+    
     
     public String[] filtrarCliente(String nombreCliente){
-    
-        DefaultListModel modelo = new DefaultListModel();
         String sql = "select * from cliente where nombreCliente = '"+nombreCliente+"';";
         String datos[] = new String[6];
         try{
@@ -429,7 +498,7 @@ public class metodos {
                 datos[5]=rs.getString(6);
             }
         }catch(SQLException e){
-            System.out.println("Error");
+            System.out.println("Error: "+e);
         }
         return datos;
     }
@@ -438,8 +507,51 @@ public class metodos {
     ///////////////////////////////////////////////////////
     
     public void editarCliente(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String idStatus, String idCliente){
-        String sql ="update cliente set nombreCliente='"+nombreCliente+"' ,direccionCliente='"+direccionCliente+"', idMunicipioCliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',nombreAval1Cliente='"+nombreAval1Cliente+"',direccionAval1Cliente='"+direccionAval1Cliente+"',idMunicipioAval1Cliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',nombreAval2Cliente='"+nombreAval2Cliente+"',direccionAval2Cliente='"+direccionAval2Cliente+"',idMunicipioAval2Cliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',idStatus='"+idStatus+"' where idCliente='"+idCliente+"'";
-        System.out.println(sql);
+        try{
+            String sql ="update cliente set nombreCliente='"+nombreCliente+"' ,direccionCliente='"+direccionCliente+"', idMunicipioCliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',nombreAval1Cliente='"+nombreAval1Cliente+"',direccionAval1Cliente='"+direccionAval1Cliente+"',idMunicipioAval1Cliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',nombreAval2Cliente='"+nombreAval2Cliente+"',direccionAval2Cliente='"+direccionAval2Cliente+"',idMunicipioAval2Cliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',idStatus='"+idStatus+"' where idCliente='"+idCliente+"'";
+            PreparedStatement pss = cn.prepareStatement(sql);
+            pss.executeUpdate();
+        }catch(SQLException e){
+            System.out.println("Error: "+e);
+        }
+    }
+    public void editarEjecutivo(String idEjecutivo, String nombreEjecutivo,String telefonoEjecutivo,String direccionEjecutivo,String nombreMunicipio,String plazaEjecutivo,String semanasEjecutivo,String montoEjecutivo,String montoEspecialEjecutivo){
+        try{
+            String sql="update ejecutivo set nombreEjecutivo='"+nombreEjecutivo+"', telefonoEjecutivo='"+telefonoEjecutivo+"', direccionEjecutivo='"+direccionEjecutivo+"', idMunicipioEjecutivo=(select idMunicipio from municipio where nombreMunicipio='"+nombreMunicipio+"'), plazaEjecutivo='"+plazaEjecutivo+"', semanasEjecutivo='"+semanasEjecutivo+"', montoEjecutivo="+montoEjecutivo+", montoEspecialEjecutivo="+montoEspecialEjecutivo+" where idEjecutivo="+idEjecutivo+";";
+            System.out.println(sql);
+            PreparedStatement pss = cn.prepareStatement(sql);
+            pss.executeUpdate();
+        }catch(SQLException e){
+            System.out.println("Error: "+e);
+        }
+    }
+    public void editarSupervisor(String nombreSupervisor, String telefonoSupervisor, String direccionSupervisor, String municipioSupervisor, String ejecutivoSupervisor,String idSupervisor){
+        try {
+            PreparedStatement pss = cn.prepareStatement("update supervisor set  nombreSupervisor=?, telefonoSupervisor=?, direccionSupervisor=?, idMunicipioSupervisor=(select idMunicipio from municipio where nombreMunicipio=?),idEjecutivoSupervisor=(select idEjecutivo from ejecutivo where nombreEjecutivo=?) where idSupervisor=?;");
+            pss.setString(1, nombreSupervisor);
+            pss.setString(2, telefonoSupervisor);
+            pss.setString(3, direccionSupervisor);
+            pss.setString(4, municipioSupervisor);
+            pss.setString(5, ejecutivoSupervisor);
+            pss.setInt(6, Integer.parseInt(idSupervisor));
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+        }
+    }
+    public void editarEncargado(String nombreEncargado, String telefonoEncargado, String direccionEncargado, String idMunicipioEncargado, String idSupervisorEncargado, String idEncargado){
+        try {
+            PreparedStatement pss = cn.prepareStatement("update encargado set  nombreEncargado=?, telefonoEncargado=?, direccionEncargado=?, idMunicipioEncargado=(select idMunicipio from municipio where nombreMunicipio=?),idSupervisorEncargado=(select idSupervisor from supervisor where nombreSupervisor=?) where idEncargado=?;");
+            pss.setString(1, nombreEncargado);
+            pss.setString(2, telefonoEncargado);
+            pss.setString(3, direccionEncargado);
+            pss.setString(4, idMunicipioEncargado);
+            pss.setString(5, idSupervisorEncargado);
+            pss.setInt(6, Integer.parseInt(idEncargado));
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+        }
     }
     
     
@@ -589,7 +701,7 @@ public class metodos {
         return modelo;
     }
     
-        public DefaultTableModel showTabletTrece(String nombreCliente, String fechaPrestamo){
+    public DefaultTableModel showTabletTrece(String nombreCliente, String fechaPrestamo){
         
         DefaultTableModel modelo= new DefaultTableModel();
         
@@ -691,6 +803,32 @@ public class metodos {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);
          }
+    }
+    public void borrarEjecutivo(String idEjecutivo){
+         try {
+            PreparedStatement pss = cn.prepareStatement("delete from ejecutivo where idEjecutivo="+idEjecutivo+";");
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+         }
+    }
+    public void borrarSupervisor(String idSupervisor){
+        try {
+            PreparedStatement pss = cn.prepareStatement("delete from supervisor where idSupervisor =?;");
+            pss.setInt(1, Integer.parseInt(idSupervisor));
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+        }
+    }
+    public void borrarEncargado(String idEncargadp){
+        try {
+            PreparedStatement pss = cn.prepareStatement("delete from encargado where idEncargado =?;");
+            pss.setInt(1, Integer.parseInt(idEncargadp));
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+        }
     }
 }
 

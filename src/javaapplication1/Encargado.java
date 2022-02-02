@@ -4,10 +4,7 @@
  */
 package javaapplication1;
 
-import java.awt.event.KeyEvent;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author soldi
@@ -20,7 +17,6 @@ public class Encargado extends javax.swing.JFrame {
     
     metodos m1 = new metodos();
 
-    
     public Encargado() {
         initComponents();
         setLocationRelativeTo(null);
@@ -29,6 +25,15 @@ public class Encargado extends javax.swing.JFrame {
     
     public void llenarcombos() {
         municipio.setModel(m1.llenarCMBMunicipio());
+        supervisor.setModel(m1.llenarCMBSupervisor());
+        buscarEncargado.setModel(m1.llenarCMBEncargado());
+    }
+    
+    public void vaciarInputs(){
+        encargado.setText("NULL");
+        nombreEncargado.setText("");
+        telefonoEncargado.setText("");
+        direccionEncargado.setText("");
     }
 
     /**
@@ -68,42 +73,49 @@ public class Encargado extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/serach.png"))); // NOI18N
         jLabel2.setText("Buscar Encargado");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, -1, -1));
 
         buscarEncargado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(buscarEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 170, -1));
+        buscarEncargado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarEncargadoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buscarEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 170, -1));
 
         jLabel3.setText("Encargado");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, 20));
 
         jLabel4.setText("Nombre");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, -1, 20));
 
         jLabel5.setText("Teléfono");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, 20));
 
         jLabel6.setText("Dirección");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, -1, 20));
 
         jLabel7.setText("Municipio");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, 20));
 
         jLabel8.setText("Supervisor");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, -1, -1));
-        getContentPane().add(encargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 170, -1));
-        getContentPane().add(nombreEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 170, -1));
-        getContentPane().add(telefonoEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 170, -1));
-        getContentPane().add(direccionEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 170, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, -1, 20));
+
+        encargado.setEditable(false);
+        encargado.setText("NULL");
+        jPanel1.add(encargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 170, -1));
+        jPanel1.add(nombreEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 170, -1));
+        jPanel1.add(telefonoEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 170, -1));
+        jPanel1.add(direccionEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 170, -1));
 
         municipio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(municipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 170, -1));
+        jPanel1.add(municipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 170, -1));
 
         supervisor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(supervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 170, -1));
+        jPanel1.add(supervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 170, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -118,10 +130,15 @@ public class Encargado extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 440, 90));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 440, 90));
 
         jButton1.setText("Editar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, -1, -1));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, -1, -1));
 
         jButton2.setText("Guardar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -129,34 +146,73 @@ public class Encargado extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 370, -1, -1));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 390, -1, -1));
 
         jButton3.setText("Eliminar");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, -1, -1));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 390, -1, -1));
 
         jButton4.setText("CARGOS");
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, -1, 40));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, -1, 40));
 
         jButton5.setText("ABONOS");
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, -1, 40));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 440, -1));
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, -1, 40));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 440, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 430));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtEncargado=encargado.getText();
         String txtnombreEncargado=nombreEncargado.getText();
         String txttelefonoEncargado=telefonoEncargado.getText();
         String txtdireccionEncargado=direccionEncargado.getText();
         String cmbmunicipio=municipio.getSelectedItem().toString();
         String cmbsupervisor=supervisor.getSelectedItem().toString();
-         if (m1.agregarEncargado(txtnombreEncargado, txttelefonoEncargado, txtdireccionEncargado, cmbmunicipio, cmbsupervisor)) {
-            JOptionPane.showMessageDialog(null, "Cliente registrado correctamente");
-        }else{
-            JOptionPane.showMessageDialog(null, "Hubo un error, intentelo nuevamente");
-        }
+        m1.agregarEncargado(txtnombreEncargado, txttelefonoEncargado, txtdireccionEncargado, cmbmunicipio, cmbsupervisor);
+        llenarcombos();
+        vaciarInputs();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (encargado.getText()!="NULL") {
+            String txtEncargado=encargado.getText();
+            String txtnombreEncargado=nombreEncargado.getText();
+            String txttelefonoEncargado=telefonoEncargado.getText();
+            String txtdireccionEncargado=direccionEncargado.getText();
+            String cmbmunicipio=municipio.getSelectedItem().toString();
+            String cmbsupervisor=supervisor.getSelectedItem().toString();
+            m1.editarEncargado(txtnombreEncargado, txttelefonoEncargado, txtdireccionEncargado, cmbmunicipio, cmbsupervisor,txtEncargado);
+        }else{
+            JOptionPane.showMessageDialog(null,"Seleccione primero un Supervisor");
+        }
+        llenarcombos();
+        vaciarInputs();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void buscarEncargadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarEncargadoActionPerformed
+        String[] datos=m1.filtrarEncargado(buscarEncargado.getSelectedItem().toString());
+        encargado.setText(datos[0]);
+        nombreEncargado.setText(datos[1]);
+        telefonoEncargado.setText(datos[2]);
+        direccionEncargado.setText(datos[3]);
+    }//GEN-LAST:event_buscarEncargadoActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (encargado.getText()!="NULL") {
+            String txtIDEncargado=encargado.getText();
+            m1.borrarEncargado(txtIDEncargado);
+        }else{
+            JOptionPane.showMessageDialog(null,"Seleccione primero un Supervisor");
+        }
+        llenarcombos();
+        vaciarInputs();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

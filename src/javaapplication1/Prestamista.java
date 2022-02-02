@@ -4,10 +4,7 @@
  */
 package javaapplication1;
 
-
-
-
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author soldi
@@ -26,8 +23,20 @@ public class Prestamista extends javax.swing.JFrame {
         llenarcombos();
     }
     
-     public void llenarcombos() {
+    public void llenarcombos() {
         municipio.setModel(m1.llenarCMBMunicipio());
+        buscarPrestamista.setModel(m1.llenarCMBPrestamista());
+    }
+     
+    public void vaciarInputs(){
+        prestamista.setText("NULL");
+        nombrePrestamista.setText("");
+        telefonoPrestamista.setText("");
+        direccionPrestamista.setText("");
+        plaza.setText("");
+        semanas.setText("");
+        montoPrestamista.setText("");
+        montoEspeciaPrestamista.setText("");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -68,46 +77,53 @@ public class Prestamista extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/serach.png"))); // NOI18N
         jLabel1.setText("Buscar Prestamista");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
         buscarPrestamista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(buscarPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 200, -1));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 42, 370, 10));
+        buscarPrestamista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarPrestamistaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buscarPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 200, 20));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 42, 370, 10));
 
         jLabel2.setText("Prestamista");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, 20));
 
         jLabel3.setText("Nombre");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, 20));
 
         jLabel4.setText("Teléfono");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, 20));
 
         jLabel5.setText("Dirección");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, 20));
 
         jLabel6.setText("Municipio");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, 20));
 
         jLabel7.setText("Plaza");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, 20));
 
         jLabel8.setText("Semanas");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, 20));
 
         jLabel9.setText("Monto");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, -1, 20));
 
         jLabel10.setText("Monto Especial");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
-        getContentPane().add(prestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 200, -1));
-        getContentPane().add(nombrePrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 200, -1));
-        getContentPane().add(telefonoPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 200, -1));
-        getContentPane().add(direccionPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 200, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, 20));
+
+        prestamista.setEditable(false);
+        prestamista.setText("NULL");
+        jPanel1.add(prestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 200, -1));
+        jPanel1.add(nombrePrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 200, -1));
+        jPanel1.add(telefonoPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 200, 20));
+        jPanel1.add(direccionPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 200, -1));
 
         municipio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         municipio.addActionListener(new java.awt.event.ActionListener() {
@@ -115,11 +131,11 @@ public class Prestamista extends javax.swing.JFrame {
                 municipioActionPerformed(evt);
             }
         });
-        getContentPane().add(municipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 200, -1));
-        getContentPane().add(plaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 200, -1));
-        getContentPane().add(semanas, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 200, -1));
-        getContentPane().add(montoPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 200, -1));
-        getContentPane().add(montoEspeciaPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, 200, -1));
+        jPanel1.add(municipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 200, -1));
+        jPanel1.add(plaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 200, -1));
+        jPanel1.add(semanas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 200, -1));
+        jPanel1.add(montoPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 200, -1));
+        jPanel1.add(montoEspeciaPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 200, -1));
 
         jButton1.setText("Editar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +143,7 @@ public class Prestamista extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
 
         jButton2.setText("Guardar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -135,34 +151,79 @@ public class Prestamista extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, -1, -1));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 350, -1, -1));
 
         jButton3.setText("Eliminar");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, -1, -1));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 350, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if (prestamista.getText()!="NULL") {
+            String txtprestamista=prestamista.getText();
+            String txtnombrePrestamista=nombrePrestamista.getText();
+            String txttelefonoPrestamista=telefonoPrestamista.getText();
+            String txtdireccionPrestamista=direccionPrestamista.getText();
+            String txtmunicipio=municipio.getSelectedItem().toString();
+            String txtplaza=plaza.getText();
+            String txtsemanas=semanas.getText();
+            String txtmontoPrestamista=montoPrestamista.getText();
+            String txtmontoEspeciaPrestamista=montoEspeciaPrestamista.getText();
+            m1.editarEjecutivo(txtprestamista, txtnombrePrestamista,txttelefonoPrestamista,txtdireccionPrestamista,txtmunicipio,txtplaza,txtsemanas,txtmontoPrestamista,txtmontoEspeciaPrestamista);
+        }else{
+            JOptionPane.showMessageDialog(null,"Seleccione primero un ejecutivo");
+        }
+        llenarcombos();
+        vaciarInputs();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtprestamista=prestamista.getText();
-        String txtnombrePrestamista=nombrePrestamista.getText();
-        String txttelefonoPrestamista=telefonoPrestamista.getText();
-        String txtdireccionPrestamista=direccionPrestamista.getText();
-        String txtmunicipio=municipio.getSelectedItem().toString();
-        String txtplaza=plaza.getText();
-        String txtsemanas=semanas.getText();
-        String txtmontoPrestamista=montoPrestamista.getText();
-        String txtmontoEspeciaPrestamista=montoEspeciaPrestamista.getText();
-        
+        String txTnombrePrestamista=nombrePrestamista.getText();
+        String txtTelefonoPrestamista=telefonoPrestamista.getText();
+        String txtDireccionPrestamista=direccionPrestamista.getText();
+        String txtMunicipio=municipio.getSelectedItem().toString();
+        String txtPlaza=plaza.getText();
+        String txtSemanas=semanas.getText();
+        String txtMontoPrestamista=montoPrestamista.getText();
+        String txtMontoEspeciaPrestamista=montoEspeciaPrestamista.getText();
+        m1.agregarEjecutivo(txTnombrePrestamista, txtTelefonoPrestamista, txtDireccionPrestamista, txtMunicipio, txtPlaza, txtSemanas, txtMontoPrestamista, txtMontoEspeciaPrestamista);
+        llenarcombos();
+        vaciarInputs();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void municipioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_municipioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_municipioActionPerformed
+
+    private void buscarPrestamistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPrestamistaActionPerformed
+        String[] datos=m1.filtrarEjecutivo(buscarPrestamista.getSelectedItem().toString());
+        prestamista.setText(datos[0]);
+        nombrePrestamista.setText(datos[1]);
+        telefonoPrestamista.setText(datos[2]);
+        direccionPrestamista.setText(datos[3]);
+        plaza.setText(datos[5]);
+        semanas.setText(datos[6]);
+        montoPrestamista.setText(datos[7]);
+        montoEspeciaPrestamista.setText(datos[8]);
+    }//GEN-LAST:event_buscarPrestamistaActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (prestamista.getText()!="NULL") {
+            m1.borrarEjecutivo(prestamista.getText());
+        }else{
+            JOptionPane.showMessageDialog(null,"Seleccione primero un ejecutivo");
+        }
+        llenarcombos();
+        vaciarInputs();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
