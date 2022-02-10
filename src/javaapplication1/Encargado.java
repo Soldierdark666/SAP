@@ -196,11 +196,11 @@ public class Encargado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void buscarEncargadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarEncargadoActionPerformed
-        String[] datos=m1.filtrarEncargado(buscarEncargado.getSelectedItem().toString());
+        /*String[] datos=m1.filtrarEncargado(buscarEncargado.getSelectedItem().toString());
         encargado.setText(datos[0]);
         nombreEncargado.setText(datos[1]);
         telefonoEncargado.setText(datos[2]);
-        direccionEncargado.setText(datos[3]);
+        direccionEncargado.setText(datos[3]);*/
     }//GEN-LAST:event_buscarEncargadoActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

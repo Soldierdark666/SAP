@@ -15,13 +15,13 @@ public class modificarFondo extends javax.swing.JFrame {
     /**
      * Creates new form modificarFondo
      */
-    
+    metodos m1= new metodos();
+    String cmbejecutivo=ejecutivo.getSelectedItem().toString();
+    String txtfechaFondo=fechaFondo.getSelectedItem().toString();
+    String datos[]=m1.filtrarFondo(txtfechaFondo, cmbejecutivo);
     public modificarFondo() {
         initComponents();
         setLocationRelativeTo(null);
-        String cmbejecutivo=ejecutivo.getSelectedItem().toString();
-        String txtfechaFondo=fechaFondo.getSelectedItem().toString();
-        System.out.println(cmbejecutivo+"----"+txtfechaFondo);
     }
 
     /**
@@ -35,19 +35,19 @@ public class modificarFondo extends javax.swing.JFrame {
 
         popupMenu1 = new java.awt.PopupMenu();
         jPanel1 = new javax.swing.JPanel();
-        value = new javax.swing.JTextField();
+        txtFondo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        value1 = new javax.swing.JTextField();
+        txtCobroSemana = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        value2 = new javax.swing.JTextField();
+        txtDepositoEjecutivo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        value3 = new javax.swing.JTextField();
-        value4 = new javax.swing.JTextField();
+        txtAdelantos = new javax.swing.JTextField();
+        txtTrece = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        value5 = new javax.swing.JTextField();
+        txtSupervision = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        value6 = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -78,34 +78,45 @@ public class modificarFondo extends javax.swing.JFrame {
         popupMenu1.setLabel("popupMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(value, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 120, -1));
+        jPanel1.add(txtFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 120, -1));
 
         jLabel1.setText("Fondo");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, 20));
 
         jLabel2.setText("Cobro semana");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, 20));
-        jPanel1.add(value1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 120, -1));
+        jPanel1.add(txtCobroSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 120, -1));
 
         jLabel3.setText("Deposito a ejecutivo");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, 20));
-        jPanel1.add(value2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 120, -1));
+        jPanel1.add(txtDepositoEjecutivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 120, -1));
 
         jLabel4.setText("Adelantos");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, 20));
-        jPanel1.add(value3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 120, -1));
-        jPanel1.add(value4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 120, -1));
+
+        txtAdelantos.setEditable(false);
+        jPanel1.add(txtAdelantos, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 120, -1));
+
+        txtTrece.setEditable(false);
+        jPanel1.add(txtTrece, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 120, -1));
 
         jLabel5.setText("Trece");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, 20));
-        jPanel1.add(value5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 120, -1));
+        jPanel1.add(txtSupervision, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 120, -1));
 
         jLabel6.setText("Supervision");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, 20));
-        jPanel1.add(value6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 120, -1));
+
+        txtTotal.setEditable(false);
+        jPanel1.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 120, -1));
 
         jLabel7.setText("Total");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, 20));
@@ -200,6 +211,19 @@ public class modificarFondo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        
+        txtTrece.setText(datos[0]);
+        txtAdelantos.setText(datos[1]);
+        
+        float sumTotal=Float.parseFloat(datos[0])+Float.parseFloat(datos[1]);
+        //System.out.println(sumTotal);
+
+        String Total=Float.toString(sumTotal);
+        
+        txtTotal.setText(Total);
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -264,16 +288,16 @@ public class modificarFondo extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private java.awt.PopupMenu popupMenu1;
-    private javax.swing.JTextField value;
-    private javax.swing.JTextField value1;
+    private javax.swing.JTextField txtAdelantos;
+    private javax.swing.JTextField txtCobroSemana;
+    private javax.swing.JTextField txtDepositoEjecutivo;
+    private javax.swing.JTextField txtFondo;
+    private javax.swing.JTextField txtSupervision;
+    private javax.swing.JTextField txtTotal;
+    private javax.swing.JTextField txtTrece;
     private javax.swing.JTextField value10;
     private javax.swing.JTextField value11;
     private javax.swing.JTextField value12;
-    private javax.swing.JTextField value2;
-    private javax.swing.JTextField value3;
-    private javax.swing.JTextField value4;
-    private javax.swing.JTextField value5;
-    private javax.swing.JTextField value6;
     private javax.swing.JTextField value7;
     private javax.swing.JTextField value8;
     private javax.swing.JTextField value9;

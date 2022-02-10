@@ -440,9 +440,10 @@ public class metodos {
         }
         return datos;
     }
-    public String[] filtrarEncargado(String nombreEncargado){
-        String sql = "select * from encargado where nombreEncargado = '"+nombreEncargado+"';";
-        String datos[] = new String[6];
+    public String[] filtrarFondo(String fechaPrestamo, String nombreEjecutivo){
+        String sql = "select sum(t.montoTrece) as totalTrece, sum(a.montoAdelanto) as totalAdelanto, c.nombreCliente, p.fechaInicioPrestamo from cliente c inner join prestamo p on p.idClientePrestamo=c.idCliente inner join trece t on t.idPrestamoTrece=p.idPrestamo inner join adelanto a on a.idprestamoAdelanto=p.idPrestamo inner join ejecutivo e on e.idEjecutivo=p.idEjecutivoPrestamo where p.fechaInicioPrestamo='"+fechaPrestamo+"' and p.idClientePrestamo=1 and e.nombreEjecutivo='"+nombreEjecutivo+"';";
+        //System.out.println(sql);
+        String datos[] = new String[4];
         try{
             Statement st=cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
@@ -451,8 +452,6 @@ public class metodos {
                 datos[1]=rs.getString(2);
                 datos[2]=rs.getString(3);
                 datos[3]=rs.getString(4);
-                datos[4]=rs.getString(5);
-                datos[5]=rs.getString(6);
             }
         }catch(SQLException e){
             System.out.println("Error: "+e);
