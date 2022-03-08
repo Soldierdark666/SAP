@@ -86,6 +86,9 @@ public class modificarFondo extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtFondo.setEditable(false);
+        txtFondo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(txtFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 120, -1));
 
         jLabel1.setText("Fondo");
@@ -93,29 +96,41 @@ public class modificarFondo extends javax.swing.JFrame {
 
         jLabel2.setText("Cobro semana");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, 20));
+
+        txtCobroSemana.setEditable(false);
+        txtCobroSemana.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(txtCobroSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 120, -1));
 
         jLabel3.setText("Deposito a ejecutivo");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, 20));
+
+        txtDepositoEjecutivo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(txtDepositoEjecutivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 120, -1));
 
         jLabel4.setText("Adelantos");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, 20));
 
         txtAdelantos.setEditable(false);
+        txtAdelantos.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(txtAdelantos, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 120, -1));
 
         txtTrece.setEditable(false);
+        txtTrece.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(txtTrece, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 120, -1));
 
         jLabel5.setText("Trece");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, 20));
+
+        txtSupervision.setEditable(false);
+        txtSupervision.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtSupervision.setText("$0");
         jPanel1.add(txtSupervision, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 120, -1));
 
         jLabel6.setText("Supervision");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, 20));
 
         txtTotal.setEditable(false);
+        txtTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 120, -1));
 
         jLabel7.setText("Total");
@@ -177,6 +192,9 @@ public class modificarFondo extends javax.swing.JFrame {
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 790, 320));
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        value7.setEditable(false);
+        value7.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel4.add(value7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 120, -1));
 
         jLabel11.setText("Prestamos");
@@ -184,19 +202,34 @@ public class modificarFondo extends javax.swing.JFrame {
 
         jLabel12.setText("Comisiones");
         jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, 20));
+
+        value8.setEditable(false);
+        value8.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel4.add(value8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 120, -1));
 
         jLabel13.setText("Especiales");
         jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, 20));
+
+        value9.setEditable(false);
+        value9.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel4.add(value9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 120, -1));
 
         jLabel14.setText("Gastos");
         jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, 20));
+
+        value10.setEditable(false);
+        value10.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel4.add(value10, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 120, -1));
+
+        value11.setEditable(false);
+        value11.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel4.add(value11, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 120, -1));
 
         jLabel15.setText("Otros");
         jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, 20));
+
+        value12.setEditable(false);
+        value12.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel4.add(value12, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 120, -1));
 
         jLabel16.setText("Total");
