@@ -45,14 +45,15 @@ public class metodos {
         }
     }
 
-    public void agregarEncargado(String nombreEncargado, String telefonoEncargado, String direccionEncargado, String idMunicipioEncargado, String idSupervisorEncargado) {
+    public void agregarEncargado(String nombreEncargado, String telefonoEncargado, String direccionEncargado, String comisionEncargado, String idMunicipioEncargado, String idSupervisorEncargado) {
         try {
-            PreparedStatement pss = cn.prepareStatement("insert into encargado values(null,?,?,?,(select idMunicipio from municipio where nombreMunicipio=?),(select idSupervisor from supervisor where nombreSupervisor=?));");
+            PreparedStatement pss = cn.prepareStatement("insert into encargado values(null,?,?,?,?,(select idMunicipio from municipio where nombreMunicipio=?),(select idSupervisor from supervisor where nombreSupervisor=?));");
             pss.setString(1, nombreEncargado);
             pss.setString(2, telefonoEncargado);
             pss.setString(3, direccionEncargado);
-            pss.setString(4, idMunicipioEncargado);
-            pss.setString(5, idSupervisorEncargado);
+            pss.setString(4, comisionEncargado);
+            pss.setString(5, idMunicipioEncargado);
+            pss.setString(6, idSupervisorEncargado);
             pss.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);
@@ -440,6 +441,24 @@ public class metodos {
         }
         return datos;
     }
+    public String[] filtrarEncargado(String nombreEncargado){
+        String sql = "select * from encargado where nombreEncargado = '"+nombreEncargado+"';";
+        String datos[] = new String[5];
+        try{
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                datos[4]=rs.getString(5);
+            }
+        }catch(SQLException e){
+            System.out.println("Error: "+e);
+        }
+        return datos;
+    }
     public String[] filtrarFondo(String fechaPrestamo, String nombreEjecutivo){
         String sql = "select sum(t.montoTrece) as totalTrece, sum(a.montoAdelanto) as totalAdelanto, c.nombreCliente, p.fechaInicioPrestamo from cliente c inner join prestamo p on p.idClientePrestamo=c.idCliente inner join trece t on t.idPrestamoTrece=p.idPrestamo inner join adelanto a on a.idprestamoAdelanto=p.idPrestamo inner join ejecutivo e on e.idEjecutivo=p.idEjecutivoPrestamo where p.fechaInicioPrestamo='"+fechaPrestamo+"' and p.idClientePrestamo=1 and e.nombreEjecutivo='"+nombreEjecutivo+"';";
         //System.out.println(sql);
@@ -555,6 +574,43 @@ public class metodos {
     
     
     ///////////////////////////////////////////////////////
+    public DefaultTableModel showTablaEncargado(){
+        
+        DefaultTableModel modelo= new DefaultTableModel();
+        
+        modelo.addColumn("ID");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Telefono");
+        modelo.addColumn("Direccion");
+        modelo.addColumn("Comision");
+        modelo.addColumn("Municipio");
+        modelo.addColumn("Supervisor");
+        
+        String sql = "select e.idEncargado, e.nombreEncargado, e.telefonoEncargado, e.direccionEncargado, e.comisionEncargado, m.nombreMunicipio, s.nombreSupervisor from encargado e inner join municipio m on m.idMunicipio=e.idMunicipioEncargado inner join supervisor s on s.idSupervisor=e.idSupervisorEncargado;";
+        String datos[] = new String [11];
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                datos[4]=rs.getString(5)+"%";
+                datos[5]=rs.getString(6);
+                datos[6]=rs.getString(7);
+                modelo.addRow(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        
+        
+        return modelo;
+    }
     public DefaultTableModel showTabletCliente(){
         
         DefaultTableModel modelo= new DefaultTableModel();

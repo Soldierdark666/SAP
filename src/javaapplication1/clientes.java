@@ -97,12 +97,8 @@ public class clientes extends javax.swing.JFrame {
         promotorPrestamo = new javax.swing.JComboBox<>();
         montoPrestamo = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        iniciaPrestamoMes = new javax.swing.JComboBox<>();
-        terminaPrestamoDia = new javax.swing.JSpinner();
-        terminaPrestamoMes = new javax.swing.JComboBox<>();
-        terminaPrestamoAnio = new javax.swing.JSpinner();
-        iniciaPrestamoAnio = new javax.swing.JSpinner();
-        iniciaPrestamoDia = new javax.swing.JSpinner();
+        txtFechaFin = new com.toedter.calendar.JDateChooser();
+        txtFechaInicio = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblPrestamos = new javax.swing.JTable();
@@ -244,16 +240,16 @@ public class clientes extends javax.swing.JFrame {
         jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
 
         jLabel16.setText("Termina");
-        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
 
         jLabel17.setText("Promotor(a)");
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
 
         jLabel18.setText("Monto");
-        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
 
         especialPrestamo.setText("Especial");
-        jPanel3.add(especialPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+        jPanel3.add(especialPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
 
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -261,7 +257,7 @@ public class clientes extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, -1));
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, -1, -1));
 
         promotorPrestamo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         promotorPrestamo.addActionListener(new java.awt.event.ActionListener() {
@@ -269,35 +265,23 @@ public class clientes extends javax.swing.JFrame {
                 promotorPrestamoActionPerformed(evt);
             }
         });
-        jPanel3.add(promotorPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 240, -1));
+        jPanel3.add(promotorPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 240, -1));
 
         montoPrestamo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 montoPrestamoKeyTyped(evt);
             }
         });
-        jPanel3.add(montoPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 240, -1));
+        jPanel3.add(montoPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 240, -1));
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/prestamo-asegurado2.png"))); // NOI18N
         jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
-        iniciaPrestamoMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
-        jPanel3.add(iniciaPrestamoMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
+        txtFechaFin.setDateFormatString("y-MM-d");
+        jPanel3.add(txtFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 240, -1));
 
-        terminaPrestamoDia.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
-        jPanel3.add(terminaPrestamoDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 70, -1));
-
-        terminaPrestamoMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
-        jPanel3.add(terminaPrestamoMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, -1, -1));
-
-        terminaPrestamoAnio.setModel(new javax.swing.SpinnerNumberModel(2022, 2022, null, 1));
-        jPanel3.add(terminaPrestamoAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 70, -1));
-
-        iniciaPrestamoAnio.setModel(new javax.swing.SpinnerNumberModel(2022, 2022, null, 1));
-        jPanel3.add(iniciaPrestamoAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 70, -1));
-
-        iniciaPrestamoDia.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
-        jPanel3.add(iniciaPrestamoDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 70, -1));
+        txtFechaInicio.setDateFormatString("y-MM-d");
+        jPanel3.add(txtFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 240, -1));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 0, 350, 450));
 
@@ -411,13 +395,8 @@ public class clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_clientesKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Integer txtIniciaPrestamoDia=(Integer)iniciaPrestamoDia.getValue();
-        String txtIniciaPrestamoMes=iniciaPrestamoMes.getSelectedItem().toString();
-        Integer txtIniciaPrestamoAnio=(Integer)iniciaPrestamoAnio.getValue();
-        
-        Integer txtTerminaPrestamoDia=(Integer)terminaPrestamoDia.getValue();
-        String txtTerminaPrestamoMes=terminaPrestamoMes.getSelectedItem().toString();
-        Integer txtTerminaPrestamoAnio=(Integer)terminaPrestamoAnio.getValue();
+        String fechaInicioFull=txtFechaFin.getDateFormatString();
+        String fechaFinFull=txtFechaFin.getDateFormatString();
         
         String txtMontoPrestamo=montoPrestamo.getText();
         String txtCodigoCliente=codigoCliente.getText();
@@ -431,69 +410,10 @@ public class clientes extends javax.swing.JFrame {
         }else{
             especial="No";
         }
-        
-        
-        String inicioMes="";
-        String terminaMes="";
-        
-        if (txtIniciaPrestamoMes=="Enero") {
-            inicioMes="01";
-        }else if(txtIniciaPrestamoMes=="Febrero"){
-            inicioMes="02";
-        }else if(txtIniciaPrestamoMes=="Marzo"){
-            inicioMes="03";
-        }else if(txtIniciaPrestamoMes=="Abril"){
-            inicioMes="04";
-        }else if(txtIniciaPrestamoMes=="Mayo"){
-            inicioMes="05";
-        }else if(txtIniciaPrestamoMes=="Junio"){
-            inicioMes="06";
-        }else if(txtIniciaPrestamoMes=="Julio"){
-            inicioMes="07";
-        }else if(txtIniciaPrestamoMes=="Agosto"){
-            inicioMes="08";
-        }else if(txtIniciaPrestamoMes=="Septiembre"){
-            inicioMes="09";
-        }else if(txtIniciaPrestamoMes=="Octubre"){
-            inicioMes="10";
-        }else if(txtIniciaPrestamoMes=="Nomviembre"){
-            inicioMes="11";
-        }else if(txtIniciaPrestamoMes=="Diciembre"){
-            inicioMes="12";
-        }  
-        if (txtTerminaPrestamoMes=="Enero") {
-            terminaMes="01";
-        }else if(txtTerminaPrestamoMes=="Febrero"){
-            terminaMes="02";
-        }else if(txtTerminaPrestamoMes=="Marzo"){
-            terminaMes="03";
-        }else if(txtTerminaPrestamoMes=="Abril"){
-            terminaMes="04";
-        }else if(txtTerminaPrestamoMes=="Mayo"){
-            terminaMes="05";
-        }else if(txtTerminaPrestamoMes=="Junio"){
-            terminaMes="06";
-        }else if(txtTerminaPrestamoMes=="Julio"){
-            terminaMes="07";
-        }else if(txtTerminaPrestamoMes=="Agosto"){
-            terminaMes="08";
-        }else if(txtTerminaPrestamoMes=="Septiembre"){
-            terminaMes="09";
-        }else if(txtTerminaPrestamoMes=="Octubre"){
-            terminaMes="10";
-        }else if(txtTerminaPrestamoMes=="Nomviembre"){
-            terminaMes="11";
-        }else if(txtTerminaPrestamoMes=="Diciembre"){
-            terminaMes="12";
-        }
-        
-        String fechaInicio=txtIniciaPrestamoDia+"/"+inicioMes+"/"+txtIniciaPrestamoAnio;
-        String fechaFin=txtTerminaPrestamoDia+"/"+terminaMes+"/"+txtTerminaPrestamoAnio;
-        
         if(txtCodigoCliente=="Codigo"){
            JOptionPane.showMessageDialog(null, "Seleccione un cliente para asigarnle un prestamo");
         }else{
-            m1.agregarPrestamo(fechaInicio, fechaFin, txtMontoPrestamo, especial, txtCodigoCliente,txtPromotorPrestamo);
+            m1.agregarPrestamo(fechaInicioFull, fechaFinFull, txtMontoPrestamo, especial, txtCodigoCliente,txtPromotorPrestamo);
             tblPrestamos.setModel(m1.showTabletPrestamo(txtCodigoCliente));
         }
         
@@ -558,9 +478,6 @@ public class clientes extends javax.swing.JFrame {
     private javax.swing.JTextField direccionAval2;
     private javax.swing.JTextField direccionCliente;
     private javax.swing.JCheckBox especialPrestamo;
-    private javax.swing.JSpinner iniciaPrestamoAnio;
-    private javax.swing.JSpinner iniciaPrestamoDia;
-    private javax.swing.JComboBox<String> iniciaPrestamoMes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -602,8 +519,7 @@ public class clientes extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> promotorPrestamo;
     private javax.swing.JComboBox<String> statusCliente;
     private javax.swing.JTable tblPrestamos;
-    private javax.swing.JSpinner terminaPrestamoAnio;
-    private javax.swing.JSpinner terminaPrestamoDia;
-    private javax.swing.JComboBox<String> terminaPrestamoMes;
+    private com.toedter.calendar.JDateChooser txtFechaFin;
+    private com.toedter.calendar.JDateChooser txtFechaInicio;
     // End of variables declaration//GEN-END:variables
 }

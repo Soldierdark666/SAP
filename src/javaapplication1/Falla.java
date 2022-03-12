@@ -60,12 +60,12 @@ public class Falla extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        fechaFalla = new javax.swing.JTextField();
         montoFechaFalla = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblFallas = new javax.swing.JTable();
+        txtFechaFalla = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -162,13 +162,6 @@ public class Falla extends javax.swing.JFrame {
 
         jLabel8.setText("Fecha falla");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, 30));
-
-        fechaFalla.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fechaFallaActionPerformed(evt);
-            }
-        });
-        jPanel2.add(fechaFalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 180, 30));
         jPanel2.add(montoFechaFalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, 200, 30));
 
         jLabel9.setText("Monto");
@@ -196,6 +189,9 @@ public class Falla extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblFallas);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 740, 210));
+
+        txtFechaFalla.setDateFormatString("y-MM-d");
+        jPanel2.add(txtFechaFalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 190, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 790, 470));
 
@@ -235,7 +231,7 @@ public class Falla extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinFallaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtfechaFalla            =           fechaFalla.getText();
+        String txtfechaFalla            =           txtFechaFalla.getDateFormatString();
         String txtMontoFechaFalla       =           montoFechaFalla.getText();
         String FechaInicioPrestamo      =           fechaPrestamoFalla.getSelectedItem().toString();
         String nombre                   =           nombreCliente.getSelectedItem().toString();
@@ -243,10 +239,6 @@ public class Falla extends javax.swing.JFrame {
         m1.agregarFalla(txtfechaFalla, txtMontoFechaFalla, FechaInicioPrestamo,nombre);
         llenarTablaFalla(m1.showTableFalla(nombre,FechaInicioPrestamo));
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void fechaFallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaFallaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fechaFallaActionPerformed
 
     private void nombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreClienteActionPerformed
         // TODO add your handling code here:
@@ -306,7 +298,6 @@ public class Falla extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField fechaFalla;
     private javax.swing.JTextField fechaFinFalla;
     private javax.swing.JComboBox<String> fechaPrestamoFalla;
     private javax.swing.JButton jButton1;
@@ -331,5 +322,6 @@ public class Falla extends javax.swing.JFrame {
     private javax.swing.JTextField promotorFalla;
     private javax.swing.JTextField psFalla;
     private javax.swing.JTable tblFallas;
+    private com.toedter.calendar.JDateChooser txtFechaFalla;
     // End of variables declaration//GEN-END:variables
 }

@@ -27,7 +27,7 @@ public class fondo extends javax.swing.JFrame {
         ejecutivo.setModel(m1.llenarCMBPromotor());
     }
     public void llenarComboFecha(){
-        fechaFondo.setModel(m1.llenarCMBFechaEjecutivoPrestamo(ejecutivo.getSelectedItem().toString()));
+        
     }
 
     /**
@@ -42,7 +42,6 @@ public class fondo extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        fechaFondo = new javax.swing.JComboBox<>();
         Fecha = new javax.swing.JLabel();
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
@@ -51,6 +50,7 @@ public class fondo extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         ejecutivo = new javax.swing.JComboBox<>();
+        txtFechaFondo = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -63,14 +63,6 @@ public class fondo extends javax.swing.JFrame {
         jLabel1.setText("Ejecutivo");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, 20));
 
-        fechaFondo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        fechaFondo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fechaFondoActionPerformed(evt);
-            }
-        });
-        jPanel2.add(fechaFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 140, -1));
-
         Fecha.setText("Fecha: ");
         jPanel2.add(Fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, 20));
 
@@ -78,7 +70,7 @@ public class fondo extends javax.swing.JFrame {
         jPanel2.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 60, 50, -1));
 
         jToggleButton2.setText("+");
-        jPanel2.add(jToggleButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 50, -1));
+        jPanel2.add(jToggleButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 50, -1));
 
         jButton1.setText("Eliminar Fondo");
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 110, 40));
@@ -110,6 +102,9 @@ public class fondo extends javax.swing.JFrame {
         });
         jPanel2.add(ejecutivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 280, -1));
 
+        txtFechaFondo.setDateFormatString("y-MM-d");
+        jPanel2.add(txtFechaFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 160, -1));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 400, 260));
 
         pack();
@@ -123,10 +118,6 @@ public class fondo extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void fechaFondoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaFondoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fechaFondoActionPerformed
 
     private void ejecutivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ejecutivoActionPerformed
         llenarComboFecha();
@@ -170,7 +161,6 @@ public class fondo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fecha;
     public static javax.swing.JComboBox<String> ejecutivo;
-    public static javax.swing.JComboBox<String> fechaFondo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -180,5 +170,6 @@ public class fondo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
+    public static com.toedter.calendar.JDateChooser txtFechaFondo;
     // End of variables declaration//GEN-END:variables
 }

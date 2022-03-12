@@ -60,12 +60,12 @@ public class trece extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        fechaTrece = new javax.swing.JTextField();
         monto = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaTrece = new javax.swing.JTable();
+        txtFechaTrece = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -157,7 +157,6 @@ public class trece extends javax.swing.JFrame {
 
         jLabel8.setText("Fecha trece");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, 30));
-        jPanel2.add(fechaTrece, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 180, 30));
         jPanel2.add(monto, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, 200, 30));
 
         jLabel9.setText("Monto");
@@ -185,6 +184,9 @@ public class trece extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tablaTrece);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 740, 210));
+
+        txtFechaTrece.setDateFormatString("y-MM-d");
+        jPanel2.add(txtFechaTrece, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 200, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 790, 470));
 
@@ -223,7 +225,7 @@ public class trece extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinTreceActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtfechaTrece            =       fechaTrece.getText();
+        String txtfechaTrece            =       txtFechaTrece.getDateFormatString();
         String txtmonto                 =       monto.getText();
         String nombre                   =       nombreCliente.getSelectedItem().toString();
         String FechaInicioPrestamo      =       fechaPrestamoTrece.getSelectedItem().toString();
@@ -285,7 +287,6 @@ public class trece extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField fechaFinTrece;
     private javax.swing.JComboBox<String> fechaPrestamoTrece;
-    private javax.swing.JTextField fechaTrece;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -308,5 +309,6 @@ public class trece extends javax.swing.JFrame {
     private javax.swing.JTextField promotorTrece;
     private javax.swing.JTextField psTrece;
     private javax.swing.JTable tablaTrece;
+    private com.toedter.calendar.JDateChooser txtFechaTrece;
     // End of variables declaration//GEN-END:variables
 }

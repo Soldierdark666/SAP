@@ -21,6 +21,11 @@ public class Encargado extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         llenarcombos();
+        llenarTabla();
+    }
+    
+    public void llenarTabla(){
+        tblEncargado.setModel(m1.showTablaEncargado());
     }
     
     public void llenarcombos() {
@@ -61,13 +66,15 @@ public class Encargado extends javax.swing.JFrame {
         municipio = new javax.swing.JComboBox<>();
         supervisor = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblEncargado = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel9 = new javax.swing.JLabel();
+        comisionEncargado = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -95,14 +102,14 @@ public class Encargado extends javax.swing.JFrame {
         jLabel5.setText("Teléfono");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, 20));
 
-        jLabel6.setText("Dirección");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, -1, 20));
+        jLabel6.setText("Comision(%)");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, 20));
 
         jLabel7.setText("Municipio");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, 20));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, -1, 20));
 
         jLabel8.setText("Supervisor");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, -1, 20));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, -1, 20));
 
         encargado.setEditable(false);
         encargado.setText("NULL");
@@ -112,12 +119,12 @@ public class Encargado extends javax.swing.JFrame {
         jPanel1.add(direccionEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 170, -1));
 
         municipio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(municipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 170, -1));
+        jPanel1.add(municipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 170, -1));
 
         supervisor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(supervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 170, -1));
+        jPanel1.add(supervisor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 170, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblEncargado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -128,9 +135,9 @@ public class Encargado extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblEncargado);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 440, 90));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 440, 90));
 
         jButton1.setText("Editar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -138,7 +145,7 @@ public class Encargado extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 420, -1, -1));
 
         jButton2.setText("Guardar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +153,7 @@ public class Encargado extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 390, -1, -1));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, -1, -1));
 
         jButton3.setText("Eliminar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +161,7 @@ public class Encargado extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 390, -1, -1));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 420, -1, -1));
 
         jButton4.setText("CARGOS");
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, -1, 40));
@@ -163,7 +170,11 @@ public class Encargado extends javax.swing.JFrame {
         jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, -1, 40));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 440, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 430));
+        jLabel9.setText("Dirección");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, -1, 20));
+        jPanel1.add(comisionEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 170, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 460));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -172,11 +183,13 @@ public class Encargado extends javax.swing.JFrame {
         String txtnombreEncargado=nombreEncargado.getText();
         String txttelefonoEncargado=telefonoEncargado.getText();
         String txtdireccionEncargado=direccionEncargado.getText();
+        String txtComisionEmcargado=comisionEncargado.getText();
         String cmbmunicipio=municipio.getSelectedItem().toString();
         String cmbsupervisor=supervisor.getSelectedItem().toString();
-        m1.agregarEncargado(txtnombreEncargado, txttelefonoEncargado, txtdireccionEncargado, cmbmunicipio, cmbsupervisor);
+        m1.agregarEncargado(txtnombreEncargado, txttelefonoEncargado, txtdireccionEncargado, txtComisionEmcargado, cmbmunicipio, cmbsupervisor);
         llenarcombos();
         vaciarInputs();
+        llenarTabla();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -193,14 +206,16 @@ public class Encargado extends javax.swing.JFrame {
         }
         llenarcombos();
         vaciarInputs();
+        llenarTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void buscarEncargadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarEncargadoActionPerformed
-        /*String[] datos=m1.filtrarEncargado(buscarEncargado.getSelectedItem().toString());
+        String[] datos=m1.filtrarEncargado(buscarEncargado.getSelectedItem().toString());
         encargado.setText(datos[0]);
         nombreEncargado.setText(datos[1]);
         telefonoEncargado.setText(datos[2]);
-        direccionEncargado.setText(datos[3]);*/
+        direccionEncargado.setText(datos[3]);
+        comisionEncargado.setText(datos[4]);
     }//GEN-LAST:event_buscarEncargadoActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -212,6 +227,7 @@ public class Encargado extends javax.swing.JFrame {
         }
         llenarcombos();
         vaciarInputs();
+        llenarTabla();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -252,6 +268,7 @@ public class Encargado extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> buscarEncargado;
+    private javax.swing.JTextField comisionEncargado;
     private javax.swing.JTextField direccionEncargado;
     private javax.swing.JTextField encargado;
     private javax.swing.JButton jButton1;
@@ -266,13 +283,14 @@ public class Encargado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> municipio;
     private javax.swing.JTextField nombreEncargado;
     private javax.swing.JComboBox<String> supervisor;
+    private javax.swing.JTable tblEncargado;
     private javax.swing.JTextField telefonoEncargado;
     // End of variables declaration//GEN-END:variables
 }

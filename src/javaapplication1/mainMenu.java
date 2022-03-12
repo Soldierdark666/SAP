@@ -58,7 +58,6 @@ public class mainMenu extends javax.swing.JFrame {
         btnReportes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
         setUndecorated(true);
         setResizable(false);
@@ -150,7 +149,7 @@ public class mainMenu extends javax.swing.JFrame {
         btnPrestamista.setBackground(new java.awt.Color(255, 255, 255));
         btnPrestamista.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Prestamista-01.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Ejecutivo-01.png"))); // NOI18N
         jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -314,6 +313,9 @@ public class mainMenu extends javax.swing.JFrame {
         btnReportes.setBorder(null);
         btnReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReportesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnReportesMouseEntered(evt);
             }
@@ -449,7 +451,7 @@ public class mainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        Prestamista P1 = new Prestamista();
+        Ejecutivo P1 = new Ejecutivo();
         P1.setVisible(true);
     }//GEN-LAST:event_jLabel8MouseClicked
 
@@ -469,8 +471,8 @@ public class mainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel11MouseClicked
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        Cuentas cu1 = new Cuentas();
-        cu1.setVisible(true);
+        Cuentas c1 = new Cuentas();
+        c1.setVisible(true);
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
@@ -482,6 +484,11 @@ public class mainMenu extends javax.swing.JFrame {
         fondo FN1 = new fondo();
         FN1.setVisible(true);
     }//GEN-LAST:event_jLabel15MouseClicked
+
+    private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
+        reporte r1 = new reporte();
+        r1.setVisible(true);
+    }//GEN-LAST:event_btnReportesMouseClicked
 
     /**
      * @param args the command line arguments

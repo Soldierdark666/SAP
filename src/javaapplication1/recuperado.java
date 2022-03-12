@@ -60,12 +60,12 @@ public class recuperado extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        fechaRecuperado = new javax.swing.JTextField();
         montoRecuperado = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaRecuperado = new javax.swing.JTable();
+        txtFechaRecuperado = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -157,13 +157,6 @@ public class recuperado extends javax.swing.JFrame {
 
         jLabel8.setText("Fecha recuperado");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, 30));
-
-        fechaRecuperado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fechaRecuperadoActionPerformed(evt);
-            }
-        });
-        jPanel2.add(fechaRecuperado, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 180, 30));
         jPanel2.add(montoRecuperado, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, 200, 30));
 
         jLabel9.setText("Monto");
@@ -191,6 +184,9 @@ public class recuperado extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tablaRecuperado);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 740, 210));
+
+        txtFechaRecuperado.setDateFormatString("y-MM-d");
+        jPanel2.add(txtFechaRecuperado, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 170, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 790, 470));
 
@@ -229,7 +225,7 @@ public class recuperado extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinRecuperadoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtfechaRecuperado=fechaRecuperado.getText();
+        String txtfechaRecuperado=txtFechaRecuperado.getDateFormatString();
         String txtmontoRecuperado=montoRecuperado.getText();
         String nombre                   =       nombreCliente.getSelectedItem().toString();
         String FechaInicioPrestamo      =       fechaPrstamoRecuperado.getSelectedItem().toString();
@@ -237,10 +233,6 @@ public class recuperado extends javax.swing.JFrame {
         
         llenarTablaRecuperado(m1.showTabletRecuperado(nombre, FechaInicioPrestamo));
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void fechaRecuperadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaRecuperadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fechaRecuperadoActionPerformed
 
     private void fechaPrstamoRecuperadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaPrstamoRecuperadoActionPerformed
         String nombre                   =       nombreCliente.getSelectedItem().toString();
@@ -297,7 +289,6 @@ public class recuperado extends javax.swing.JFrame {
     private javax.swing.JTextField MontoRecuperado;
     private javax.swing.JTextField fechaFinRecuperado;
     private javax.swing.JComboBox<String> fechaPrstamoRecuperado;
-    private javax.swing.JTextField fechaRecuperado;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -319,5 +310,6 @@ public class recuperado extends javax.swing.JFrame {
     private javax.swing.JTextField promotorRecuperado;
     private javax.swing.JTextField psRecuperado;
     private javax.swing.JTable tablaRecuperado;
+    private com.toedter.calendar.JDateChooser txtFechaRecuperado;
     // End of variables declaration//GEN-END:variables
 }

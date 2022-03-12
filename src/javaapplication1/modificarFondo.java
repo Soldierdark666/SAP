@@ -4,7 +4,7 @@
  */
 package javaapplication1;
 import static javaapplication1.fondo.ejecutivo;
-import static javaapplication1.fondo.fechaFondo;
+import static javaapplication1.fondo.txtFechaFondo;
 
 /**
  *
@@ -17,7 +17,7 @@ public class modificarFondo extends javax.swing.JFrame {
      */
     metodos m1= new metodos();
     String cmbejecutivo=ejecutivo.getSelectedItem().toString();
-    String txtfechaFondo=fechaFondo.getSelectedItem().toString();
+    String txtfechaFondo=txtFechaFondo.getDateFormatString();
     String datos[]=m1.filtrarFondo(txtfechaFondo, cmbejecutivo);
     public modificarFondo() {
         initComponents();
