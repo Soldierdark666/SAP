@@ -4,6 +4,8 @@
  */
 package javaapplication1;
 
+import java.text.DateFormat;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -23,6 +25,12 @@ public class recuperado extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         llenarcombos();
     }
+    
+    public String arreglarFormato(Date date){
+    String strDate = DateFormat.getDateInstance().format(date);
+    String fechaFin = strDate.replace(" ", "-");
+    return fechaFin;
+}
     
     public void llenarcombos() {
         nombreCliente.setModel(m1.llenarCMBClientes());
@@ -225,11 +233,13 @@ public class recuperado extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinRecuperadoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtfechaRecuperado=txtFechaRecuperado.getDateFormatString();
+        Date dateInicio  =txtFechaRecuperado.getDate();
+        String fechaNueva=arreglarFormato(dateInicio);
+        
         String txtmontoRecuperado=montoRecuperado.getText();
         String nombre                   =       nombreCliente.getSelectedItem().toString();
         String FechaInicioPrestamo      =       fechaPrstamoRecuperado.getSelectedItem().toString();
-        m1.agregarRecuperado(txtfechaRecuperado, txtmontoRecuperado, FechaInicioPrestamo, nombre);
+        m1.agregarRecuperado(fechaNueva, txtmontoRecuperado, FechaInicioPrestamo, nombre);
         
         llenarTablaRecuperado(m1.showTabletRecuperado(nombre, FechaInicioPrestamo));
     }//GEN-LAST:event_jButton2ActionPerformed

@@ -26,6 +26,7 @@ public class metodos {
     public void registrarClientes(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String txtStatusCliente) {
         try {
             String sql="insert into cliente values(null,'"+nombreCliente+"','"+direccionCliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioCliente+"')"+",'"+nombreAval1Cliente+"','"+direccionAval1Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval1Cliente+"')"+",'"+nombreAval2Cliente+"','"+direccionAval2Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval2Cliente+"')"+",(select idStatus from catalogoStatus where descripcionStatus='"+txtStatusCliente+"'));";
+            System.out.println(sql);
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se registro el cliente correctamente");
@@ -148,6 +149,15 @@ public class metodos {
             JOptionPane.showMessageDialog(null, "error: " + e);
             
         }
+    }
+    public void agregarMunicipio(String nombreMunicipio){ 
+        try {
+            String sql="insert into municipio value(null, '"+nombreMunicipio+"')";
+            PreparedStatement pss = cn.prepareStatement(sql);
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+         }
     }
     ///////////////////////////////////////////////////////
 

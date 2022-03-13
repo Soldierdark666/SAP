@@ -5,6 +5,8 @@
 package javaapplication1;
 
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -20,6 +22,11 @@ public class clientes extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         llenarCombos();
         llenarListaClientes();
+    }
+    public String arreglarFormato(Date date){
+        String strDate = DateFormat.getDateInstance().format(date);
+        String fechaFin = strDate.replace(" ", "-");
+        return fechaFin;
     }
     public void llenarListaClientes(){
         DefaultListModel modeloLista = m1.llenarLista();
@@ -395,8 +402,11 @@ public class clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_clientesKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String fechaInicioFull=txtFechaFin.getDateFormatString();
-        String fechaFinFull=txtFechaFin.getDateFormatString();
+        
+        Date dateInicio  =txtFechaInicio.getDate();
+        String fechaInicio=arreglarFormato(dateInicio);
+        Date dateFin  =txtFechaFin.getDate();
+        String fechaFin=arreglarFormato(dateFin);
         
         String txtMontoPrestamo=montoPrestamo.getText();
         String txtCodigoCliente=codigoCliente.getText();
@@ -404,6 +414,7 @@ public class clientes extends javax.swing.JFrame {
         String especial="";
         
         String txtPromotorPrestamo = promotorPrestamo.getSelectedItem().toString();
+        
         
         if (especialPrestamo.isSelected()) {
             especial="Si";
@@ -413,7 +424,7 @@ public class clientes extends javax.swing.JFrame {
         if(txtCodigoCliente=="Codigo"){
            JOptionPane.showMessageDialog(null, "Seleccione un cliente para asigarnle un prestamo");
         }else{
-            m1.agregarPrestamo(fechaInicioFull, fechaFinFull, txtMontoPrestamo, especial, txtCodigoCliente,txtPromotorPrestamo);
+            m1.agregarPrestamo(fechaInicio, fechaFin, txtMontoPrestamo, especial, txtCodigoCliente,txtPromotorPrestamo);
             tblPrestamos.setModel(m1.showTabletPrestamo(txtCodigoCliente));
         }
         

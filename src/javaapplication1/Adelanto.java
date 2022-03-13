@@ -4,6 +4,8 @@
  */
 package javaapplication1;
 
+import java.text.DateFormat;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,6 +26,12 @@ public class Adelanto extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         llenarcombos();
     }
+    
+    public String arreglarFormato(Date date){
+    String strDate = DateFormat.getDateInstance().format(date);
+    String fechaFin = strDate.replace(" ", "-");
+    return fechaFin;
+}
     
     public void llenarcombos() {
         nombreCliente.setModel(m1.llenarCMBClientes());
@@ -234,13 +242,16 @@ public class Adelanto extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinAdelantoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtfechaEntranteAdelanto =           txtFechaEntrnateAdelanto.getDateFormatString();
-        String txtfechaSalienteAdelanto =           txtFechaSalienteAdelanto.getDateFormatString();
+        Date dateInicio  =txtFechaEntrnateAdelanto.getDate();
+        String fechaNuevaEntrante=arreglarFormato(dateInicio);
+        Date dateSaliente  =txtFechaSalienteAdelanto.getDate();
+        String fechaNuevaSaliente=arreglarFormato(dateSaliente);
+     
         String txtmontoAdelantoFecha    =           montoAdelantoFecha.getText();
         String nombre                   =           nombreCliente.getSelectedItem().toString();
         String FechaInicioPrestamo      =           fechaPrestamoAdelanto.getSelectedItem().toString();
         
-        m1.agregarAdelanto(txtfechaEntranteAdelanto, txtfechaSalienteAdelanto, txtmontoAdelantoFecha,nombre,FechaInicioPrestamo);
+        m1.agregarAdelanto(fechaNuevaEntrante, fechaNuevaSaliente, txtmontoAdelantoFecha,nombre,FechaInicioPrestamo);
         
         llenarTablaAdelanto(m1.showTabletAdelanto(nombre,FechaInicioPrestamo));
     }//GEN-LAST:event_jButton2ActionPerformed

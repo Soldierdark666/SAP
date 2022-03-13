@@ -4,6 +4,8 @@
  */
 package javaapplication1;
 
+import java.text.DateFormat;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -22,6 +24,11 @@ public class Falla extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         llenarcombos();
+    }
+    public String arreglarFormato(Date date){
+        String strDate = DateFormat.getDateInstance().format(date);
+        String fechaFin = strDate.replace(" ", "-");
+        return fechaFin;
     }
     
     public void llenarTablaFalla(DefaultTableModel modelo){
@@ -191,7 +198,7 @@ public class Falla extends javax.swing.JFrame {
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 740, 210));
 
         txtFechaFalla.setDateFormatString("y-MM-d");
-        jPanel2.add(txtFechaFalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 190, 30));
+        jPanel2.add(txtFechaFalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 210, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 790, 470));
 
@@ -231,12 +238,15 @@ public class Falla extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinFallaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtfechaFalla            =           txtFechaFalla.getDateFormatString();
+        Date dateInicio  =txtFechaFalla.getDate();
+        String fechaNueva=arreglarFormato(dateInicio);
+        
+       
         String txtMontoFechaFalla       =           montoFechaFalla.getText();
         String FechaInicioPrestamo      =           fechaPrestamoFalla.getSelectedItem().toString();
         String nombre                   =           nombreCliente.getSelectedItem().toString();
         
-        m1.agregarFalla(txtfechaFalla, txtMontoFechaFalla, FechaInicioPrestamo,nombre);
+        m1.agregarFalla(fechaNueva, txtMontoFechaFalla, FechaInicioPrestamo,nombre);
         llenarTablaFalla(m1.showTableFalla(nombre,FechaInicioPrestamo));
     }//GEN-LAST:event_jButton2ActionPerformed
 

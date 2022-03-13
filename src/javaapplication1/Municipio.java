@@ -17,6 +17,7 @@ public class Municipio extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
+    metodos m1=new metodos();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,6 +71,11 @@ public class Municipio extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String txtcodigoMunicipio=codigoMunicipio.getText();
         String txtmunicipio=municipio.getText();
+        m1.agregarMunicipio(txtmunicipio);
+        
+        codigoMunicipio.setText("");
+        municipio.setText("");
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
