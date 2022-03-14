@@ -282,7 +282,7 @@ public class Cuentas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
         Date date  =txtFechaInicio.getDate();
         String strDate = DateFormat.getDateInstance().format(date);
         String fechaFin = strDate.replace(" ", "-");

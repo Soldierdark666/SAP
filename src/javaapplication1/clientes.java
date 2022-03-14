@@ -38,7 +38,7 @@ public class clientes extends javax.swing.JFrame {
         municipioAval.setModel(m1.llenarCMBMunicipio());
         municipioAval2.setModel(m1.llenarCMBMunicipio());
         statusCliente.setModel(m1.llenarCMBStatus());
-        promotorPrestamo.setModel(m1.llenarCMBPromotor());
+        buscarEncargado.setModel(m1.llenarCMBEncargado());
     }
     public void vaciarTXT(){
         codigoCliente.setText("");
@@ -65,7 +65,7 @@ public class clientes extends javax.swing.JFrame {
         listClientes = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        buscarCliente = new javax.swing.JComboBox<>();
+        buscarEncargado = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -97,11 +97,9 @@ public class clientes extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         especialPrestamo = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
-        promotorPrestamo = new javax.swing.JComboBox<>();
         montoPrestamo = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         txtFechaFin = new com.toedter.calendar.JDateChooser();
@@ -143,8 +141,8 @@ public class clientes extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/serach.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        buscarCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(buscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 190, -1));
+        buscarEncargado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(buscarEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 190, -1));
 
         jLabel3.setText("Buscar");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
@@ -249,14 +247,11 @@ public class clientes extends javax.swing.JFrame {
         jLabel16.setText("Termina");
         jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
 
-        jLabel17.setText("Promotor(a)");
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
-
         jLabel18.setText("Monto");
-        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
+        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
         especialPrestamo.setText("Especial");
-        jPanel3.add(especialPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
+        jPanel3.add(especialPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
 
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -264,22 +259,14 @@ public class clientes extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, -1, -1));
-
-        promotorPrestamo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        promotorPrestamo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                promotorPrestamoActionPerformed(evt);
-            }
-        });
-        jPanel3.add(promotorPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 240, -1));
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, -1, -1));
 
         montoPrestamo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 montoPrestamoKeyTyped(evt);
             }
         });
-        jPanel3.add(montoPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 240, -1));
+        jPanel3.add(montoPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 240, -1));
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/prestamo-asegurado2.png"))); // NOI18N
         jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
@@ -329,7 +316,8 @@ public class clientes extends javax.swing.JFrame {
         String txtDireccionAval2 = direccionAval2.getText();
         String txtMunicipioAval2 = municipioAval2.getSelectedItem().toString();
         String txtStatusCliente = statusCliente.getSelectedItem().toString();
-        m1.registrarClientes(txtNombreCliente, txtDireccionCliente, txtMunicipio, txtNombreAval, txtDireccionAval, txtMunicipioAval, txtNombreAval2, txtDireccionAval2, txtMunicipioAval2, txtStatusCliente);
+        String txtEncargado = buscarEncargado.getSelectedItem().toString();
+        m1.registrarClientes(txtNombreCliente, txtDireccionCliente, txtMunicipio, txtNombreAval, txtDireccionAval, txtMunicipioAval, txtNombreAval2, txtDireccionAval2, txtMunicipioAval2, txtStatusCliente,txtEncargado);
         vaciarTXT();
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -372,10 +360,6 @@ public class clientes extends javax.swing.JFrame {
         
     }//GEN-LAST:event_listClientesMouseClicked
 
-    private void promotorPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_promotorPrestamoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_promotorPrestamoActionPerformed
-
     private void montoPrestamoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_montoPrestamoKeyTyped
         char c=evt.getKeyChar();
         if((Character.isDigit(c))||(c==KeyEvent.VK_PERIOD)||(c==KeyEvent.VK_BACK_SPACE)){
@@ -413,8 +397,6 @@ public class clientes extends javax.swing.JFrame {
         
         String especial="";
         
-        String txtPromotorPrestamo = promotorPrestamo.getSelectedItem().toString();
-        
         
         if (especialPrestamo.isSelected()) {
             especial="Si";
@@ -424,7 +406,7 @@ public class clientes extends javax.swing.JFrame {
         if(txtCodigoCliente=="Codigo"){
            JOptionPane.showMessageDialog(null, "Seleccione un cliente para asigarnle un prestamo");
         }else{
-            m1.agregarPrestamo(fechaInicio, fechaFin, txtMontoPrestamo, especial, txtCodigoCliente,txtPromotorPrestamo);
+            m1.agregarPrestamo(fechaInicio, fechaFin, txtMontoPrestamo, especial, txtCodigoCliente);
             tblPrestamos.setModel(m1.showTabletPrestamo(txtCodigoCliente));
         }
         
@@ -482,7 +464,7 @@ public class clientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> buscarCliente;
+    private javax.swing.JComboBox<String> buscarEncargado;
     private javax.swing.JTextField clientes;
     private javax.swing.JTextField codigoCliente;
     private javax.swing.JTextField direccionAval;
@@ -501,7 +483,6 @@ public class clientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -527,7 +508,6 @@ public class clientes extends javax.swing.JFrame {
     private javax.swing.JTextField nombreAval;
     private javax.swing.JTextField nombreAval2;
     private javax.swing.JTextField nombreCliente;
-    private javax.swing.JComboBox<String> promotorPrestamo;
     private javax.swing.JComboBox<String> statusCliente;
     private javax.swing.JTable tblPrestamos;
     private com.toedter.calendar.JDateChooser txtFechaFin;

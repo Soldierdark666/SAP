@@ -9,19 +9,28 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
  * @author soldi
  */
-public class reporte extends javax.swing.JFrame {
+public class tarjetaEncargado extends javax.swing.JFrame {
 
     /**
-     * Creates new form Cuentas
+     * Creates new form tarjetaEncargado
      */
-    public reporte() {
+    metodos m1= new metodos();
+    public void llenarCMB(){
+        DefaultComboBoxModel modelo=m1.llenarCMBEncargado();
+        cmbEncargado.setModel(modelo);
+    }
+    public tarjetaEncargado() {
         initComponents();
         setLocationRelativeTo(null);
+        llenarCMB();
     }
 
     /**
@@ -34,52 +43,61 @@ public class reporte extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        fechaPrestamo = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        cmbEncargado = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 11, -1, -1));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/LISTAAAA.png"))); // NOI18N
+        fechaPrestamo.setDateFormatString("y-MM-d");
+        jPanel1.add(fechaPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 140, -1));
+
+        jLabel1.setText("Fecha Prestamo:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 100, 40));
+
+        jLabel2.setText("Encargado:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 110, -1));
+
+        cmbEncargado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(cmbEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 140, -1));
+
+        jButton1.setText("Generar reporte");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 180, 150));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 120, -1));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plazaaaaa.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 180, -1));
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Recuperado-01.png"))); // NOI18N
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 180, 150));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 240));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        tarjetaEncargado t1= new tarjetaEncargado();
-        t1.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Date date  =fechaPrestamo.getDate();
+        String encargado=cmbEncargado.getSelectedItem().toString();
+        String idEncargado=m1.filtrarEncargado(encargado)[0];
+        String strDate = DateFormat.getDateInstance().format(date);
+        String fechaFin = strDate.replace(" ", "-");
         URL url=null;
+        
         try {
-            url = new URL("http://localhost/reportes/reporteClientes.php");
-            Desktop.getDesktop().browse(url.toURI());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+            url = new URL("http://localhost/reportes/reporteVentas.php?fecha="+fechaFin+"&encargado="+idEncargado);
+            try {
+                Desktop.getDesktop().browse(url.toURI());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e1) {
+            e1.printStackTrace();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -100,31 +118,30 @@ public class reporte extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(reporte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(tarjetaEncargado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(reporte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(tarjetaEncargado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(reporte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(tarjetaEncargado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(reporte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(tarjetaEncargado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new reporte().setVisible(true);
+                new tarjetaEncargado().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbEncargado;
+    private com.toedter.calendar.JDateChooser fechaPrestamo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

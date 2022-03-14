@@ -23,9 +23,9 @@ public class metodos {
     
     
     
-    public void registrarClientes(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String txtStatusCliente) {
+    public void registrarClientes(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String txtStatusCliente, String txtEncargado) {
         try {
-            String sql="insert into cliente values(null,'"+nombreCliente+"','"+direccionCliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioCliente+"')"+",'"+nombreAval1Cliente+"','"+direccionAval1Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval1Cliente+"')"+",'"+nombreAval2Cliente+"','"+direccionAval2Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval2Cliente+"')"+",(select idStatus from catalogoStatus where descripcionStatus='"+txtStatusCliente+"'));";
+            String sql="insert into cliente values(null,'"+nombreCliente+"','"+direccionCliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioCliente+"')"+",'"+nombreAval1Cliente+"','"+direccionAval1Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval1Cliente+"')"+",'"+nombreAval2Cliente+"','"+direccionAval2Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval2Cliente+"')"+",(select idStatus from catalogoStatus where descripcionStatus='"+txtStatusCliente+"'), (select idEncargado from encargado where nombreEncargado='"+txtEncargado+"'));";
             System.out.println(sql);
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
@@ -140,9 +140,9 @@ public class metodos {
          }
     }
     
-    public void agregarPrestamo(String fechaInicioPrestamo, String fechaFinPrestamo, String montoPrestamo, String especial, String idClientePrestamo, String ejecutivoPrestamo){
+    public void agregarPrestamo(String fechaInicioPrestamo, String fechaFinPrestamo, String montoPrestamo, String especial, String idClientePrestamo){
         try {
-            String sql = "insert into prestamo value(null,'"+fechaInicioPrestamo+"','"+fechaFinPrestamo+"','"+montoPrestamo+"','"+especial+"', "+idClientePrestamo+", (select idEjecutivo from ejecutivo where nombreEjecutivo='"+ejecutivoPrestamo+"'))";
+            String sql = "insert into prestamo value(null,'"+fechaInicioPrestamo+"','"+fechaFinPrestamo+"','"+montoPrestamo+"','"+especial+"', "+idClientePrestamo+");";
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
         } catch (SQLException e) {
@@ -837,7 +837,8 @@ public class metodos {
         modelo.addColumn("Especial");
         modelo.addColumn("Ejecutivo");
         
-        String sql = "select p.idPrestamo, p.fechaInicioPrestamo, p.fechaFinPrestamo, P.montoPrestamo, p.especial, e.nombreEjecutivo from prestamo p inner join ejecutivo e on p.idEjecutivoPrestamo=e.idEjecutivo where p.idClientePrestamo="+idClientePrestamo+";";
+        String sql = "select p.idPrestamo, p.fechaInicioPrestamo, p.fechaFinPrestamo, P.montoPrestamo, p.especial, e.nombreEncargado from prestamo p  inner join cliente c on c.idCliente=p.idClientePrestamo inner join encargado e on e.idEncargado=c.idEncargadoCliente where c.idCliente="+idClientePrestamo+";";
+        System.out.println();
         String datos[] = new String [6];
         try{
             
