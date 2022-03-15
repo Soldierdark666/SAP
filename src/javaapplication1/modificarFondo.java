@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package javaapplication1;
-import static javaapplication1.fondo.ejecutivo;
-import static javaapplication1.fondo.txtFechaFondo;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,10 +17,21 @@ public class modificarFondo extends javax.swing.JFrame {
      * Creates new form modificarFondo
      */
     metodos m1= new metodos();
-    String cmbejecutivo=ejecutivo.getSelectedItem().toString();
-    String txtfechaFondo=txtFechaFondo.getDateFormatString();
-    String datos[]=m1.filtrarFondo(txtfechaFondo, cmbejecutivo);
-    public modificarFondo() {
+    private String fechaFondo;
+    public void setFechaFondo(String fechaFondo){
+        this.fechaFondo=fechaFondo;
+    }
+    public modificarFondo(String fechaFondo, String nombreEjecutivos) {
+        initComponents();
+        this.setFechaFondo(fechaFondo);
+        setLocationRelativeTo(null);
+        llenarTabla();
+    }
+    public void llenarTabla(){
+        DefaultTableModel modelo=m1.showTableGastos(this.fechaFondo);
+        tablaGasto.setModel(modelo);
+    }
+    public modificarFondo(){
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -53,11 +65,11 @@ public class modificarFondo extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaGasto = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtMonto = new javax.swing.JTextField();
+        txtConcepto = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -157,7 +169,7 @@ public class modificarFondo extends javax.swing.JFrame {
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaGasto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -168,7 +180,7 @@ public class modificarFondo extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaGasto);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 390, 240));
 
@@ -179,10 +191,15 @@ public class modificarFondo extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Concepto");
         jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 220, -1, -1));
-        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 250, 250, -1));
-        jPanel3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, 250, -1));
+        jPanel3.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 250, 250, -1));
+        jPanel3.add(txtConcepto, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, 250, -1));
 
         jButton1.setText("Agregar ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 280, 350, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -246,16 +263,18 @@ public class modificarFondo extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         
-        txtTrece.setText(datos[0]);
-        txtAdelantos.setText(datos[1]);
-        
-        float sumTotal=Float.parseFloat(datos[0])+Float.parseFloat(datos[1]);
-        //System.out.println(sumTotal);
-
-        String Total=Float.toString(sumTotal);
-        
-        txtTotal.setText(Total);
     }//GEN-LAST:event_formWindowOpened
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String concepto=txtConcepto.getText();
+        String monto=txtMonto.getText();
+        if(concepto.equals("")||monto.equals("")){
+            JOptionPane.showMessageDialog(null, "Favor de llenar todos los campos");
+        }else{
+            m1.agregarGasto(concepto,monto,this.fechaFondo);
+        }
+        llenarTabla();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -317,14 +336,14 @@ public class modificarFondo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private java.awt.PopupMenu popupMenu1;
+    private javax.swing.JTable tablaGasto;
     private javax.swing.JTextField txtAdelantos;
     private javax.swing.JTextField txtCobroSemana;
+    private javax.swing.JTextField txtConcepto;
     private javax.swing.JTextField txtDepositoEjecutivo;
     private javax.swing.JTextField txtFondo;
+    private javax.swing.JTextField txtMonto;
     private javax.swing.JTextField txtSupervision;
     private javax.swing.JTextField txtTotal;
     private javax.swing.JTextField txtTrece;

@@ -5,6 +5,7 @@
 package javaapplication1;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -19,19 +20,13 @@ public class Adelanto extends javax.swing.JFrame {
      * Creates new form trece
      */
     
-        metodos m1 = new metodos();
+    metodos m1 = new metodos();
     
     public Adelanto() {
         initComponents();
         setLocationRelativeTo(null);
         llenarcombos();
     }
-    
-    public String arreglarFormato(Date date){
-    String strDate = DateFormat.getDateInstance().format(date);
-    String fechaFin = strDate.replace(" ", "-");
-    return fechaFin;
-}
     
     public void llenarcombos() {
         nombreCliente.setModel(m1.llenarCMBClientes());
@@ -242,10 +237,13 @@ public class Adelanto extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinAdelantoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        SimpleDateFormat formato= new SimpleDateFormat("yyyy-MM-dd");
+        
+        
         Date dateInicio  =txtFechaEntrnateAdelanto.getDate();
-        String fechaNuevaEntrante=arreglarFormato(dateInicio);
+        String fechaNuevaEntrante=formato.format(dateInicio);
         Date dateSaliente  =txtFechaSalienteAdelanto.getDate();
-        String fechaNuevaSaliente=arreglarFormato(dateSaliente);
+        String fechaNuevaSaliente=formato.format(dateSaliente);
      
         String txtmontoAdelantoFecha    =           montoAdelantoFecha.getText();
         String nombre                   =           nombreCliente.getSelectedItem().toString();

@@ -6,6 +6,7 @@ package javaapplication1;
 
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -22,11 +23,6 @@ public class clientes extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         llenarCombos();
         llenarListaClientes();
-    }
-    public String arreglarFormato(Date date){
-        String strDate = DateFormat.getDateInstance().format(date);
-        String fechaFin = strDate.replace(" ", "-");
-        return fechaFin;
     }
     public void llenarListaClientes(){
         DefaultListModel modeloLista = m1.llenarLista();
@@ -63,6 +59,7 @@ public class clientes extends javax.swing.JFrame {
         clientes = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         listClientes = new javax.swing.JList<>();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         buscarEncargado = new javax.swing.JComboBox<>();
@@ -102,8 +99,8 @@ public class clientes extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         montoPrestamo = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        txtFechaFin = new com.toedter.calendar.JDateChooser();
         txtFechaInicio = new com.toedter.calendar.JDateChooser();
+        txtFechaFin = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblPrestamos = new javax.swing.JTable();
@@ -132,7 +129,10 @@ public class clientes extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(listClientes);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 210, 500));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 210, 460));
+
+        jToggleButton1.setText("Filtrar cliente");
+        jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, 210, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 580));
 
@@ -271,11 +271,11 @@ public class clientes extends javax.swing.JFrame {
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/prestamo-asegurado2.png"))); // NOI18N
         jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
-        txtFechaFin.setDateFormatString("y-MM-d");
-        jPanel3.add(txtFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 240, -1));
-
         txtFechaInicio.setDateFormatString("y-MM-d");
         jPanel3.add(txtFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 240, -1));
+
+        txtFechaFin.setDateFormatString("d-MM-y");
+        jPanel3.add(txtFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 240, -1));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 0, 350, 450));
 
@@ -386,12 +386,13 @@ public class clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_clientesKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        SimpleDateFormat formato= new SimpleDateFormat("yyyy-MM-dd");
         
         Date dateInicio  =txtFechaInicio.getDate();
-        String fechaInicio=arreglarFormato(dateInicio);
+        String fechaInicio=formato.format(dateInicio);
         Date dateFin  =txtFechaFin.getDate();
-        String fechaFin=arreglarFormato(dateFin);
-        
+        String fechaFin=formato.format(dateFin);
+         
         String txtMontoPrestamo=montoPrestamo.getText();
         String txtCodigoCliente=codigoCliente.getText();
         
@@ -500,6 +501,7 @@ public class clientes extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JList<String> listClientes;
     private javax.swing.JTextField montoPrestamo;
     private javax.swing.JComboBox<String> municipio;

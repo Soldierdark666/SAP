@@ -5,6 +5,7 @@
 package javaapplication1;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -25,12 +26,6 @@ public class trece extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         llenarcombos();
     }
-    
-    public String arreglarFormato(Date date){
-    String strDate = DateFormat.getDateInstance().format(date);
-    String fechaFin = strDate.replace(" ", "-");
-    return fechaFin;
-}
     
     public void llenarcombos() {
         nombreCliente.setModel(m1.llenarCMBClientes());
@@ -233,8 +228,11 @@ public class trece extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinTreceActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        SimpleDateFormat formato= new SimpleDateFormat("yyyy-MM-dd");
+        
+        
         Date dateInicio  =txtFechaTrece.getDate();
-        String fechaNueva=arreglarFormato(dateInicio); 
+        String fechaNueva=formato.format(dateInicio); 
         
         String txtmonto                 =       monto.getText();
         String nombre                   =       nombreCliente.getSelectedItem().toString();

@@ -4,6 +4,10 @@
  */
 package javaapplication1;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -111,11 +115,23 @@ public class fondo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        modificarFondo f1 = new modificarFondo();
-        f1.setVisible(true);
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Date date=txtFechaFondo.getDate();
+        SimpleDateFormat formato= new SimpleDateFormat("yyyy-MM-dd");
+        String fechaFondo=formato.format(date);
+        String nombreEjecutivo=ejecutivo.getSelectedItem().toString();
+        
+        String fondo[]=m1.filtrarFondo(fechaFondo,nombreEjecutivo);
+        System.out.println("Fondo:"+fondo[0]);
+        if (fondo[0].equals("NO")){
+            m1.agregarFondo(fechaFondo, nombreEjecutivo);
+        }
+        
+        modificarFondo f1= new modificarFondo(fechaFondo,nombreEjecutivo);
+        f1.setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
 

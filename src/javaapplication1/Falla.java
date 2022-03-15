@@ -5,6 +5,7 @@
 package javaapplication1;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -24,11 +25,6 @@ public class Falla extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         llenarcombos();
-    }
-    public String arreglarFormato(Date date){
-        String strDate = DateFormat.getDateInstance().format(date);
-        String fechaFin = strDate.replace(" ", "-");
-        return fechaFin;
     }
     
     public void llenarTablaFalla(DefaultTableModel modelo){
@@ -238,8 +234,10 @@ public class Falla extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinFallaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        SimpleDateFormat formato= new SimpleDateFormat("yyyy-MM-dd");
+        
         Date dateInicio  =txtFechaFalla.getDate();
-        String fechaNueva=arreglarFormato(dateInicio);
+        String fechaNueva=formato.format(dateInicio);
         
        
         String txtMontoFechaFalla       =           montoFechaFalla.getText();

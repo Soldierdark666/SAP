@@ -46,6 +46,19 @@ public class metodos {
         }
     }
 
+    public void agregarGasto(String concepto, String monto, String fechaFondo) {
+        try {
+            String sql="insert into gasto value(null,?,?, (select idFondo from fondo where fechaFondo=?))";
+            PreparedStatement pss = cn.prepareStatement(sql);
+            pss.setString(1, concepto);
+            pss.setString(2, monto);
+            pss.setString(3, fechaFondo);
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+        }
+    }
+    
     public void agregarEncargado(String nombreEncargado, String telefonoEncargado, String direccionEncargado, String comisionEncargado, String idMunicipioEncargado, String idSupervisorEncargado) {
         try {
             PreparedStatement pss = cn.prepareStatement("insert into encargado values(null,?,?,?,?,(select idMunicipio from municipio where nombreMunicipio=?),(select idSupervisor from supervisor where nombreSupervisor=?));");
@@ -108,12 +121,12 @@ public class metodos {
             JOptionPane.showMessageDialog(null, "error: " + e);
         }
     }
-    public void agregarFondo(String idFondo,String fechaFondo,String idEjecutivo){
+    public void agregarFondo(String fechaFondo,String nombreEjecutivo){
         try {
-            PreparedStatement pss = cn.prepareStatement("insert into fondo(null,?,?);");
-            pss.setString(1, idFondo);
-            pss.setString(2, fechaFondo);
-            pss.setString(3, idEjecutivo);  
+            String sql="insert into fondo value(null,'"+fechaFondo+"',(select idEjecutivo from ejecutivo where nombreEjecutivo='"+nombreEjecutivo+"'));";
+            //System.out.println(sql);
+            PreparedStatement pss = cn.prepareStatement(sql);
+            pss.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);
         }
@@ -469,19 +482,27 @@ public class metodos {
         }
         return datos;
     }
-    public String[] filtrarFondo(String fechaPrestamo, String nombreEjecutivo){
-        String sql = "select sum(t.montoTrece) as totalTrece, sum(a.montoAdelanto) as totalAdelanto, c.nombreCliente, p.fechaInicioPrestamo from cliente c inner join prestamo p on p.idClientePrestamo=c.idCliente inner join trece t on t.idPrestamoTrece=p.idPrestamo inner join adelanto a on a.idprestamoAdelanto=p.idPrestamo inner join ejecutivo e on e.idEjecutivo=p.idEjecutivoPrestamo where p.fechaInicioPrestamo='"+fechaPrestamo+"' and p.idClientePrestamo=1 and e.nombreEjecutivo='"+nombreEjecutivo+"';";
+    public String[] filtrarFondo(String fechaFondo, String nombreEjecutivo){
+        String sql = "select * from fondo where fechaFondo ='"+fechaFondo+"' and idEjecutivo=(select idEjecutivo from ejecutivo where nombreEjecutivo='"+nombreEjecutivo+"');";
         //System.out.println(sql);
         String datos[] = new String[4];
         try{
             Statement st=cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
-                datos[0]=rs.getString(1);
-                datos[1]=rs.getString(2);
-                datos[2]=rs.getString(3);
-                datos[3]=rs.getString(4);
+            if ( rs.getRow() != 0 ){
+                datos[0]="NO";
+                datos[1]="NO";
+                datos[2]="NO";
+                datos[3]="NO";
+            }else{
+                while(rs.next()){
+                    datos[0]=rs.getString(1);
+                    datos[1]=rs.getString(2);
+                    datos[2]=rs.getString(3);
+                    datos[3]=rs.getString(4);
+                }
             }
+            
         }catch(SQLException e){
             System.out.println("Error: "+e);
         }
@@ -611,6 +632,35 @@ public class metodos {
                 datos[4]=rs.getString(5)+"%";
                 datos[5]=rs.getString(6);
                 datos[6]=rs.getString(7);
+                modelo.addRow(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        
+        
+        return modelo;
+    }
+    public DefaultTableModel showTableGastos(String fechaFondo){
+        
+        DefaultTableModel modelo= new DefaultTableModel();
+        
+        modelo.addColumn("Concepto");
+        modelo.addColumn("Monto");
+        
+        String sql="select * from gasto where idFondoGasto=(select idFondo from fondo where fechaFondo='"+fechaFondo+"');";
+        
+        
+        String datos[] = new String [11];
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
                 modelo.addRow(datos);
             }
             

@@ -134,6 +134,12 @@ public class Ejecutivo extends javax.swing.JFrame {
         jPanel1.add(municipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 200, -1));
         jPanel1.add(plaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 200, -1));
         jPanel1.add(semanas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 200, -1));
+
+        montoPrestamista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                montoPrestamistaActionPerformed(evt);
+            }
+        });
         jPanel1.add(montoPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 200, -1));
         jPanel1.add(montoEspeciaPrestamista, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 200, -1));
 
@@ -194,6 +200,12 @@ public class Ejecutivo extends javax.swing.JFrame {
         String txtSemanas=semanas.getText();
         String txtMontoPrestamista=montoPrestamista.getText();
         String txtMontoEspeciaPrestamista=montoEspeciaPrestamista.getText();
+        if (txtMontoPrestamista.equals("")){
+            txtMontoPrestamista="0";
+        }
+        if (txtMontoEspeciaPrestamista.equals("")){
+            txtMontoEspeciaPrestamista="0";
+        }
         m1.agregarEjecutivo(txTnombrePrestamista, txtTelefonoPrestamista, txtDireccionPrestamista, txtMunicipio, txtPlaza, txtSemanas, txtMontoPrestamista, txtMontoEspeciaPrestamista);
         llenarcombos();
         vaciarInputs();
@@ -224,6 +236,10 @@ public class Ejecutivo extends javax.swing.JFrame {
         llenarcombos();
         vaciarInputs();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void montoPrestamistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoPrestamistaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_montoPrestamistaActionPerformed
 
     /**
      * @param args the command line arguments
