@@ -25,7 +25,7 @@ public class metodos {
     
     public void registrarClientes(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String txtStatusCliente, String txtEncargado) {
         try {
-            String sql="insert into cliente values(null,'"+nombreCliente+"','"+direccionCliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioCliente+"')"+",'"+nombreAval1Cliente+"','"+direccionAval1Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval1Cliente+"')"+",'"+nombreAval2Cliente+"','"+direccionAval2Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval2Cliente+"')"+",(select idStatus from catalogoStatus where descripcionStatus='"+txtStatusCliente+"'), (select idEncargado from encargado where nombreEncargado='"+txtEncargado+"'));";
+            String sql="insert into cliente values(null,'"+nombreCliente+"','"+direccionCliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioCliente+"')"+",'"+nombreAval1Cliente+"','"+direccionAval1Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval1Cliente+"')"+",'"+nombreAval2Cliente+"','"+direccionAval2Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval1Cliente+"')"+",(select idEncargado from encargado where nombreEncargado='"+txtEncargado+"'), (select idStatus from catalogoStatus where descripcionStatus='Activo'));";
             System.out.println(sql);
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
@@ -555,9 +555,10 @@ public class metodos {
     
     ///////////////////////////////////////////////////////
     
-    public void editarCliente(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String idStatus, String idCliente){
+    public void editarCliente(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String idStatus, String idCliente, String nombreEncargado){
         try{
-            String sql ="update cliente set nombreCliente='"+nombreCliente+"' ,direccionCliente='"+direccionCliente+"', idMunicipioCliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',nombreAval1Cliente='"+nombreAval1Cliente+"',direccionAval1Cliente='"+direccionAval1Cliente+"',idMunicipioAval1Cliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',nombreAval2Cliente='"+nombreAval2Cliente+"',direccionAval2Cliente='"+direccionAval2Cliente+"',idMunicipioAval2Cliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',idStatus='"+idStatus+"' where idCliente='"+idCliente+"'";
+            String sql ="update cliente set nombreCliente='"+nombreCliente+"', idEncargadoCliente=(select idEncargado from encargado where nombreEncargado='"+nombreEncargado+"') ,direccionCliente='"+direccionCliente+"', idMunicipioCliente=(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"'),nombreAval1Cliente='"+nombreAval1Cliente+"',direccionAval1Cliente='"+direccionAval1Cliente+"',idMunicipioAval1Cliente=(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"'),nombreAval2Cliente='"+nombreAval2Cliente+"',direccionAval2Cliente='"+direccionAval2Cliente+"',idMunicipioAval2Cliente=(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"'),idStatus=1 where idCliente="+idCliente+"";
+            System.out.println(sql);
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
         }catch(SQLException e){
@@ -567,6 +568,16 @@ public class metodos {
     public void editarEjecutivo(String idEjecutivo, String nombreEjecutivo,String telefonoEjecutivo,String direccionEjecutivo,String nombreMunicipio,String plazaEjecutivo,String semanasEjecutivo,String montoEjecutivo,String montoEspecialEjecutivo){
         try{
             String sql="update ejecutivo set nombreEjecutivo='"+nombreEjecutivo+"', telefonoEjecutivo='"+telefonoEjecutivo+"', direccionEjecutivo='"+direccionEjecutivo+"', idMunicipioEjecutivo=(select idMunicipio from municipio where nombreMunicipio='"+nombreMunicipio+"'), plazaEjecutivo='"+plazaEjecutivo+"', semanasEjecutivo='"+semanasEjecutivo+"', montoEjecutivo="+montoEjecutivo+", montoEspecialEjecutivo="+montoEspecialEjecutivo+" where idEjecutivo="+idEjecutivo+";";
+            System.out.println(sql);
+            PreparedStatement pss = cn.prepareStatement(sql);
+            pss.executeUpdate();
+        }catch(SQLException e){
+            System.out.println("Error: "+e);
+        }
+    }
+    public void editarPrestamo(String especialPrestamo, String montoPrestamo, String idPrestamo){
+        try{
+            String sql="Update prestamo set especial='"+especialPrestamo+"', montoPrestamo='"+montoPrestamo+"' where idPrestamo="+idPrestamo+";";
             System.out.println(sql);
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
@@ -784,6 +795,37 @@ public class metodos {
         
         return modelo;
     }
+     public DefaultTableModel showTableFallaById(String idPrestamo){
+        
+        DefaultTableModel modelo= new DefaultTableModel();
+        
+        modelo.addColumn("ID falla");
+        modelo.addColumn("Fecha falla");
+        modelo.addColumn("Monto falla");
+        modelo.addColumn("Fecha prestamo");
+        
+        String sql = "select f.idFalla, f.fechaFalla, f.montoFalla, p.fechaInicioPrestamo from falla f inner join prestamo p on f.idPrestamoFalla = p.idPrestamo inner join cliente c on c.idCliente=p.idClientePrestamo where idPrestamoFalla="+idPrestamo+";";
+        String datos[] = new String [11];
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                modelo.addRow(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        
+        
+        return modelo;
+    }
      
     public DefaultTableModel showTabletRecuperado(String nombreCliente, String fechaPrestamo){
         
@@ -815,6 +857,36 @@ public class metodos {
         
         return modelo;
     }
+    public DefaultTableModel showTabletRecuperadoById(String idPrestamo){
+        
+        DefaultTableModel modelo= new DefaultTableModel();
+        
+        modelo.addColumn("ID Recuperado");
+        modelo.addColumn("Fecha Recuperado");
+        modelo.addColumn("Monto Recuperado");
+        modelo.addColumn("Fecha Prestamo");
+        
+        String sql = "select r.idRecuperado, r.fechaRecuperado, r.montoRecuperado, p.fechaInicioPrestamo from recuperado r inner join prestamo p on r.idPrestamoRecuperado=p.idPrestamo inner join cliente c on c.idCliente=p.idClientePrestamo where r.idPrestamoRecuperado="+idPrestamo+";";
+        String datos[] = new String [11];
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                modelo.addRow(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        
+        return modelo;
+    }
     
     public DefaultTableModel showTabletTrece(String nombreCliente, String fechaPrestamo){
         
@@ -826,6 +898,58 @@ public class metodos {
         modelo.addColumn("Fecha Prestamo");
         
         String sql = "select t.idTrece, t.fechaTrece, t.montoTrece, p.fechaInicioPrestamo from trece t inner join prestamo p on t.idPrestamoTrece=p.idPrestamo inner join cliente c on c.idCliente=p.idClientePrestamo where c.nombreCliente='"+nombreCliente+"' and p.fechaInicioPrestamo='"+fechaPrestamo+"';";
+        String datos[] = new String [11];
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                modelo.addRow(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        
+        return modelo;
+    }
+    
+    
+    public String returnLastClient(){
+        String sql="select idCliente from cliente order by idCliente DESC limit 1;";
+        
+        String dato="";
+        try{
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                dato=rs.getString(1);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        
+        return dato;
+        
+    }
+    
+    
+    public DefaultTableModel showTabletTreceById(String idPrestamo){
+        
+        DefaultTableModel modelo= new DefaultTableModel();
+        
+        modelo.addColumn("ID Trece");
+        modelo.addColumn("Fecha Trece");
+        modelo.addColumn("Monto Trece");
+        modelo.addColumn("Fecha Prestamo");
+        
+        String sql = "select t.idTrece, t.fechaTrece, t.montoTrece, p.fechaInicioPrestamo from trece t inner join prestamo p on t.idPrestamoTrece=p.idPrestamo inner join cliente c on c.idCliente=p.idClientePrestamo where f.idPrestamoFalla="+idPrestamo+";";
         String datos[] = new String [11];
         try{
             
@@ -915,6 +1039,14 @@ public class metodos {
     public void borrarCliente(String idCliente){
          try {
             PreparedStatement pss = cn.prepareStatement("delete from cliente where idCliente="+idCliente+";");
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+         }
+    }
+    public void borrarPrestamo(String idPrestamo){
+         try {
+            PreparedStatement pss = cn.prepareStatement("delete from prestamo where idPrestamo="+idPrestamo+";");
             pss.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);

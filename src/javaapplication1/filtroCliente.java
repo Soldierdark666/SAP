@@ -36,8 +36,26 @@ public class filtroCliente extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         listClientes = new javax.swing.JList<>();
         clientes = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblPrestamos = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblFalla = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblRecuperado = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        avalCliente = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        direccionCliente = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        municipioCliente = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -54,16 +72,115 @@ public class filtroCliente extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(listClientes);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 210, 400));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 290, 400));
 
         clientes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 clientesKeyTyped(evt);
             }
         });
-        jPanel1.add(clientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 210, -1));
+        jPanel1.add(clientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 290, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 460));
+        tblPrestamos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblPrestamos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPrestamosMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblPrestamos);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 530, 110));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Prestamos");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, 90, 30));
+
+        tblFalla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tblFalla);
+
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 530, 110));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setText("Fallas");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 180, 60, 30));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setText("Recuperado");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 480, 110, 30));
+
+        tblRecuperado.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(tblRecuperado);
+
+        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 510, 530, 110));
+
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(jTable4);
+
+        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 360, 530, 110));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setText("Trece");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 330, 50, 30));
+
+        jLabel5.setText("Aval");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, -1, 20));
+
+        avalCliente.setEditable(false);
+        jPanel1.add(avalCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(71, 460, 230, -1));
+
+        jLabel6.setText("Direccion");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, -1, 20));
+
+        direccionCliente.setEditable(false);
+        jPanel1.add(direccionCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 500, 230, -1));
+
+        jLabel7.setText("Municipio");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, -1, 20));
+
+        municipioCliente.setEditable(false);
+        jPanel1.add(municipioCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 540, 230, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 640));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -71,6 +188,10 @@ public class filtroCliente extends javax.swing.JFrame {
     private void listClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listClientesMouseClicked
         String Cliente=listClientes.getSelectedValue().toString();
         String[] arrayCliente=m1.mostrarCliente(Cliente);
+        avalCliente.setText(arrayCliente[4]);
+        direccionCliente.setText(arrayCliente[2]);
+        municipioCliente.setText(arrayCliente[3]);
+        tblPrestamos.setModel(m1.showTabletPrestamo(arrayCliente[0]));
 
     }//GEN-LAST:event_listClientesMouseClicked
 
@@ -78,6 +199,15 @@ public class filtroCliente extends javax.swing.JFrame {
         DefaultListModel modelo = m1.BuscarCliente(clientes.getText());
         listClientes.setModel(modelo);
     }//GEN-LAST:event_clientesKeyTyped
+
+    private void tblPrestamosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPrestamosMouseClicked
+        int row = tblPrestamos.getSelectedRow();
+        String idPrestamo=tblPrestamos.getValueAt(row, 0).toString();
+        tblFalla.setModel(m1.showTableFallaById(idPrestamo));
+        tblRecuperado.setModel(m1.showTabletRecuperadoById(idPrestamo));
+        tblFalla.setModel(m1.showTabletTreceById(idPrestamo));
+        
+    }//GEN-LAST:event_tblPrestamosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -115,9 +245,27 @@ public class filtroCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField avalCliente;
     private javax.swing.JTextField clientes;
+    private javax.swing.JTextField direccionCliente;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTable jTable4;
     private javax.swing.JList<String> listClientes;
+    private javax.swing.JTextField municipioCliente;
+    private javax.swing.JTable tblFalla;
+    private javax.swing.JTable tblPrestamos;
+    private javax.swing.JTable tblRecuperado;
     // End of variables declaration//GEN-END:variables
 }

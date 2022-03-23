@@ -286,10 +286,13 @@ public class Cuentas extends javax.swing.JFrame {
         Date date  =txtFechaInicio.getDate();
         String strDate = DateFormat.getDateInstance().format(date);
         String fechaFin = strDate.replace(" ", "-");
-        URL url=null;
-        
+        URL url;
+        String nombreSupervisor=comboSupervisor.getSelectedItem().toString();
+        String nombreSupervisorFin= nombreSupervisor.replace(" ", "-");
+        String full="http://localhost/reportes/cuentasVentas.php?fechaInicio="+fechaFin+"&nombreSupervisor="+nombreSupervisorFin;
+        System.out.println(full);
         try {
-            url = new URL("http://localhost/reportes/cuentasVentas.php?fechaInicio="+fechaFin);
+            url = new URL(full);
             try {
                 Desktop.getDesktop().browse(url.toURI());
             } catch (IOException e) {

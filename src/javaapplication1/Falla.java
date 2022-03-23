@@ -203,7 +203,10 @@ public class Falla extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String nombre                   =           nombreCliente.getSelectedItem().toString();
+        System.out.println(nombre);
         DefaultComboBoxModel modelo     =           m1.llenarCMBFechaPrestamo(nombre);
+        
+        
         this.fechaPrestamoFalla.setModel(modelo);
         String FechaInicioPrestamo      =           this.fechaPrestamoFalla.getSelectedItem().toString();
         String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo,nombre);
