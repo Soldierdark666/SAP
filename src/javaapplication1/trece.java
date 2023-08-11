@@ -4,6 +4,7 @@
  */
 package javaapplication1;
 
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -17,6 +18,7 @@ public class trece extends javax.swing.JFrame {
      */
     
     metodos m1 = new metodos();
+    public String idTrece;
     
     public trece() {
         initComponents();
@@ -66,6 +68,8 @@ public class trece extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaTrece = new javax.swing.JTable();
         txtFechaTrece = new com.toedter.calendar.JDateChooser();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -181,6 +185,11 @@ public class trece extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaTrece.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaTreceMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaTrece);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 740, 210));
@@ -189,6 +198,17 @@ public class trece extends javax.swing.JFrame {
         jPanel2.add(txtFechaTrece, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 200, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 790, 470));
+
+        jButton3.setText("Borrar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 510, 360, 50));
+
+        jButton4.setText("Editar");
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 360, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -225,7 +245,11 @@ public class trece extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinTreceActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtfechaTrece            =       txtFechaTrece.getDateFormatString();
+        Date fecha              =       txtFechaTrece.getDate();
+        
+        
+        
+        String txtfechaTrece=m1.formatoFecha(fecha);
         String txtmonto                 =       monto.getText();
         String nombre                   =       nombreCliente.getSelectedItem().toString();
         String FechaInicioPrestamo      =       fechaPrestamoTrece.getSelectedItem().toString();
@@ -248,6 +272,25 @@ public class trece extends javax.swing.JFrame {
         
         llenarTablaTrece(m1.showTabletTrece(nombre, FechaInicioPrestamo));
     }//GEN-LAST:event_fechaPrestamoTreceActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        String idTrece=this.idTrece;
+        m1.borrarTrece(idTrece);
+        
+        String nombre                   =       nombreCliente.getSelectedItem().toString();
+        String FechaInicioPrestamo      =       fechaPrestamoTrece.getSelectedItem().toString();
+        
+        String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo,nombre);
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tablaTreceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaTreceMouseClicked
+        int rowIndex = tablaTrece.getSelectedRow();
+        Object value = tablaTrece.getValueAt(rowIndex, 0);
+        String idTrece=value+"";
+        this.idTrece=idTrece;
+    }//GEN-LAST:event_tablaTreceMouseClicked
 
     /**
      * @param args the command line arguments
@@ -289,6 +332,8 @@ public class trece extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> fechaPrestamoTrece;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

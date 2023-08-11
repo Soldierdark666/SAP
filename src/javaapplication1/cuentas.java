@@ -4,7 +4,13 @@
  */
 package javaapplication1;
 
+import java.awt.Desktop;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -12,10 +18,10 @@ import javax.swing.JOptionPane;
  *
  * @author soldi
  */
-public class filtroCuentas extends javax.swing.JFrame {
+public class Cuentas extends javax.swing.JFrame {
 
     metodos m1 = new metodos();
-    public filtroCuentas() {
+    public Cuentas() {
         initComponents();
         setLocationRelativeTo(null);
         llenarCombos();
@@ -24,7 +30,6 @@ public class filtroCuentas extends javax.swing.JFrame {
      public void llenarCombos(){
         supervisor.setModel(m1.llenarCMBSupervisor());
         ejecutivo.setModel(m1.llenarCMBEjecutivo());
-        ejecutivoGrupo.setModel(m1.llenarCMBEjecutivo());
     }
 
     /**
@@ -44,7 +49,6 @@ public class filtroCuentas extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
@@ -60,12 +64,12 @@ public class filtroCuentas extends javax.swing.JFrame {
         jTextField15 = new javax.swing.JTextField();
         imprimir = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        txtFecha = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         ejecutivo = new javax.swing.JComboBox<>();
         jTextField16 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
         jTextField18 = new javax.swing.JTextField();
         jTextField19 = new javax.swing.JTextField();
         jTextField20 = new javax.swing.JTextField();
@@ -81,48 +85,7 @@ public class filtroCuentas extends javax.swing.JFrame {
         jTextField30 = new javax.swing.JTextField();
         imprimir1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        ejecutivoGrupo = new javax.swing.JComboBox<>();
-        jTextField31 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField32 = new javax.swing.JTextField();
-        jTextField33 = new javax.swing.JTextField();
-        jTextField34 = new javax.swing.JTextField();
-        jTextField35 = new javax.swing.JTextField();
-        jTextField36 = new javax.swing.JTextField();
-        jTextField37 = new javax.swing.JTextField();
-        jTextField38 = new javax.swing.JTextField();
-        jTextField39 = new javax.swing.JTextField();
-        jTextField40 = new javax.swing.JTextField();
-        jTextField41 = new javax.swing.JTextField();
-        jTextField42 = new javax.swing.JTextField();
-        jTextField43 = new javax.swing.JTextField();
-        jTextField44 = new javax.swing.JTextField();
-        jTextField45 = new javax.swing.JTextField();
-        imprimir2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jTextField46 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField47 = new javax.swing.JTextField();
-        jTextField48 = new javax.swing.JTextField();
-        jTextField49 = new javax.swing.JTextField();
-        jTextField50 = new javax.swing.JTextField();
-        jTextField51 = new javax.swing.JTextField();
-        jTextField52 = new javax.swing.JTextField();
-        jTextField53 = new javax.swing.JTextField();
-        jTextField54 = new javax.swing.JTextField();
-        jTextField55 = new javax.swing.JTextField();
-        jTextField56 = new javax.swing.JTextField();
-        jTextField57 = new javax.swing.JTextField();
-        jTextField58 = new javax.swing.JTextField();
-        jTextField59 = new javax.swing.JTextField();
-        jTextField60 = new javax.swing.JTextField();
-        imprimir3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        txtFechaEjecutivoJ = new com.toedter.calendar.JDateChooser();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -137,7 +100,7 @@ public class filtroCuentas extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -151,9 +114,6 @@ public class filtroCuentas extends javax.swing.JFrame {
 
         jLabel2.setText("Fecha");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, -1, 20));
-
-        jTextField2.setText("jTextField1");
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 150, -1));
         jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 50, -1));
         jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, 50, -1));
         jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 50, -1));
@@ -172,7 +132,15 @@ public class filtroCuentas extends javax.swing.JFrame {
         jPanel1.add(imprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 230, 80, -1));
 
         jButton2.setText("ver");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 80, -1));
+
+        txtFecha.setDateFormatString("yyyy-MM-dd");
+        jPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 150, -1));
 
         plaza.addTab("Cuentas por supervisor", jPanel1);
 
@@ -192,9 +160,6 @@ public class filtroCuentas extends javax.swing.JFrame {
 
         jLabel4.setText("Fecha");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, -1, 20));
-
-        jTextField17.setText("jTextField1");
-        jPanel2.add(jTextField17, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 150, -1));
         jPanel2.add(jTextField18, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 50, -1));
         jPanel2.add(jTextField19, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, 50, -1));
         jPanel2.add(jTextField20, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 50, -1));
@@ -213,81 +178,17 @@ public class filtroCuentas extends javax.swing.JFrame {
         jPanel2.add(imprimir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 230, 80, -1));
 
         jButton3.setText("ver");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 80, -1));
 
+        txtFechaEjecutivoJ.setDateFormatString("yyyy-MM-dd");
+        jPanel2.add(txtFechaEjecutivoJ, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 150, -1));
+
         plaza.addTab("Cuentas por ejecutivo", jPanel2);
-
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        ejecutivoGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel3.add(ejecutivoGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 150, -1));
-        jPanel3.add(jTextField31, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 50, -1));
-
-        jLabel5.setText("Ejecutivo");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, -1, 20));
-
-        jLabel6.setText("Fecha");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, -1, 20));
-
-        jTextField32.setText("jTextField1");
-        jPanel3.add(jTextField32, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 150, -1));
-        jPanel3.add(jTextField33, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 50, -1));
-        jPanel3.add(jTextField34, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, 50, -1));
-        jPanel3.add(jTextField35, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 50, -1));
-        jPanel3.add(jTextField36, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 50, -1));
-        jPanel3.add(jTextField37, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 50, -1));
-        jPanel3.add(jTextField38, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 50, -1));
-        jPanel3.add(jTextField39, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 50, -1));
-        jPanel3.add(jTextField40, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, 50, -1));
-        jPanel3.add(jTextField41, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 50, -1));
-        jPanel3.add(jTextField42, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 50, -1));
-        jPanel3.add(jTextField43, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 50, -1));
-        jPanel3.add(jTextField44, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 50, -1));
-        jPanel3.add(jTextField45, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 50, -1));
-
-        imprimir2.setText("imprimir");
-        jPanel3.add(imprimir2, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 230, 80, -1));
-
-        jButton4.setText("ver");
-        jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 80, -1));
-
-        plaza.addTab("Ejecutivo/Grupo", jPanel3);
-
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel4.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 150, -1));
-        jPanel4.add(jTextField46, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 50, -1));
-
-        jLabel7.setText("Plaza");
-        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, -1, 20));
-
-        jLabel8.setText("Fecha");
-        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, -1, 20));
-
-        jTextField47.setText("jTextField1");
-        jPanel4.add(jTextField47, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 150, -1));
-        jPanel4.add(jTextField48, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 50, -1));
-        jPanel4.add(jTextField49, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, 50, -1));
-        jPanel4.add(jTextField50, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 50, -1));
-        jPanel4.add(jTextField51, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 50, -1));
-        jPanel4.add(jTextField52, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 50, -1));
-        jPanel4.add(jTextField53, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 50, -1));
-        jPanel4.add(jTextField54, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 50, -1));
-        jPanel4.add(jTextField55, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, 50, -1));
-        jPanel4.add(jTextField56, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 50, -1));
-        jPanel4.add(jTextField57, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 50, -1));
-        jPanel4.add(jTextField58, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 50, -1));
-        jPanel4.add(jTextField59, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 50, -1));
-        jPanel4.add(jTextField60, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 50, -1));
-
-        imprimir3.setText("imprimir");
-        jPanel4.add(imprimir3, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 230, 80, -1));
-
-        jButton5.setText("ver");
-        jPanel4.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 80, -1));
-
-        plaza.addTab("Cuentas general", jPanel4);
 
         getContentPane().add(plaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, 360));
 
@@ -297,6 +198,50 @@ public class filtroCuentas extends javax.swing.JFrame {
     private void ejecutivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ejecutivoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ejecutivoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        URL url=null;
+
+        Date fecha=txtFecha.getDate();
+        String txtFecha=m1.formatoFecha(fecha);
+        String txtSupervisor= supervisor.getSelectedItem().toString();
+        String txtURL="http://localhost/reportes/cuentasVentasV2.php?fechaInicio="+txtFecha+"&nombreSupervisor="+txtSupervisor;
+        txtURL=txtURL.replace(" ", "%20");
+        try {
+            url = new URL(txtURL);
+            try {
+                Desktop.getDesktop().browse(url.toURI());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e1) {
+            e1.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        URL url=null;
+
+        Date fecha=txtFechaEjecutivoJ.getDate();
+        String txtFechaEjecutivo=m1.formatoFecha(fecha);
+        String txtSupervisor= ejecutivo.getSelectedItem().toString();
+        String txtURL="http://localhost/reportes/cuentasVentasEjecutivo.php?fechaInicio="+txtFechaEjecutivo+"&nombreEjecutivo="+txtSupervisor;
+        txtURL=txtURL.replace(" ", "%20");
+        try {
+            url = new URL(txtURL);
+            try {
+                Desktop.getDesktop().browse(url.toURI());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e1) {
+            e1.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -315,48 +260,39 @@ public class filtroCuentas extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(filtroCuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(filtroCuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(filtroCuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(filtroCuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new filtroCuentas().setVisible(true);
+                new Cuentas().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ejecutivo;
-    private javax.swing.JComboBox<String> ejecutivoGrupo;
     private javax.swing.JButton imprimir;
     private javax.swing.JButton imprimir1;
-    private javax.swing.JButton imprimir2;
-    private javax.swing.JButton imprimir3;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
@@ -367,10 +303,8 @@ public class filtroCuentas extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
@@ -383,43 +317,15 @@ public class filtroCuentas extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField29;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField30;
-    private javax.swing.JTextField jTextField31;
-    private javax.swing.JTextField jTextField32;
-    private javax.swing.JTextField jTextField33;
-    private javax.swing.JTextField jTextField34;
-    private javax.swing.JTextField jTextField35;
-    private javax.swing.JTextField jTextField36;
-    private javax.swing.JTextField jTextField37;
-    private javax.swing.JTextField jTextField38;
-    private javax.swing.JTextField jTextField39;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField40;
-    private javax.swing.JTextField jTextField41;
-    private javax.swing.JTextField jTextField42;
-    private javax.swing.JTextField jTextField43;
-    private javax.swing.JTextField jTextField44;
-    private javax.swing.JTextField jTextField45;
-    private javax.swing.JTextField jTextField46;
-    private javax.swing.JTextField jTextField47;
-    private javax.swing.JTextField jTextField48;
-    private javax.swing.JTextField jTextField49;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField50;
-    private javax.swing.JTextField jTextField51;
-    private javax.swing.JTextField jTextField52;
-    private javax.swing.JTextField jTextField53;
-    private javax.swing.JTextField jTextField54;
-    private javax.swing.JTextField jTextField55;
-    private javax.swing.JTextField jTextField56;
-    private javax.swing.JTextField jTextField57;
-    private javax.swing.JTextField jTextField58;
-    private javax.swing.JTextField jTextField59;
     private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField60;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JTabbedPane plaza;
     private javax.swing.JComboBox<String> supervisor;
+    private com.toedter.calendar.JDateChooser txtFecha;
+    private com.toedter.calendar.JDateChooser txtFechaEjecutivoJ;
     // End of variables declaration//GEN-END:variables
 }

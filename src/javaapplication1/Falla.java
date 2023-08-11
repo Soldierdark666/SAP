@@ -4,6 +4,7 @@
  */
 package javaapplication1;
 
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -17,6 +18,7 @@ public class Falla extends javax.swing.JFrame {
      */
     
     metodos m1 = new metodos();
+    public String idFalla;
     
     public Falla() {
         initComponents();
@@ -66,6 +68,8 @@ public class Falla extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblFallas = new javax.swing.JTable();
         txtFechaFalla = new com.toedter.calendar.JDateChooser();
+        jButton4 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -186,6 +190,11 @@ public class Falla extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblFallas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblFallasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblFallas);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 740, 210));
@@ -193,7 +202,18 @@ public class Falla extends javax.swing.JFrame {
         txtFechaFalla.setDateFormatString("y-MM-d");
         jPanel2.add(txtFechaFalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 190, 30));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 790, 470));
+        jButton4.setText("Editar");
+        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 360, 50));
+
+        jButton3.setText("Borrar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 470, 360, 50));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 790, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -205,10 +225,10 @@ public class Falla extends javax.swing.JFrame {
         String FechaInicioPrestamo      =           this.fechaPrestamoFalla.getSelectedItem().toString();
         String[] datosPrestamo          =           m1.buscarPrestamo(FechaInicioPrestamo,nombre);
         
-        this.nombreClienteFalla.setText(datosPrestamo[0]);
+        /*this.nombreClienteFalla.setText(datosPrestamo[0]);
         this.promotorFalla.setText(datosPrestamo[1]);
         this.montoFalla.setText(datosPrestamo[2]);
-        this.fechaFinFalla.setText(datosPrestamo[3]);
+        this.fechaFinFalla.setText(datosPrestamo[3]);*/
          
         llenarTablaFalla(m1.showTableFalla(nombre,FechaInicioPrestamo));
         
@@ -231,7 +251,11 @@ public class Falla extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinFallaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtfechaFalla            =           txtFechaFalla.getDateFormatString();
+        Date fecha                    =           txtFechaFalla.getDate();
+        
+        
+        
+        String txtfechaFalla            =           m1.formatoFecha(fecha);
         String txtMontoFechaFalla       =           montoFechaFalla.getText();
         String FechaInicioPrestamo      =           fechaPrestamoFalla.getSelectedItem().toString();
         String nombre                   =           nombreCliente.getSelectedItem().toString();
@@ -258,6 +282,24 @@ public class Falla extends javax.swing.JFrame {
         
         llenarTablaFalla(m1.showTableFalla(nombre,FechaInicioPrestamo));
     }//GEN-LAST:event_fechaPrestamoFallaActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+        String idFalla=this.idFalla;
+        m1.borrarFalla(idFalla);
+        
+        String FechaInicioPrestamo      =           this.fechaPrestamoFalla.getSelectedItem().toString();
+        String nombre                   =           nombreCliente.getSelectedItem().toString();
+        llenarTablaFalla(m1.showTableFalla(nombre,FechaInicioPrestamo));
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tblFallasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFallasMouseClicked
+        int rowIndex = tblFallas.getSelectedRow();
+        Object value = tblFallas.getValueAt(rowIndex, 0);
+        String idFalla=value+"";
+        this.idFalla=idFalla;
+    }//GEN-LAST:event_tblFallasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -302,6 +344,8 @@ public class Falla extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> fechaPrestamoFalla;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

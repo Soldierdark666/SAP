@@ -4,6 +4,7 @@
  */
 package javaapplication1;
 
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -17,6 +18,7 @@ public class recuperado extends javax.swing.JFrame {
      */
     
     metodos m1 = new metodos();
+    public String idRecuperado;
     
     public recuperado() {
         initComponents();
@@ -66,6 +68,8 @@ public class recuperado extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaRecuperado = new javax.swing.JTable();
         txtFechaRecuperado = new com.toedter.calendar.JDateChooser();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -181,6 +185,11 @@ public class recuperado extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaRecuperado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaRecuperadoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaRecuperado);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 740, 210));
@@ -188,7 +197,18 @@ public class recuperado extends javax.swing.JFrame {
         txtFechaRecuperado.setDateFormatString("y-MM-d");
         jPanel2.add(txtFechaRecuperado, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 170, 30));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 790, 470));
+        jButton3.setText("Borrar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 470, 360, 50));
+
+        jButton4.setText("Editar");
+        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 360, 50));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 790, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -225,7 +245,11 @@ public class recuperado extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaFinRecuperadoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String txtfechaRecuperado=txtFechaRecuperado.getDateFormatString();
+        Date fecha=txtFechaRecuperado.getDate();
+        
+        String txtfechaRecuperado=m1.formatoFecha(fecha);
+        
+        
         String txtmontoRecuperado=montoRecuperado.getText();
         String nombre                   =       nombreCliente.getSelectedItem().toString();
         String FechaInicioPrestamo      =       fechaPrstamoRecuperado.getSelectedItem().toString();
@@ -246,8 +270,31 @@ public class recuperado extends javax.swing.JFrame {
         this.fechaFinRecuperado.setText(datosPrestamo[3]);
         
         
+        
         llenarTablaRecuperado(m1.showTabletRecuperado(nombre, FechaInicioPrestamo));
     }//GEN-LAST:event_fechaPrstamoRecuperadoActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        String idRecuperado=this.idRecuperado;
+        m1.borrarRecuperado(idRecuperado);
+        
+        String nombre                   =       nombreCliente.getSelectedItem().toString();
+        String FechaInicioPrestamo      =       fechaPrstamoRecuperado.getSelectedItem().toString();
+        llenarTablaRecuperado(m1.showTabletRecuperado(nombre, FechaInicioPrestamo));
+        
+        
+        
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tablaRecuperadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaRecuperadoMouseClicked
+        int rowIndex = tablaRecuperado.getSelectedRow();
+        Object value = tablaRecuperado.getValueAt(rowIndex, 0);
+        String idRecuperado=value+"";
+        this.idRecuperado=idRecuperado;
+        
+    }//GEN-LAST:event_tablaRecuperadoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -291,6 +338,8 @@ public class recuperado extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> fechaPrstamoRecuperado;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

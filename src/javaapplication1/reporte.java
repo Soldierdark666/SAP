@@ -36,19 +36,30 @@ public class reporte extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 11, -1, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/LISTAAAA.png"))); // NOI18N
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 180, 150));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 180, 150));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plazaaaaa.png"))); // NOI18N
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 180, -1));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 180, -1));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Recuperado-01.png"))); // NOI18N
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 180, 150));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 180, 150));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 1, 690, 300));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        HojaEjecutivo h1= new HojaEjecutivo();
+        h1.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -8,6 +8,11 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 /**
  *
@@ -23,9 +28,59 @@ public class metodos {
     
     
     
-    public void registrarClientes(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String txtStatusCliente) {
+    ////////////////////////////////////////////////////////////////////////////
+    
+    
+        
+    public static String Suma13(String fechaInicial) {
         try {
-            String sql="insert into cliente values(null,'"+nombreCliente+"','"+direccionCliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioCliente+"')"+",'"+nombreAval1Cliente+"','"+direccionAval1Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval1Cliente+"')"+",'"+nombreAval2Cliente+"','"+direccionAval2Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval2Cliente+"')"+",(select idStatus from catalogoStatus where descripcionStatus='"+txtStatusCliente+"'));";
+            // Formato de entrada de la fecha
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("y-MM-d");
+            
+            // Convertir la cadena de fecha en un objeto Date
+            Date fecha = formatoFecha.parse(fechaInicial);
+
+            // Crear un objeto Calendar y establecer la fecha inicial
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(fecha);
+
+            // Agregar 13 semanas a la fecha
+            calendar.add(Calendar.WEEK_OF_YEAR, 12);
+
+            // Obtener la fecha resultante después de 13 semanas
+            Date fechaDespuesDe13Semanas = calendar.getTime();
+
+            // Formatear la fecha resultante en el formato deseado
+            String fechaFormateada = formatoFecha.format(fechaDespuesDe13Semanas);
+
+            return fechaFormateada;
+        } catch (ParseException e) {
+            // Manejo de excepciones si ocurre un error al analizar la fecha
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public String formatoFecha(Date fecha){
+        
+        SimpleDateFormat formateador = new SimpleDateFormat("y-MM-d");
+        
+        
+        
+        String newFecha=formateador.format(fecha);
+        
+        return newFecha;
+    }
+    
+    
+    
+    
+    ////////////////////////////////////////////////////////////////////////////
+    
+    
+    public void registrarClientes(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String txtEncargadoPrestamo, String txtStatusCliente) {
+        try {
+            String sql="insert into cliente values(null,'"+nombreCliente+"','"+direccionCliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioCliente+"')"+",'"+nombreAval1Cliente+"','"+direccionAval1Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval1Cliente+"')"+",'"+nombreAval2Cliente+"','"+direccionAval2Cliente+"',"+"(select idMunicipio from municipio where nombreMunicipio = '"+idMunicipioAval2Cliente+"')"+","+"(select idEncargado from encargado where nombreEncargado='"+txtEncargadoPrestamo+"')"+", (select idStatus from catalogoStatus where descripcionStatus='"+txtStatusCliente+"'));";
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se registro el cliente correctamente");
@@ -139,13 +194,15 @@ public class metodos {
          }
     }
     
-    public void agregarPrestamo(String fechaInicioPrestamo, String fechaFinPrestamo, String montoPrestamo, String especial, String idClientePrestamo, String ejecutivoPrestamo){
+    public void agregarPrestamo(String fechaInicioPrestamo, String fechaFinPrestamo, String montoPrestamo, String especial, String idClientePrestamo, String encargado){
+        String sql = "insert into prestamo value(null,'"+fechaInicioPrestamo+"','"+fechaFinPrestamo+"','"+montoPrestamo+"','"+especial+"', "+idClientePrestamo+", (select idEncargado from encargado where nombreEncargado='"+encargado+"'))";
+            
         try {
-            String sql = "insert into prestamo value(null,'"+fechaInicioPrestamo+"','"+fechaFinPrestamo+"','"+montoPrestamo+"','"+especial+"', "+idClientePrestamo+", (select idEjecutivo from ejecutivo where nombreEjecutivo='"+ejecutivoPrestamo+"'))";
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);
+            System.out.println(sql);
             
         }
     }
@@ -265,7 +322,7 @@ public class metodos {
     
     public DefaultComboBoxModel llenarCMBClientes(){
         DefaultComboBoxModel modelo= new DefaultComboBoxModel();
-        String sql = "select * from cliente;";
+        String sql = "select * from cliente ORDER BY nombreCliente ASC;";
         String datos="";
         try{
             
@@ -322,8 +379,27 @@ public class metodos {
     
     public DefaultComboBoxModel llenarCMBPromotor(){
         DefaultComboBoxModel modelo= new DefaultComboBoxModel();
-        String sql = "select * from ejecutivo;";
-        String datos="";
+        String sql = "select * from encargado order By nombreEncargado ASC;";
+        System.out.println(sql);
+        String datos;
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                datos=rs.getString(2);
+                modelo.addElement(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        return modelo;
+    }
+    public DefaultComboBoxModel llenarCMBPromotorPrestamo(String idCliente){
+        DefaultComboBoxModel modelo= new DefaultComboBoxModel();
+        String sql = "select * from encargado ORDER BY nombreEncargado=(select nombreEncargado where idEncargado=(select idEncargadoCliente from cliente where idCliente="+idCliente+"))DESC,nombreEncargado;;";
+        String datos;
         try{
             
             Statement st=cn.createStatement();
@@ -342,7 +418,7 @@ public class metodos {
     public DefaultListModel llenarLista(){
         
         DefaultListModel modelo = new DefaultListModel();
-        String sql = "select nombreCliente from cliente;";
+        String sql = "select nombreCliente from cliente order by nombreCliente ASC;";
         String datos="";
         try{
             Statement st=cn.createStatement();
@@ -384,7 +460,10 @@ public class metodos {
     
     public String[] buscarPrestamo(String fechaInicioPrestamo, String nombreCliente){
         DefaultComboBoxModel modelo= new DefaultComboBoxModel();
-        String sql = "select c.nombreCliente, e.nombreEjecutivo, p.montoPrestamo, p.fechaFinPrestamo from cliente c inner join prestamo p on c.idCliente=p.idClientePrestamo inner join ejecutivo e on e.idEjecutivo=p.idEjecutivoPrestamo where fechaInicioPrestamo='"+fechaInicioPrestamo+"' and c.nombreCliente='"+nombreCliente+"';";
+        String sql = "select c.nombreCliente, e.nombreEncargado, p.montoPrestamo, p.fechaFinPrestamo from cliente c inner join prestamo p on c.idCliente=p.idClientePrestamo inner join encargado e on e.idEncargado=p.idEncargadoPrestamo where fechaInicioPrestamo='"+fechaInicioPrestamo+"' and c.nombreCliente='"+nombreCliente+"';";
+        
+        //System.out.println(sql);
+        
         //System.out.println(sql);
         String datos[]=new String[4];
         try{
@@ -408,7 +487,7 @@ public class metodos {
     public DefaultListModel BuscarCliente(String nombreCliente){
     
         DefaultListModel modelo = new DefaultListModel();
-        String sql = "select nombreCliente from cliente where nombreCliente like '%"+nombreCliente+"%' ;";
+        String sql = "select nombreCliente from cliente where nombreCliente like '%"+nombreCliente+"%' ORDER BY nombreCliente ASC;";
         String datos="";
         try{
             Statement st=cn.createStatement();
@@ -524,9 +603,19 @@ public class metodos {
     
     ///////////////////////////////////////////////////////
     
-    public void editarCliente(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String idStatus, String idCliente){
+    public void editarCliente(String nombreCliente, String direccionCliente, String idMunicipioCliente, String nombreAval1Cliente, String direccionAval1Cliente, String idMunicipioAval1Cliente, String nombreAval2Cliente, String direccionAval2Cliente, String idMunicipioAval2Cliente, String Status, String idCliente){
+        
+        
+        
         try{
-            String sql ="update cliente set nombreCliente='"+nombreCliente+"' ,direccionCliente='"+direccionCliente+"', idMunicipioCliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',nombreAval1Cliente='"+nombreAval1Cliente+"',direccionAval1Cliente='"+direccionAval1Cliente+"',idMunicipioAval1Cliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',nombreAval2Cliente='"+nombreAval2Cliente+"',direccionAval2Cliente='"+direccionAval2Cliente+"',idMunicipioAval2Cliente='(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"')',idStatus='"+idStatus+"' where idCliente='"+idCliente+"'";
+            String idStatus="1";
+            if (Status=="Activo") {
+                idStatus="1";
+            }else{
+                idStatus="0";
+            }
+            
+            String sql ="update cliente set nombreCliente='"+nombreCliente+"' ,direccionCliente='"+direccionCliente+"', idMunicipioCliente=(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"'),nombreAval1Cliente='"+nombreAval1Cliente+"',direccionAval1Cliente='"+direccionAval1Cliente+"',idMunicipioAval1Cliente=(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"'),nombreAval2Cliente='"+nombreAval2Cliente+"',direccionAval2Cliente='"+direccionAval2Cliente+"',idMunicipioAval2Cliente=(select idMunicipio from municipio where nombreMunicipio='"+idMunicipioCliente+"'),idStatus="+idStatus+" where idCliente="+idCliente+";";
             PreparedStatement pss = cn.prepareStatement(sql);
             pss.executeUpdate();
         }catch(SQLException e){
@@ -827,7 +916,7 @@ public class metodos {
         modelo.addColumn("Especial");
         modelo.addColumn("Ejecutivo");
         
-        String sql = "select p.idPrestamo, p.fechaInicioPrestamo, p.fechaFinPrestamo, P.montoPrestamo, p.especial, e.nombreEjecutivo from prestamo p inner join ejecutivo e on p.idEjecutivoPrestamo=e.idEjecutivo where p.idClientePrestamo="+idClientePrestamo+";";
+        String sql = "select p.idPrestamo, p.fechaInicioPrestamo, p.fechaFinPrestamo, P.montoPrestamo, p.especial, e.nombreEncargado from prestamo p inner join encargado e on p.idEncargadoPrestamo=e.idEncargado where p.idClientePrestamo="+idClientePrestamo+";";
         String datos[] = new String [6];
         try{
             
@@ -841,6 +930,91 @@ public class metodos {
                 datos[3]=rs.getString(4);
                 datos[4]=rs.getString(5);
                 datos[5]=rs.getString(6);
+                modelo.addRow(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        
+        return modelo;
+    }
+    public DefaultTableModel showTablaFalla(String idPrestamo){
+        
+        DefaultTableModel modelo= new DefaultTableModel();
+        
+        modelo.addColumn("ID Falla");
+        modelo.addColumn("Fecha Falla");
+        modelo.addColumn("Monto Falla");
+        
+        String sql = "SELECT * FROM falla WHERE idPrestamoFalla="+idPrestamo+";";
+        System.out.println(sql);
+        String datos[] = new String [6];
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                modelo.addRow(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        
+        return modelo;
+    }
+    public DefaultTableModel showTablaRecuperado(String idPrestamo){
+        
+        DefaultTableModel modelo= new DefaultTableModel();
+        
+        modelo.addColumn("ID Recuperado");
+        modelo.addColumn("Fecha Recuperado");
+        modelo.addColumn("Monto Recuperado");
+        
+        String sql = "SELECT * FROM recuperado WHERE idPrestamoRecuperado="+idPrestamo+";";
+        String datos[] = new String [6];
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                modelo.addRow(datos);
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error");
+        }
+        
+        return modelo;
+    }
+    public DefaultTableModel showTablaTrece(String idPrestamo){
+        
+        DefaultTableModel modelo= new DefaultTableModel();
+        
+        modelo.addColumn("ID Trece");
+        modelo.addColumn("Fecha Trece");
+        modelo.addColumn("Monto Trece");
+        
+        String sql = "SELECT * FROM trece WHERE idPrestamoTrece="+idPrestamo+";";
+        String datos[] = new String [6];
+        try{
+            
+            Statement st=cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
                 modelo.addRow(datos);
             }
             
@@ -880,6 +1054,44 @@ public class metodos {
         try {
             PreparedStatement pss = cn.prepareStatement("delete from encargado where idEncargado =?;");
             pss.setInt(1, Integer.parseInt(idEncargadp));
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+        }
+    }
+    
+    public void borrarFalla(String idFalla){
+        try {
+            PreparedStatement pss = cn.prepareStatement("delete from falla where idFalla =?;");
+            pss.setInt(1, Integer.parseInt(idFalla));
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+        }
+    }
+    
+        public void borrarRecuperado(String idRecuperado){
+        try {
+            PreparedStatement pss = cn.prepareStatement("delete from recuperado where idRecuperado =?;");
+            pss.setInt(1, Integer.parseInt(idRecuperado));
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+        }
+    }
+        public void borrarTrece(String idTrece){
+        try {
+            PreparedStatement pss = cn.prepareStatement("delete from trece where idTrece =?;");
+            pss.setInt(1, Integer.parseInt(idTrece));
+            pss.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
+        }
+    }
+        public void borrarAdelanto(String idAdelanto){
+        try {
+            PreparedStatement pss = cn.prepareStatement("delete from adelanto where idAdelanto =?;");
+            pss.setInt(1, Integer.parseInt(idAdelanto));
             pss.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error: " + e);
